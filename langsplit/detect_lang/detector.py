@@ -1,12 +1,16 @@
 from langdetect import detect
 import fast_langdetect
 
-lang_map = {
+LANG_MAP = {
     "zh": "zh",
     "zh-cn": "zh",
     "zh-tw": "x",
     "ko": "ko",
     "ja": "ja",
+    "de": "de",
+    "fr": "fr",
+    "en": "en",
+    "x": "en",
 }
 
 
