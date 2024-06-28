@@ -1,4 +1,4 @@
-# `langsplit`
+# `split-lang`
 
 splitting sentences by language (concatenating over-split substrings based on their language)
 
@@ -17,7 +17,7 @@ splitting sentences by language (concatenating over-split substrings based on th
 You can install the package using pip:
 
 ```bash
-pip install langsplit
+pip install split-lang
 ```
 
 ```python
