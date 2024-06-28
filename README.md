@@ -1,18 +1,38 @@
-# `split-lang`
+# 1. `split-lang`
 
-splitting sentences by language (concatenating over-split substrings based on their language)
+[![PyPI version](https://badge.fury.io/py/split-lang.svg)](https://badge.fury.io/py/split-lang)
+[![wakatime](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad.svg)](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad)
 
-# Motivation
+splitting sentences by language (concatenating over-split substrings based on their language
+
+# 2. Motivation
 1. TTS (Text-To-Speech) model often fail on multi-language sentence, separate sentence based on language will bring better result
-2. Existed NLP toolkit (e.g. SpaCy) is helpful for parsing text in one language, however when it comes to multi-language text like below is hard to deal with: 
+2. Existed NLP toolkit (e.g. SpaCy) is helpful for parsing text in one language, however when it comes to multi-language texts like below are hard to deal with: 
 
 ```
 你最近好吗、最近どうですか？요즘 어떻게 지내요？sky is clear and sunny。
 ```
+```
+Vielen Dank, merci beaucoup, for your help.
+```
 
-# Usage
+- [1. `split-lang`](#1-split-lang)
+- [2. Motivation](#2-motivation)
+- [3. Usage](#3-usage)
+  - [3.1. Installation](#31-installation)
+  - [3.2. Sample Code](#32-sample-code)
+    - [3.2.1. Chinese, Japanese, Korean, English (Simple Usage)](#321-chinese-japanese-korean-english-simple-usage)
+      - [3.2.1.1. Code](#3211-code)
+      - [3.2.1.2. Output](#3212-output)
+    - [3.2.2. French, German, English (Advanced Usage)](#322-french-german-english-advanced-usage)
+      - [3.2.2.1. Code](#3221-code)
+      - [3.2.2.2. Output](#3222-output)
+  - [3.3. `lang_map`](#33-lang_map)
 
-## Installation
+
+# 3. Usage
+
+## 3.1. Installation
 
 You can install the package using pip:
 
@@ -20,7 +40,10 @@ You can install the package using pip:
 pip install split-lang
 ```
 
-## Sample Code
+## 3.2. Sample Code
+
+### 3.2.1. Chinese, Japanese, Korean, English (Simple Usage)
+#### 3.2.1.1. Code
 ```python
 texts = [
     "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。",
@@ -50,12 +73,12 @@ texts = [
 ]
 
 for text in texts:
-    substr_list = split(text, verbose=False)
+    substr_list = split(text)
     for index, substr in enumerate(substr_list):
         print(f"{substr.lang}|{index}: {substr.text}")
     print("----------------------")
 ```
-### Output
+#### 3.2.1.2. Output
 ```
 zh|0: 我是 
 en|1: VGroupChatBot
@@ -158,4 +181,108 @@ zh|0: 你最近好吗、最近
 ja|1: どうですか？
 ko|2: 요즘 어떻게 지내요？
 ----------------------
+```
+
+### 3.2.2. French, German, English (Advanced Usage)
+#### 3.2.2.1. Code
+```python
+
+texts_2 = [
+    "Ich liebe Paris, c'est une belle ville, and the food is amazing!",
+    "Berlin ist wunderbar, je veux y retourner, and explore more.",
+    "Bonjour, wie geht's dir today?",
+    "Die Musik hier ist fantastisch, la musique est superbe, and I enjoy it a lot.",
+    "Guten Morgen, je t'aime, have a great day!",
+    "Das Wetter ist heute schön, il fait beau aujourd'hui, and it's perfect for a walk.",
+    "Ich mag dieses Buch, ce livre est intéressant, and it has a great story.",
+    "Vielen Dank, merci beaucoup, for your help.",
+    "Wir reisen nach Deutschland, nous voyageons en Allemagne, and we are excited.",
+    "Ich bin müde, je suis fatigué, and I need some rest.",
+]
+
+new_lang_map = {
+    "zh": "zh",
+    "zh-cn": "zh",
+    "zh-tw": "x",
+    "ko": "ko",
+    "ja": "ja",
+    "de": "de",
+    "fr": "fr",
+    "en": "en",
+    "x": "en",
+}
+
+
+for text in texts_2:
+    substr_list = split(text=text, verbose=False, lang_map=new_lang_map, threshold=1e-3)
+    # `threshold`: if your text contains no Chinese, Japanese, Korean, `threshold=1e-3` is suggested
+    # `lang_nap`: mapping different language to same language for better result, if you know the range of your target languages. Defaults to None.
+    for index, substr in enumerate(substr_list):
+        print(f"{substr.lang}|{index}: {substr.text}")
+    print("----------------------")
+```
+#### 3.2.2.2. Output
+```
+de|0: Ich liebe 
+en|1: Paris,
+fr|2: c'est une belle ville,
+en|3: and the food is amazing!
+----------------------
+de|0: Berlin ist wunderbar, 
+fr|1: je veux y retourner,
+en|2: and explore more.
+----------------------
+fr|0: Bonjour,
+de|1: wie geht's dir today?
+----------------------
+de|0: Die Musik hier ist fantastisch, 
+fr|1: la musique est superbe,
+en|2: and I enjoy it a lot.
+----------------------
+de|0: Guten Morgen, 
+fr|1: je t'aime,
+en|2: have a great day!
+----------------------
+de|0: Das Wetter ist heute schön, 
+fr|1: il fait beau aujourd'hui,
+en|2: and it's perfect for a walk.
+----------------------
+de|0: Ich mag dieses Buch, 
+fr|1: ce livre est intéressant,
+en|2: and it has a great story.
+----------------------
+de|0: Vielen Dank, 
+fr|1: merci beaucoup,
+en|2: for your help.
+----------------------
+de|0: Wir reisen nach Deutschland, 
+fr|1: nous voyageons en Allemagne,
+en|2: and we are excited.
+----------------------
+de|0: Ich bin müde, 
+fr|1: je suis fatigué,
+en|2: and I need some rest.
+----------------------
+```
+
+## 3.3. `lang_map`
+- default `lang_map` looks like below
+  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `'x'`
+  - every 'x' would be merge to the near substring
+
+> [!NOTE]
+> if you include `key:value` (e.g. `'x':"en"`), then `'x'` will be set to `'en'` and merge will based on language
+
+```python
+lang_map = {
+    "zh": "zh",
+    "zh-cn": "zh",
+    "zh-tw": "x",
+    "ko": "ko",
+    "ja": "ja",
+    "de": "de",
+    "fr": "fr",
+    "en": "en",
+    "x": "en",
+}
 ```
