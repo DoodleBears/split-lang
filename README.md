@@ -3,11 +3,18 @@
 [![PyPI version](https://badge.fury.io/py/split-lang.svg)](https://badge.fury.io/py/split-lang)
 [![wakatime](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad.svg)](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad)
 
-splitting sentences by language (concatenating over-split substrings based on their language
+splitting sentences by language (concatenating over-split substrings based on their language)
 
+powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)
+
+1. over-split text to substrings by `wtpsplit`
+2. concatenate substrings based on their languages using `fast-langdetect` and `langdetect`
+
+- [Example output of Chinese, Japanese, Korean, English](#3212-output)
+- [Example output of French, German, English](#3222-output)
 # 2. Motivation
-1. TTS (Text-To-Speech) model often fail on multi-language sentence, separate sentence based on language will bring better result
-2. Existed NLP toolkit (e.g. SpaCy) is helpful for parsing text in one language, however when it comes to multi-language texts like below are hard to deal with: 
+1. TTS (Text-To-Speech) model often fails on multi-language sentence, separate sentence based on language will bring better result
+2. Existed NLP toolkit (e.g. `SpaCy`) is helpful for parsing text in one language, however when it comes to multi-language texts like below are hard to deal with: 
 
 ```
 你最近好吗、最近どうですか？요즘 어떻게 지내요？sky is clear and sunny。
@@ -27,7 +34,7 @@ Vielen Dank, merci beaucoup, for your help.
     - [3.2.2. French, German, English (Advanced Usage)](#322-french-german-english-advanced-usage)
       - [3.2.2.1. Code](#3221-code)
       - [3.2.2.2. Output](#3222-output)
-  - [3.3. `lang_map`](#33-lang_map)
+  - [3.3. usage of `lang_map` (for better result)](#33-usage-of-lang_map-for-better-result)
 
 
 # 3. Usage
@@ -184,6 +191,12 @@ ko|2: 요즘 어떻게 지내요？
 ```
 
 ### 3.2.2. French, German, English (Advanced Usage)
+
+> [!NOTE]
+> `threshold`: if your text contains NO Chinese, Japanese and Korean, then `1e-3` is suggested, otherwise `5e-5`
+> 
+> `lang_map`: mapping different language to same language for better result, if you know the range of your target languages. Defaults to None. (see [3.3. usage of `lang_map` (for better result)](#33-usage-of-lang_map-for-better-result))
+
 #### 3.2.2.1. Code
 ```python
 
@@ -265,7 +278,7 @@ en|2: and I need some rest.
 ----------------------
 ```
 
-## 3.3. `lang_map`
+## 3.3. usage of `lang_map` (for better result)
 - default `lang_map` looks like below
   - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `'x'`
   - every 'x' would be merge to the near substring
