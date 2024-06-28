@@ -12,7 +12,7 @@ def read(*relpath):
 
 
 setup(
-    name="langsplit",
+    name="split_lang",
     version="0.1.0",
     description="A package for splitting sentences by language (concatenating over-split substrings based on their language)",
     long_description=read("README.md"),
