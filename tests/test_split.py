@@ -5,10 +5,8 @@ texts = [
     "你好，我的名字是西野くまです。I am from Tokyo, 日本の首都。今天的天气非常好，sky is clear and sunny。おはようございます、皆さん！我们一起来学习吧。Learning languages can be fun and exciting。昨日はとても忙しかったので、今日は少しリラックスしたいです。Let's take a break and enjoy some coffee。中文、日本語、and English are three distinct languages, each with its own unique charm。希望我们能一起进步，一起成长。Let's keep studying and improving our language skills together. ありがとう！",
     "你好，今日はどこへ行きますか？",
     "我的名字是田中さんです。",
-    "我喜欢吃寿司和拉面、おいしいです。",
     "我喜欢吃寿司和拉面おいしいです。",
     "今天の天気はとてもいいですね。",
-    "我在学习日本語、少し難しいです。",
     "我在学习日本語少し難しいです。",
     "日语真是おもしろい啊",
     "你喜欢看アニメ吗？",
@@ -17,9 +15,6 @@ texts = [
     "我们一起去カラオケ吧、楽しそうです。",
     "你今天吃了什么、朝ごはんは何ですか？",
     "我的家在北京、でも、仕事で東京に住んでいます。",
-    "我喜欢读书、本を読むのが好きです。",
-    "这个周末、一緒に公園へ行きましょうか？",
-    "你的猫很可爱、あなたの猫はかわいいです。",
     "我在学做日本料理、日本料理を作るのを習っています。",
     "你会说几种语言、何ヶ国語話せますか？",
     "我昨天看了一本书、その本はとても面白かったです。",
@@ -33,7 +28,7 @@ texts = [
 ]
 
 for text in texts:
-    substr_list = split(text, verbose=True)
+    substr_list = split(text, verbose=False)
     for index, substr in enumerate(substr_list):
         print(f"{substr.lang}|{index}: {substr.text}")
     print("----------------------")
