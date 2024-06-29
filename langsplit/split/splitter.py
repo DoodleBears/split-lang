@@ -64,7 +64,7 @@ class SentenceSplitter:
     def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
         self.wtp_split_model = wtp_split_model
 
-    def split(self, text: str, threshold: float = 5e-5, verbose=False) -> List[str]:
+    def split(self, text: str, threshold: float = 4.9e-5, verbose=False) -> List[str]:
         if text in PUNCTUATION:
             return text
         return self.wtp_split_model.split(
@@ -77,7 +77,7 @@ default_sentence_splitter = SentenceSplitter()
 
 def split(
     text: str,
-    threshold: float = 5e-5,
+    threshold: float = 4.9e-5,
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
     verbose=False,
@@ -89,7 +89,7 @@ def split(
 
     Args:
         text (str): text to split
-        threshold (float, optional): the lower the more separated (more) substring will return. Defaults to 5e-5 (if your text contains no Chinese, Japanese, Korean, 1e-3 is suggested)
+        threshold (float, optional): the lower the more separated (more) substring will return. Defaults to 4.9e-5 (if your text contains no Chinese, Japanese, Korean, 4.9e-4 is suggested)
         lang_map (_type_, optional): mapping different language to same language for better result, if you know the range of your target languages. Defaults to None.
         verbose (bool, optional): print the process. Defaults to False.
         splitter (SentenceSplitter, optional): sentence splitter. Defaults to default_sentence_splitter.
@@ -195,65 +195,6 @@ def _pre_split(text: str) -> List[SubStringSection]:
 
     add_substring()
     return sections
-
-
-# def _pre_split_by_paired_brackets(text: str) -> List[str]:
-#     """Separate text into substrings based on paired brackets.
-
-#     Args:
-#         text (str): input text
-
-#     Returns:
-#         List[str]: list of substrings
-#     """
-#     substrings = []
-#     current_text = []
-#     bracket_stack = []
-#     left_brackets = "([{<（【《〈「『“‘"
-#     right_brackets = ")]}>）】》〉」』”’"
-#     bracket_pairs = {
-#         ")": "(",
-#         "]": "[",
-#         "}": "{",
-#         "）": "（",
-#         "】": "【",
-#         "》": "《",
-#         "〉": "〈",
-#         "」": "「",
-#         "』": "『",
-#         "”": "“",
-#         "’": "‘",
-#     }
-
-#     def add_substring():
-#         if current_text:
-#             substrings.append("".join(current_text))
-#             current_text.clear()
-
-#     i = 0
-#     while i < len(text):
-#         char = text[i]
-#         if char in left_brackets:
-#             if not bracket_stack:
-#                 add_substring()
-#             bracket_stack.append(char)
-#             current_text.append(char)
-#         elif char in right_brackets:
-#             current_text.append(char)
-#             if bracket_stack and bracket_stack[-1] == bracket_pairs[char]:
-#                 bracket_stack.pop()
-#                 if not bracket_stack:
-#                     add_substring()
-#             else:
-#                 # Unmatched right bracket, treat as normal character
-#                 add_substring()
-#                 substrings.append(char)
-#         else:
-#             current_text.append(char)
-#         i += 1
-
-#     add_substring()
-#     return substrings
 
 
 def _smart_merge(
@@ -431,7 +372,7 @@ def _check_languages(
         cur_lang = lang_map.get(cur_lang, default_lang)
         if cur_lang == "ko":
             fast_lang = fast_detect_lang(substr.text, text_len_threshold=0)
-            if fast_lang != "ko":
+            if fast_lang != cur_lang:
                 is_left = _get_find_direction(lang_text_list, index)
                 cur_lang = _find_nearest_lang_with_direction(
                     lang_text_list, index, is_left
@@ -444,23 +385,23 @@ def _check_languages(
 def _smart_concat_logic(
     lang_text_list: List[SubString], lang_map: Dict = None, default_lang: str = None
 ):
-    print("# _merge_middle_substr_to_two_side")
+    # print("# _merge_middle_substr_to_two_side")
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
-    print("# _merge_blocks")
+    # print("# _merge_blocks")
     lang_text_list = _merge_blocks(lang_text_list)
-    print("# _check_languages")
+    # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )
-    print("# _merge_middle_substr_to_two_side")
+    # print("# _merge_middle_substr_to_two_side")
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
-    print("# _fill_missing_languages")
+    # print("# _fill_missing_languages")
     lang_text_list = _fill_missing_languages(lang_text_list)
-    print("# _merge_two_side_substr_to_near")
+    # print("# _merge_two_side_substr_to_near")
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
-    print("# _merge_blocks")
+    # print("# _merge_blocks")
     lang_text_list = _merge_blocks(lang_text_list)
-    print("# _check_languages")
+    # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )

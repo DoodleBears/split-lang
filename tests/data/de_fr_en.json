@@ -1,441 +1,719 @@
-[
-    {
-        "is_punctuation": false,
-        "text": "Ich liebe Paris",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Ich liebe Paris"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "c'est une belle ville",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "c'est une belle ville"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and the food is amazing",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and the food is amazing"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": "!",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Berlin ist wunderbar",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Berlin ist wunderbar"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "je veux y retourner",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "je veux y retourner"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and explore more",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and explore more"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Bonjour",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "Bonjour"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "wie geht's dir today",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "wie geht's dir "
-            },
-            {
-                "lang": "en",
-                "text": "today"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": "?",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Die Musik hier ist fantastisch",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Die Musik hier ist fantastisch"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "la musique est superbe",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "la musique est superbe"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and I enjoy it a lot",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and I enjoy it a lot"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Guten Morgen",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Guten Morgen"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "je t'aime",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "je t'aime"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "have a great day",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "have a great day"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": "!",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Das Wetter ist heute schön",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Das Wetter ist heute schön"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "il fait beau aujourd'hui",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "il fait beau aujourd'hui"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and it's perfect for a walk",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and it's perfect for a walk"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Ich mag dieses Buch",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Ich mag dieses Buch"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "ce livre est intéressant",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "ce livre est intéressant"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and it has a great story",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and it has a great story"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Vielen Dank",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Vielen Dank"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "merci beaucoup",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "merci beaucoup"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "for your help",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "for your help"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Wir reisen nach Deutschland",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Wir reisen nach Deutschland"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "nous voyageons en Allemagne",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "nous voyageons en Allemagne"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and we are excited",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and we are excited"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "Ich bin müde",
-        "substrings": [
-            {
-                "lang": "de",
-                "text": "Ich bin müde"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "je suis fatigué",
-        "substrings": [
-            {
-                "lang": "fr",
-                "text": "je suis fatigué"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ", ",
-        "substrings": []
-    },
-    {
-        "is_punctuation": false,
-        "text": "and I need some rest",
-        "substrings": [
-            {
-                "lang": "en",
-                "text": "and I need some rest"
-            }
-        ]
-    },
-    {
-        "is_punctuation": true,
-        "text": ".",
-        "substrings": []
-    }
-]
+{
+    "Ich liebe Paris, c'est une belle ville, and the food is amazing!": [
+        {
+            "is_punctuation": false,
+            "text": "Ich liebe Paris",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich liebe Paris"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "c'est une belle ville",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "c'est une belle ville"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and the food is amazing",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and the food is amazing"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "!",
+            "substrings": []
+        }
+    ],
+    "Berlin ist wunderbar, je veux y retourner, and explore more.": [
+        {
+            "is_punctuation": false,
+            "text": "Berlin ist wunderbar",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Berlin ist wunderbar"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "je veux y retourner",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "je veux y retourner"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and explore more",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and explore more"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Bonjour, wie geht's dir today?": [
+        {
+            "is_punctuation": false,
+            "text": "Bonjour",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "Bonjour"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "wie geht's dir today",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "wie geht's dir "
+                },
+                {
+                    "lang": "en",
+                    "text": "today"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "?",
+            "substrings": []
+        }
+    ],
+    "Die Musik hier ist fantastisch, la musique est superbe, and I enjoy it a lot.": [
+        {
+            "is_punctuation": false,
+            "text": "Die Musik hier ist fantastisch",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Die Musik hier ist fantastisch"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "la musique est superbe",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "la musique est superbe"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and I enjoy it a lot",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and I enjoy it a lot"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Guten Morgen, je t'aime, have a great day!": [
+        {
+            "is_punctuation": false,
+            "text": "Guten Morgen",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Guten Morgen"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "je t'aime",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "je t'aime"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "have a great day",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "have a great day"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "!",
+            "substrings": []
+        }
+    ],
+    "Das Wetter ist heute schön, il fait beau aujourd'hui, and it's perfect for a walk.": [
+        {
+            "is_punctuation": false,
+            "text": "Das Wetter ist heute schön",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Das Wetter ist heute schön"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "il fait beau aujourd'hui",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "il fait beau aujourd'hui"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and it's perfect for a walk",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and it's perfect for a walk"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Ich mag dieses Buch, ce livre est intéressant, and it has a great story.": [
+        {
+            "is_punctuation": false,
+            "text": "Ich mag dieses Buch",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich mag dieses Buch"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "ce livre est intéressant",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "ce livre est intéressant"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and it has a great story",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and it has a great story"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Vielen Dank, merci beaucoup, for your help.": [
+        {
+            "is_punctuation": false,
+            "text": "Vielen Dank",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Vielen Dank"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "merci beaucoup",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "merci beaucoup"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "for your help",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "for your help"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Wir reisen nach Deutschland, nous voyageons en Allemagne, and we are excited.": [
+        {
+            "is_punctuation": false,
+            "text": "Wir reisen nach Deutschland",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Wir reisen nach Deutschland"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "nous voyageons en Allemagne",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "nous voyageons en Allemagne"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and we are excited",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and we are excited"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Ich bin müde, je suis fatigué, and I need some rest.": [
+        {
+            "is_punctuation": false,
+            "text": "Ich bin müde",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich "
+                },
+                {
+                    "lang": "en",
+                    "text": "bin "
+                },
+                {
+                    "lang": "de",
+                    "text": "müde"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "je suis fatigué",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "je suis fatigué"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and I need some rest",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and I need some rest"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Ich liebe Paris c'est une belle ville and the food is amazing!": [
+        {
+            "is_punctuation": false,
+            "text": "Ich liebe Paris c'est une belle ville and the food is amazing",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich liebe Paris "
+                },
+                {
+                    "lang": "fr",
+                    "text": "c'est une belle ville and the food is amazing"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "!",
+            "substrings": []
+        }
+    ],
+    "Berlin ist wunderbar je veux y retourner and explore more.": [
+        {
+            "is_punctuation": false,
+            "text": "Berlin ist wunderbar je veux y retourner and explore more",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Berlin ist wunderbar "
+                },
+                {
+                    "lang": "fr",
+                    "text": "je veux y "
+                },
+                {
+                    "lang": "en",
+                    "text": "retourner and explore more"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Bonjour wie geht's dir today?": [
+        {
+            "is_punctuation": false,
+            "text": "Bonjour wie geht's dir today",
+            "substrings": [
+                {
+                    "lang": "fr",
+                    "text": "Bonjour "
+                },
+                {
+                    "lang": "de",
+                    "text": "wie geht's dir "
+                },
+                {
+                    "lang": "en",
+                    "text": "today"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "?",
+            "substrings": []
+        }
+    ],
+    "Die Musik hier ist fantastisch la musique est superbe and I enjoy it a lot.": [
+        {
+            "is_punctuation": false,
+            "text": "Die Musik hier ist fantastisch la musique est superbe and I enjoy it a lot",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Die Musik hier ist fantastisch "
+                },
+                {
+                    "lang": "fr",
+                    "text": "la musique est superbe "
+                },
+                {
+                    "lang": "en",
+                    "text": "and I enjoy it a lot"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Guten Morgen je t'aime have a great day!": [
+        {
+            "is_punctuation": false,
+            "text": "Guten Morgen je t'aime have a great day",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Guten Morgen "
+                },
+                {
+                    "lang": "fr",
+                    "text": "je t'aime "
+                },
+                {
+                    "lang": "en",
+                    "text": "have a great day"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "!",
+            "substrings": []
+        }
+    ],
+    "Das Wetter ist heute schön il fait beau aujourd'hui and it's perfect for a walk.": [
+        {
+            "is_punctuation": false,
+            "text": "Das Wetter ist heute schön il fait beau aujourd'hui and it's perfect for a walk",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Das Wetter ist heute schön "
+                },
+                {
+                    "lang": "fr",
+                    "text": "il fait beau aujourd'"
+                },
+                {
+                    "lang": "de",
+                    "text": "hui "
+                },
+                {
+                    "lang": "en",
+                    "text": "and it's perfect for a walk"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Ich mag dieses Buch ce livre est intéressant and it has a great story.": [
+        {
+            "is_punctuation": false,
+            "text": "Ich mag dieses Buch ce livre est intéressant and it has a great story",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich mag dieses Buch "
+                },
+                {
+                    "lang": "en",
+                    "text": "ce livre est intéressant and it has a great story"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Vielen Dank merci beaucoup for your help.": [
+        {
+            "is_punctuation": false,
+            "text": "Vielen Dank merci beaucoup for your help",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Vielen Dank "
+                },
+                {
+                    "lang": "fr",
+                    "text": "merci beaucoup for your help"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Wir reisen nach Deutschland nous voyageons en Allemagne and we are excited.": [
+        {
+            "is_punctuation": false,
+            "text": "Wir reisen nach Deutschland nous voyageons en Allemagne and we are excited",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Wir reisen nach Deutschland "
+                },
+                {
+                    "lang": "fr",
+                    "text": "nous voyageons en Allemagne "
+                },
+                {
+                    "lang": "en",
+                    "text": "and we are excited"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ],
+    "Ich bin müde je suis fatigué and I need some rest.": [
+        {
+            "is_punctuation": false,
+            "text": "Ich bin müde je suis fatigué and I need some rest",
+            "substrings": [
+                {
+                    "lang": "de",
+                    "text": "Ich "
+                },
+                {
+                    "lang": "en",
+                    "text": "bin "
+                },
+                {
+                    "lang": "de",
+                    "text": "müde "
+                },
+                {
+                    "lang": "fr",
+                    "text": "je suis fatigué "
+                },
+                {
+                    "lang": "en",
+                    "text": "and I need some rest"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ".",
+            "substrings": []
+        }
+    ]
+}

@@ -60,22 +60,22 @@ def main():
     data = TestData(
         filename="zh_jp_ko_en",
         texts=texts_zh_jp_ko_en,
-        threshold=1e-5,
+        threshold=4.9e-5,
         splitter=splitter,
         lang_map=zh_jp_ko_en_lang_map,
         default_lang="en",
     )
     generate_test_data(data=data)
 
-    # data = TestData(
-    #     filename="de_fr_en",
-    #     texts=texts_de_fr_en,
-    #     threshold=1e-3,
-    #     splitter=splitter,
-    #     lang_map=None,
-    #     default_lang="x",
-    # )
-    # generate_test_data(data=data)
+    data = TestData(
+        filename="de_fr_en",
+        texts=texts_de_fr_en,
+        threshold=4.9e-4,
+        splitter=splitter,
+        lang_map=None,
+        default_lang="x",
+    )
+    generate_test_data(data=data)
     return
 
 

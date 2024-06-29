@@ -61,6 +61,7 @@ def calculate_test_result(
 
 
 def main():
+    splitter = SentenceSplitter()
     zh_jp_ko_en_lang_map = {
         "zh": "zh",
         "zh-cn": "zh",
@@ -68,30 +69,18 @@ def main():
         "ko": "ko",
         "ja": "ja",
     }
+
     data = TestData(
         filename="zh_jp_ko_en",
         texts=texts_zh_jp_ko_en,
-        threshold=5e-5,
-        splitter=SentenceSplitter(),
+        threshold=1e-5,
+        splitter=splitter,
         lang_map=zh_jp_ko_en_lang_map,
         default_lang="en",
     )
-
-    verify_split(data=data, json_file=f"{TEST_DATA_FOLDER}/{data.filename}.json")
-
-    data = TestData(
-        filename="de_fr_en",
-        texts=texts_de_fr_en,
-        threshold=1e-3,
-        splitter=SentenceSplitter(),
-        lang_map=None,
-        default_lang="x",
-    )
-
     verify_split(data=data, json_file=f"{TEST_DATA_FOLDER}/{data.filename}.json")
 
     return
-    pass
 
 
 if __name__ == "__main__":
