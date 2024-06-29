@@ -11,7 +11,6 @@ new_lang_map = {
     "de": "de",
     "fr": "fr",
     "en": "en",
-    "x": "en",
 }
 
 for text in texts_zh_jp_ko_en:

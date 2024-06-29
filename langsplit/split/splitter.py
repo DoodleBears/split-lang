@@ -1,5 +1,5 @@
 from typing import List, Dict
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 from langdetect.lang_detect_exception import LangDetectException
 from wtpsplit import SaT, WtP
@@ -12,8 +12,7 @@ from langsplit.detect_lang.detector import (
 )
 
 
-@dataclass
-class SubString:
+class SubString(BaseModel):
     lang: str
     text: str
 
@@ -110,7 +109,7 @@ def _init_substr_lang(
         if cur_lang == "x":
             cur_lang = fast_detect_lang(block)
             cur_lang = lang_map.get(cur_lang, default_lang)
-        concat_result.append(SubString(cur_lang, block))
+        concat_result.append(SubString(lang=cur_lang, text=block))
         lang = cur_lang
     return concat_result
 

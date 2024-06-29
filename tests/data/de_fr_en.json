@@ -2,11 +2,7 @@
     [
         {
             "lang": "de",
-            "text": "Ich liebe "
-        },
-        {
-            "lang": "en",
-            "text": "Paris, "
+            "text": "Ich liebe Paris,"
         },
         {
             "lang": "fr",
@@ -38,7 +34,11 @@
         },
         {
             "lang": "de",
-            "text": "wie geht's dir today?"
+            "text": "wie geht's dir "
+        },
+        {
+            "lang": "en",
+            "text": "today?"
         }
     ],
     [
@@ -104,11 +104,11 @@
         },
         {
             "lang": "fr",
-            "text": "merci "
+            "text": "merci beaucoup, "
         },
         {
             "lang": "en",
-            "text": "beaucoup, for your help."
+            "text": "for your help."
         }
     ],
     [
