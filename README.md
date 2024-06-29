@@ -1,9 +1,14 @@
 # 1. `split-lang`
 
 [![PyPI version](https://badge.fury.io/py/split-lang.svg)](https://badge.fury.io/py/split-lang)
+[![Downloads](https://static.pepy.tech/badge/split-lang)](https://pepy.tech/project/split-lang)
+[![Downloads](https://static.pepy.tech/badge/split-lang/month)](https://pepy.tech/project/split-lang)
+
+[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+
 [![wakatime](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad.svg)](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad)
 
-splitting sentences by language (concatenating over-split substrings based on their language)
+Splitting sentences by concatenating over-split substrings based on their language
 
 powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)
 
@@ -14,8 +19,6 @@ powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`fast
 3. concatenate substrings based on their languages using `fast-langdetect` and `langdetect`
    1. `我的名字是` | `西野` | `くまです` -> `我的名字是` | `西野くまです`
 
-- [Example output of Chinese, Japanese, Korean, English](#3212-output)
-- [Example output of French, German, English](#3222-output)
 # 2. Motivation
 1. TTS (Text-To-Speech) model often fails on multi-language sentence, separate sentence based on language will bring better result
 2. Existed NLP toolkit (e.g. `SpaCy`) is helpful for parsing text in one language, however when it comes to multi-language texts like below are hard to deal with: 
@@ -37,15 +40,15 @@ Vielen Dank, merci beaucoup, for your help.
   - [3.1. Installation](#31-installation)
   - [3.2. Sample Code](#32-sample-code)
     - [3.2.1. Basic](#321-basic)
-      - [`split_to_substring`](#split_to_substring)
-    - [Advanced](#advanced)
-      - [`split`](#split)
-    - [3.2.2. Chinese, Japanese, Korean, English (Simple Usage)](#322-chinese-japanese-korean-english-simple-usage)
-      - [3.2.2.1. Code](#3221-code)
-      - [3.2.2.2. Output](#3222-output)
-    - [3.2.3. French, German, English (Advanced Usage)](#323-french-german-english-advanced-usage)
+      - [3.2.1.1. `split_to_substring`](#3211-split_to_substring)
+    - [3.2.2. Advanced](#322-advanced)
+      - [3.2.2.1. `split`](#3221-split)
+    - [3.2.3. Chinese, Japanese, Korean, English (Simple Usage)](#323-chinese-japanese-korean-english-simple-usage)
       - [3.2.3.1. Code](#3231-code)
       - [3.2.3.2. Output](#3232-output)
+    - [3.2.4. French, German, English (Advanced Usage)](#324-french-german-english-advanced-usage)
+      - [3.2.4.1. Code](#3241-code)
+      - [3.2.4.2. Output](#3242-output)
   - [3.3. usage of `lang_map` (for better result)](#33-usage-of-lang_map-for-better-result)
 
 
@@ -62,7 +65,7 @@ pip install split-lang
 ## 3.2. Sample Code
 
 ### 3.2.1. Basic
-#### `split_to_substring`
+#### 3.2.1.1. `split_to_substring`
 
 ```python
 from langsplit import split_to_substring
@@ -91,8 +94,8 @@ for text in texts:
 3|punctuation:？
 ```
 
-### Advanced
-#### `split`
+### 3.2.2. Advanced
+#### 3.2.2.1. `split`
 
 ```python
 from langsplit import split
@@ -170,8 +173,8 @@ for text in texts_zh_jp_ko_en:
         |——punctuation:。
 ```
 
-### 3.2.2. Chinese, Japanese, Korean, English (Simple Usage)
-#### 3.2.2.1. Code
+### 3.2.3. Chinese, Japanese, Korean, English (Simple Usage)
+#### 3.2.3.1. Code
 ```python
 from langsplit import split
 
@@ -219,7 +222,7 @@ for text in texts:
         print()
     print("----------------------")
 ```
-#### 3.2.2.2. Output
+#### 3.2.3.2. Output
 <details>
   <summary>Output</summary>
 
@@ -396,14 +399,14 @@ for text in texts:
 ```
 </details>
 
-### 3.2.3. French, German, English (Advanced Usage)
+### 3.2.4. French, German, English (Advanced Usage)
 
 > [!NOTE]
 > `threshold`: if your text contains NO Chinese, Japanese and Korean, then `4.9e-4` is suggested, otherwise `4.9e-5`
 > 
 > `lang_map`: mapping different language to same language for better result, if you know the range of your target languages. Defaults to None. (see [3.3. usage of `lang_map` (for better result)](#33-usage-of-lang_map-for-better-result))
 
-#### 3.2.3.1. Code
+#### 3.2.4.1. Code
 ```python
 from langsplit import split
 
@@ -447,7 +450,7 @@ for text in texts:
         print()
     print("----------------------")
 ```
-#### 3.2.3.2. Output
+#### 3.2.4.2. Output
 
 <details>
   <summary>Output</summary>
