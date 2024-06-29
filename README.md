@@ -37,6 +37,9 @@ Vielen Dank, merci beaucoup, for your help.
   - [3.1. Installation](#31-installation)
   - [3.2. Sample Code](#32-sample-code)
     - [3.2.1. Basic](#321-basic)
+      - [`split_to_substring`](#split_to_substring)
+    - [Advanced](#advanced)
+      - [`split`](#split)
     - [3.2.2. Chinese, Japanese, Korean, English (Simple Usage)](#322-chinese-japanese-korean-english-simple-usage)
       - [3.2.2.1. Code](#3221-code)
       - [3.2.2.2. Output](#3222-output)
@@ -59,15 +62,46 @@ pip install split-lang
 ## 3.2. Sample Code
 
 ### 3.2.1. Basic
+#### `split_to_substring`
 
 ```python
-from langsplit import split
+from langsplit import split_to_substring
 
 texts = [
     "你喜欢看アニメ吗？",
 ]
 
 for text in texts:
+    substr = split_to_substring(
+        text=text,
+        verbose=False,
+        lang_map=new_lang_map,
+        threshold=4.9e-5,
+        default_lang="en",
+    )
+    for index, item in enumerate(substr):
+        print(f"{index}|{item.lang}:{item.text}")
+    print("----------------------")
+```
+
+```
+0|zh:你喜欢看
+1|ja:アニメ
+2|zh:吗
+3|punctuation:？
+```
+
+### Advanced
+#### `split`
+
+```python
+from langsplit import split
+
+texts = [
+    "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。",
+]
+
+for text in texts_zh_jp_ko_en:
     substr_sections = split(
         text=text,
         verbose=False,
@@ -76,18 +110,64 @@ for text in texts:
         default_lang="en",
     )
     for index, section in enumerate(substr_sections):
-        print(f"{index}: ", end="")
+        print(f"{index}:{section.text}")
         if section.is_punctuation:
-            print(f"{section.text}")
+            print(f"\t|——punctuation:{section.text}")
             continue
-        for substr in section.substrings:
-            print(f"{substr.lang}:{substr.text}", end="|")
-        print()
+        for inner_index, substr in enumerate(section.substrings):
+            print(f"\t|——{substr.lang}:{substr.text}")
+    print("----------------------")
 ```
 
 ```
-0: zh:你喜欢看|ja:アニメ|zh:吗|
-1: ？
+0:我是 
+        |——zh:我是
+1:VGroupChatBot
+        |——en:VGroupChatBot
+2:，
+        |——punctuation:，
+3:一个旨在支持多人通信的助手
+        |——zh:一个旨在支持多人通信的助手
+4:，
+        |——punctuation:，
+5:通过可视化消息来帮助团队成员更好地交流
+        |——zh:通过可视化消息来帮助团队成员更好地交流
+6:。
+        |——punctuation:。
+7:我可以帮助团队成员更好地整理和共享信息
+        |——zh:我可以帮助团队成员更好地整理和共享信息
+8:，
+        |——punctuation:，
+9:特别是在讨论
+        |——zh:特别是在讨论
+10:、
+        |——punctuation:、
+11:会议和
+        |——zh:会议和
+12:Brainstorming
+        |——en:Brainstorming
+13:等情况下
+        |——zh:等情况下
+14:。
+        |——punctuation:。
+15:你好我的名字是西野くまです
+        |——zh:你好我的名字是
+        |——ja:西野くまです
+16:my name is bob
+        |——en:my name is bob
+17:很高兴认识你どうぞよろしくお願いいたします
+        |——zh:很高兴认识你
+        |——ja:どうぞよろしくお願いいたします
+18:「
+        |——punctuation:「
+19:こんにちは
+        |——ja:こんにちは
+20:」
+        |——punctuation:」
+21:是什么意思
+        |——zh:是什么意思
+22:。
+        |——punctuation:。
 ```
 
 ### 3.2.2. Chinese, Japanese, Korean, English (Simple Usage)

@@ -75,6 +75,30 @@ class SentenceSplitter:
 default_sentence_splitter = SentenceSplitter()
 
 
+def split_to_substring(
+    text: str,
+    threshold: float = 4.9e-5,
+    lang_map: Dict = None,
+    default_lang: str = DEFAULT_LANG,
+    verbose=False,
+    splitter: SentenceSplitter = default_sentence_splitter,
+) -> List[SubString]:
+    sections = split(
+        text=text,
+        threshold=threshold,
+        lang_map=lang_map,
+        default_lang=default_lang,
+        verbose=verbose,
+        splitter=splitter,
+    )
+    substrings: List[SubString] = []
+    for section in sections:
+        if section.is_punctuation:
+            substrings.append(SubString(lang="punctuation", text=section.text))
+        substrings.extend(section.substrings)
+    return substrings
+
+
 def split(
     text: str,
     threshold: float = 4.9e-5,
