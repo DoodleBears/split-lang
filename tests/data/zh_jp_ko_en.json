@@ -1,370 +1,1230 @@
-[
-    [
+{
+    "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。": [
         {
-            "lang": "zh",
-            "text": "我是 "
+            "is_punctuation": false,
+            "text": "我是 ",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我是 "
+                }
+            ]
         },
         {
-            "lang": "en",
-            "text": "VGroupChatBot"
+            "is_punctuation": false,
+            "text": "VGroupChatBot",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "VGroupChatBot"
+                }
+            ]
         },
         {
-            "lang": "zh",
-            "text": "，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是"
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "西野くまです"
+            "is_punctuation": false,
+            "text": "一个旨在支持多人通信的助手",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "一个旨在支持多人通信的助手"
+                }
+            ]
         },
         {
-            "lang": "en",
-            "text": "my name is bob"
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "很高兴认识你"
+            "is_punctuation": false,
+            "text": "通过可视化消息来帮助团队成员更好地交流",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "通过可视化消息来帮助团队成员更好地交流"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "どうぞよろしくお願いいたします「こんにちは」"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "是什么意思。"
+            "is_punctuation": false,
+            "text": "我可以帮助团队成员更好地整理和共享信息",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我可以帮助团队成员更好"
+                },
+                {
+                    "lang": "ja",
+                    "text": "地整理和共享信"
+                },
+                {
+                    "lang": "zh",
+                    "text": "息"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "特别是在讨论",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "特别是在讨论"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "会议和",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "会议和"
+                }
+            ]
+        },
+        {
+            "is_punctuation": false,
+            "text": "Brainstorming",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "Brainstorming"
+                }
+            ]
+        },
+        {
+            "is_punctuation": false,
+            "text": "等情况下",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "等情况下"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "你好我的名字是西野くまです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你好我的名字是西野"
+                },
+                {
+                    "lang": "ja",
+                    "text": "くまです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": false,
+            "text": "my name is bob",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "my name is bob"
+                }
+            ]
+        },
+        {
+            "is_punctuation": false,
+            "text": "很高兴认识你どうぞよろしくお願いいたします",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "很高兴认识你"
+                },
+                {
+                    "lang": "ja",
+                    "text": "どうぞよろしくお願いいたします"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "「",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "こんにちは",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "こんにちは"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "」",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "是什么意思",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "是什么意思"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "你好，我的名字是西野くまです。I am from Tokyo, 日本の首都。今天的天气非常好，sky is clear and sunny。おはようございます、皆さん！我们一起来学习吧。Learning languages can be fun and exciting。昨日はとても忙しかったので、今日は少しリラックスしたいです。Let's take a break and enjoy some coffee。中文、日本語、and English are three distinct languages, each with its own unique charm。希望我们能一起进步，一起成长。Let's keep studying and improving our language skills together. ありがとう！": [
         {
-            "lang": "zh",
-            "text": "你好，我的名字是"
+            "is_punctuation": false,
+            "text": "你好",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你好"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "西野くまです。"
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
         },
         {
-            "lang": "en",
-            "text": "I am from Tokyo, "
+            "is_punctuation": false,
+            "text": "我的名字是西野くまです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我的名字是"
+                },
+                {
+                    "lang": "ja",
+                    "text": "西野くまです"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "日本の首都"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "。今天的天气非常好，"
+            "is_punctuation": false,
+            "text": "I am from Tokyo",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "I am from Tokyo"
+                }
+            ]
         },
         {
-            "lang": "en",
-            "text": "sky is clear and sunny。"
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "おはようございます、皆さん！"
+            "is_punctuation": false,
+            "text": "日本の首都",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "日本の首都"
+                }
+            ]
         },
         {
-            "lang": "zh",
-            "text": "我们一起来学习吧。"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         },
         {
-            "lang": "en",
-            "text": "Learning languages can be fun and exciting。"
+            "is_punctuation": false,
+            "text": "今天的天气非常好",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "今天的天气非常好"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "昨日はとても忙しかったので、今日は少しリラックスしたいです。"
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
         },
         {
-            "lang": "en",
-            "text": "Let's take a break and enjoy some coffee。"
+            "is_punctuation": false,
+            "text": "sky is clear and sunny",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "sky is clear and sunny"
+                }
+            ]
         },
         {
-            "lang": "zh",
-            "text": "中文、"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "日本語、"
+            "is_punctuation": false,
+            "text": "おはようございます",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "おはようございます"
+                }
+            ]
         },
         {
-            "lang": "en",
-            "text": "and English are three distinct languages, each with its own unique charm。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "希望我们能一起进步，一起成长。"
+            "is_punctuation": false,
+            "text": "皆さん",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "皆さん"
+                }
+            ]
         },
         {
-            "lang": "en",
-            "text": "Let's keep studying and improving our language skills together. "
+            "is_punctuation": true,
+            "text": "！",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "ありがとう！"
+            "is_punctuation": false,
+            "text": "我们一起来学习吧",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我们一起来学习吧"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "Learning languages can be fun and exciting",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "Learning languages can be fun and exciting"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "昨日はとても忙しかったので",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "昨日はとても忙しかったので"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "今日は少しリラックスしたいです",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "今日は少しリラックスしたいです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "Let's take a break and enjoy some coffee",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "Let's take a break and enjoy some coffee"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "中文",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "中文"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "日本語",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "日本語"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "and English are three distinct languages",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "and English are three distinct languages"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "each with its own unique charm",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "each with its own unique charm"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "希望我们能一起进步",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "希望我们能一起进步"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "一起成长",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "一起成长"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "Let's keep studying and improving our language skills together",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "Let's keep studying and improving our language skills together"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ". ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "ありがとう",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "ありがとう"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "！",
+            "substrings": []
         }
     ],
-    [
+    "你好，今日はどこへ行きますか？": [
         {
-            "lang": "zh",
-            "text": "你好，"
+            "is_punctuation": false,
+            "text": "你好",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你好"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "今日はどこへ行きますか？"
+            "is_punctuation": true,
+            "text": "，",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "今日はどこへ行きますか",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "今日はどこへ行きますか"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "你好今日はどこへ行きますか？": [
         {
-            "lang": "zh",
-            "text": "我的名字是"
+            "is_punctuation": false,
+            "text": "你好今日はどこへ行きますか",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你好今"
+                },
+                {
+                    "lang": "ja",
+                    "text": "日はどこへ行きますか"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "田中さんです。"
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "我的名字是田中さんです。": [
         {
-            "lang": "zh",
-            "text": "我喜欢吃寿司和拉面"
+            "is_punctuation": false,
+            "text": "我的名字是田中さんです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我的名字是田"
+                },
+                {
+                    "lang": "ja",
+                    "text": "中さんです"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "おいしいです。"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我喜欢吃寿司和拉面おいしいです。": [
         {
-            "lang": "ja",
-            "text": "今天の天気はとてもいいですね。"
+            "is_punctuation": false,
+            "text": "我喜欢吃寿司和拉面おいしいです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我喜欢吃寿司和拉面"
+                },
+                {
+                    "lang": "ja",
+                    "text": "おいしいです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "今天の天気はとてもいいですね。": [
         {
-            "lang": "zh",
-            "text": "我在学习"
+            "is_punctuation": false,
+            "text": "今天の天気はとてもいいですね",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "今天の天気はとてもいいですね"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "日本語少し難しいです。"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我在学习日本語少し難しいです。": [
         {
-            "lang": "zh",
-            "text": "日语真是"
+            "is_punctuation": false,
+            "text": "我在学习日本語少し難しいです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我在学习"
+                },
+                {
+                    "lang": "ja",
+                    "text": "日本語少し難しいです"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "おもしろい"
-        },
-        {
-            "lang": "zh",
-            "text": "啊"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "日语真是おもしろい啊": [
         {
-            "lang": "zh",
-            "text": "你喜欢看"
-        },
-        {
-            "lang": "ja",
-            "text": "アニメ"
-        },
-        {
-            "lang": "zh",
-            "text": "吗？"
+            "is_punctuation": false,
+            "text": "日语真是おもしろい啊",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "日语真是"
+                },
+                {
+                    "lang": "ja",
+                    "text": "おもしろい啊"
+                }
+            ]
         }
     ],
-    [
+    "你喜欢看アニメ吗？": [
         {
-            "lang": "zh",
-            "text": "我想去日本旅行、"
+            "is_punctuation": false,
+            "text": "你喜欢看アニメ吗",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你喜欢看"
+                },
+                {
+                    "lang": "ja",
+                    "text": "アニメ"
+                },
+                {
+                    "lang": "zh",
+                    "text": "吗"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "特に京都に行きたいです。"
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "我想去日本旅行、特に京都に行きたいです。": [
         {
-            "lang": "ja",
-            "text": "昨天見た映画はとても感動的でした。"
+            "is_punctuation": false,
+            "text": "我想去日本旅行",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我想去"
+                },
+                {
+                    "lang": "ja",
+                    "text": "日本旅行"
+                }
+            ]
         },
         {
-            "lang": "zh",
-            "text": "我朋友是日本人、"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "彼はとても優しいです。"
+            "is_punctuation": false,
+            "text": "特に京都に行きたいです",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "特に京都に行きたいです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "昨天見た映画はとても感動的でした。我朋友是日本人彼はとても優しいです。": [
         {
-            "lang": "zh",
-            "text": "我们一起去"
+            "is_punctuation": false,
+            "text": "昨天見た映画はとても感動的でした",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "昨天見た映画はとても感動的でした"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "カラオケ"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "吧、"
+            "is_punctuation": false,
+            "text": "我朋友是日本人彼はとても優しいです",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我朋友是"
+                },
+                {
+                    "lang": "ja",
+                    "text": "日本人彼はとても優しいです"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "楽しそうです。"
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我们一起去カラオケ吧、楽しそうです。": [
         {
-            "lang": "zh",
-            "text": "你今天吃了什么、"
+            "is_punctuation": false,
+            "text": "我们一起去カラオケ吧",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我们一起去"
+                },
+                {
+                    "lang": "ja",
+                    "text": "カラオケ吧"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "朝ごはんは何ですか？"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "楽しそうです",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "楽しそうです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我的家在北京、でも、仕事で東京に住んでいます。": [
         {
-            "lang": "zh",
-            "text": "我的家在北京、"
+            "is_punctuation": false,
+            "text": "我的家在北京",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我的家在北京"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "でも、仕事で東京に住んでいます。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "でも",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "でも"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "仕事で東京に住んでいます",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "仕事で東京に住んでいます"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我在学做日本料理、日本料理を作るのを習っています。": [
         {
-            "lang": "zh",
-            "text": "我在学做日本料理、"
+            "is_punctuation": false,
+            "text": "我在学做日本料理",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我在学"
+                },
+                {
+                    "lang": "ja",
+                    "text": "做日本料理"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "日本料理を作るのを習っています。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "日本料理を作るのを習っています",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "日本料理を作るのを習っています"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "你会说几种语言、何ヶ国語話せますか？": [
         {
-            "lang": "zh",
-            "text": "你会说几种语言、"
+            "is_punctuation": false,
+            "text": "你会说几种语言",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你会说几种语言"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "何ヶ国語話せますか？"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "何ヶ国語話せますか",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "何ヶ国語話せますか"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "我昨天看了一本书、その本はとても面白かったです。": [
         {
-            "lang": "zh",
-            "text": "我昨天看了一本书、"
+            "is_punctuation": false,
+            "text": "我昨天看了一本书",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我昨天看了一本书"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "その本はとても面白かったです。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "その本はとても面白かったです",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "その本はとても面白かったです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "你最近好吗、最近どうですか？": [
         {
-            "lang": "zh",
-            "text": "我们一起去逛街、"
+            "is_punctuation": false,
+            "text": "你最近好吗",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你最近好吗"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "買い物に行きましょう。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "最近どうですか",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "最近どうですか"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "我在学做日本料理와 한국 요리、日本料理を作るのを習っています。": [
         {
-            "lang": "zh",
-            "text": "你最近好吗、"
+            "is_punctuation": false,
+            "text": "我在学做日本料理와 한국 요리",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我在学"
+                },
+                {
+                    "lang": "ko",
+                    "text": "做日本料理와 한국 요리"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "最近どうですか？"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "日本料理を作るのを習っています",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "日本料理を作るのを習っています"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "你会说几种语言、何ヶ国語話せますか？몇 개 언어를 할 수 있어요？": [
         {
-            "lang": "zh",
-            "text": "我在学做日本料理"
+            "is_punctuation": false,
+            "text": "你会说几种语言",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你会说几种语言"
+                }
+            ]
         },
         {
-            "lang": "ko",
-            "text": "와 한국 요리"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "ja",
-            "text": "、日本料理を作るのを習っています。"
+            "is_punctuation": false,
+            "text": "何ヶ国語話せますか",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "何ヶ国語話せますか"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "몇 개 언어를 할 수 있어요",
+            "substrings": [
+                {
+                    "lang": "ko",
+                    "text": "몇 개 언어를 할 수 있어요"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ],
-    [
+    "我昨天看了一本书、その本はとても面白かったです。어제 책을 읽었는데, 정말 재미있었어요。": [
         {
-            "lang": "zh",
-            "text": "你会说几种语言、"
+            "is_punctuation": false,
+            "text": "我昨天看了一本书",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我昨天看了一本书"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "何ヶ国語話せますか？"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "ko",
-            "text": "몇 개 언어를 할 수 있어요？"
+            "is_punctuation": false,
+            "text": "その本はとても面白かったです",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "その本はとても面白かったです"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "어제 책을 읽었는데",
+            "substrings": [
+                {
+                    "lang": "ko",
+                    "text": "어제 책을 읽었는데"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": ", ",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "정말 재미있었어요",
+            "substrings": [
+                {
+                    "lang": "ko",
+                    "text": "정말 재미있었어요"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "我们一起去逛街와 쇼핑、買い物に行きましょう。쇼핑하러 가요。": [
         {
-            "lang": "zh",
-            "text": "我昨天看了一本书、"
+            "is_punctuation": false,
+            "text": "我们一起去逛街와 쇼핑",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "我们一起去逛街"
+                },
+                {
+                    "lang": "ko",
+                    "text": "와 쇼핑"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "その本はとても面白かったです。"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "ko",
-            "text": "어제 책을 읽었는데, 정말 재미있었어요。"
+            "is_punctuation": false,
+            "text": "買い物に行きましょう",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "買い物に行きましょう"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
+        },
+        {
+            "is_punctuation": false,
+            "text": "쇼핑하러 가요",
+            "substrings": [
+                {
+                    "lang": "ko",
+                    "text": "쇼핑하러 가요"
+                }
+            ]
+        },
+        {
+            "is_punctuation": true,
+            "text": "。",
+            "substrings": []
         }
     ],
-    [
+    "你最近好吗、最近どうですか？요즘 어떻게 지내요？": [
         {
-            "lang": "zh",
-            "text": "我们一起去逛街"
+            "is_punctuation": false,
+            "text": "你最近好吗",
+            "substrings": [
+                {
+                    "lang": "zh",
+                    "text": "你最近好吗"
+                }
+            ]
         },
         {
-            "lang": "ko",
-            "text": "와 쇼핑"
+            "is_punctuation": true,
+            "text": "、",
+            "substrings": []
         },
         {
-            "lang": "zh",
-            "text": "、"
+            "is_punctuation": false,
+            "text": "最近どうですか",
+            "substrings": [
+                {
+                    "lang": "ja",
+                    "text": "最近どうですか"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "買い物に行きましょう。"
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         },
         {
-            "lang": "ko",
-            "text": "쇼핑하러 가요。"
-        }
-    ],
-    [
-        {
-            "lang": "zh",
-            "text": "你最近好吗、"
+            "is_punctuation": false,
+            "text": "요즘 어떻게 지내요",
+            "substrings": [
+                {
+                    "lang": "ko",
+                    "text": "요즘 어떻게 지내요"
+                }
+            ]
         },
         {
-            "lang": "ja",
-            "text": "最近どうですか？"
-        },
-        {
-            "lang": "ko",
-            "text": "요즘 어떻게 지내요？"
+            "is_punctuation": true,
+            "text": "？",
+            "substrings": []
         }
     ]
-]
+}

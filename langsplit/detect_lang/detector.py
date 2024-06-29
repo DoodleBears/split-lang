@@ -11,7 +11,7 @@ LANG_MAP = {
     "fr": "fr",
     "en": "en",
 }
-DEFAULT_LANG = "x"
+DEFAULT_LANG = "en"
 
 
 def detect_lang(text: str) -> str:
