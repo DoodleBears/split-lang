@@ -1,6 +1,25 @@
-from langsplit import split
+import json
+import os
+from dataclasses import dataclass
+from typing import Dict, List
 
-texts = [
+from wtpsplit import SaT, WtP
+
+from langsplit import split
+from langsplit.split.splitter import SentenceSplitter
+
+
+@dataclass
+class TestData:
+    filename: str
+    texts: List[str]
+    threshold: float
+    splitter: SaT | WtP
+    lang_map: Dict
+    default_lang: str
+
+
+texts_zh_jp_ko_en = [
     "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。",
     "你好，我的名字是西野くまです。I am from Tokyo, 日本の首都。今天的天气非常好，sky is clear and sunny。おはようございます、皆さん！我们一起来学习吧。Learning languages can be fun and exciting。昨日はとても忙しかったので、今日は少しリラックスしたいです。Let's take a break and enjoy some coffee。中文、日本語、and English are three distinct languages, each with its own unique charm。希望我们能一起进步，一起成长。Let's keep studying and improving our language skills together. ありがとう！",
     "你好，今日はどこへ行きますか？",
@@ -27,7 +46,7 @@ texts = [
     "你最近好吗、最近どうですか？요즘 어떻게 지내요？",
 ]
 
-texts_2 = [
+texts_de_fr_en = [
     "Ich liebe Paris, c'est une belle ville, and the food is amazing!",
     "Berlin ist wunderbar, je veux y retourner, and explore more.",
     "Bonjour, wie geht's dir today?",
@@ -40,27 +59,74 @@ texts_2 = [
     "Ich bin müde, je suis fatigué, and I need some rest.",
 ]
 
-new_lang_map = {
-    "zh": "zh",
-    "zh-cn": "zh",
-    "zh-tw": "x",
-    "ko": "ko",
-    "ja": "ja",
-    "de": "de",
-    "fr": "fr",
-    "en": "en",
-    "x": "en",
-}
+
+def generate_json(data: TestData) -> List[Dict]:
+    """
+    Generate json for accuracy calculation
+    """
+    result: List[Dict] = []
+    for text in data.texts:
+        text_result = []
+        substr_list = split(
+            text=text,
+            threshold=data.threshold,
+            splitter=data.splitter,
+            lang_map=data.lang_map,
+            default_lang=data.default_lang,
+            verbose=True,
+        )
+        for _, substr in enumerate(substr_list):
+            text_result.append({"lang": substr.lang, "text": substr.text})
+        result.append(text_result)
+
+    return result
 
 
-for text in texts:
-    substr_list = split(text=text, verbose=False, lang_map=new_lang_map, threshold=5e-5)
-    for index, substr in enumerate(substr_list):
-        print(f"{substr.lang}|{index}: {substr.text}")
-    print("----------------------")
+def generate_test_data():
+    # Create the tests/data directory if it doesn't exist
+    test_data_folder = "tests/data"
+    os.makedirs(test_data_folder, exist_ok=True)
 
-for text in texts_2:
-    substr_list = split(text=text, verbose=False, lang_map=new_lang_map, threshold=1e-3)
-    for index, substr in enumerate(substr_list):
-        print(f"{substr.lang}|{index}: {substr.text}")
-    print("----------------------")
+    zh_jp_ko_en_lang_map = {
+        "zh": "zh",
+        "zh-cn": "zh",
+        "zh-tw": "x",
+        "ko": "ko",
+        "ja": "ja",
+    }
+
+    test_data: List[TestData] = [
+        TestData(
+            filename="zh_jp_ko_en",
+            texts=texts_zh_jp_ko_en,
+            threshold=5e-5,
+            splitter=SentenceSplitter(),
+            lang_map=zh_jp_ko_en_lang_map,
+            default_lang="en",
+        ),
+        TestData(
+            filename="de_fr_en",
+            texts=texts_de_fr_en,
+            threshold=1e-3,
+            splitter=SentenceSplitter(),
+            lang_map=None,
+            default_lang="x",
+        ),
+    ]
+
+    for data in test_data:
+        result = generate_json(data)
+        with open(
+            f"{test_data_folder}/{data.filename}.json", "w", encoding="utf-8"
+        ) as f:
+            json.dump(result, f, ensure_ascii=False, indent=4)
+
+
+
+def main():
+    # generate_test_data()
+    return
+
+
+if __name__ == "__main__":
+    main()

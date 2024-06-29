@@ -4,7 +4,12 @@ from dataclasses import dataclass
 from langdetect.lang_detect_exception import LangDetectException
 from wtpsplit import SaT, WtP
 
-from langsplit.detect_lang.detector import detect_lang, fast_detect_lang, LANG_MAP
+from langsplit.detect_lang.detector import (
+    detect_lang,
+    fast_detect_lang,
+    LANG_MAP,
+    DEFAULT_LANG,
+)
 
 
 @dataclass
@@ -29,7 +34,8 @@ default_sentence_splitter = SentenceSplitter()
 def split(
     text: str,
     threshold: float = 5e-5,
-    lang_map=None,
+    lang_map: Dict = None,
+    default_lang: str = DEFAULT_LANG,
     verbose=False,
     splitter: SentenceSplitter = default_sentence_splitter,
 ) -> List[SubString]:
@@ -50,21 +56,31 @@ def split(
     substr_list = splitter.split(text=text, threshold=threshold, verbose=verbose)
     if verbose:
         print(f"substr_list: {substr_list}")
-    substr_list = _init_substr_lang(substr=substr_list, lang_map=lang_map)
+    substr_list = _init_substr_lang(
+        substr=substr_list, lang_map=lang_map, default_lang=default_lang
+    )
     if verbose:
-        print(f"substr_list: {substr_list}")
-    substr_list = _smart_concat(substr_list=substr_list, lang_map=lang_map)
+        print(f"substr_list_lang: {substr_list}")
+    substr_list = _smart_concat(
+        substr_list=substr_list, lang_map=lang_map, default_lang=default_lang
+    )
     if verbose:
         print(f"split_result: {substr_list}")
     return substr_list
 
 
-def _smart_concat(substr_list: List[SubString], lang_map=None):
+def _smart_concat(
+    substr_list: List[SubString],
+    lang_map: Dict = None,
+    default_lang: str = DEFAULT_LANG,
+):
     if lang_map is None:
         lang_map = LANG_MAP
     is_concat_complete = False
     while is_concat_complete is False:
-        substr_list = _smart_concat_logic(substr_list, lang_map=lang_map)
+        substr_list = _smart_concat_logic(
+            substr_list, lang_map=lang_map, default_lang=default_lang
+        )
         is_concat_complete = True
         for index, block in enumerate(substr_list):
             if block.lang == "x":
@@ -77,20 +93,23 @@ def _smart_concat(substr_list: List[SubString], lang_map=None):
     return substr_list
 
 
-def _init_substr_lang(substr: List[str], lang_map=None) -> List[SubString]:
+def _init_substr_lang(
+    substr: List[str], lang_map: Dict = None, default_lang: str = DEFAULT_LANG
+) -> List[SubString]:
     concat_result = []
     lang = ""
     if lang_map is None:
         lang_map = LANG_MAP
+
     for block in substr:
         try:
             cur_lang = detect_lang(block)
         except LangDetectException:
             cur_lang = lang
-        cur_lang = lang_map.get(cur_lang, "x")
+        cur_lang = lang_map.get(cur_lang, default_lang)
         if cur_lang == "x":
             cur_lang = fast_detect_lang(block)
-            cur_lang = lang_map.get(cur_lang, "x")
+            cur_lang = lang_map.get(cur_lang, default_lang)
         concat_result.append(SubString(cur_lang, block))
         lang = cur_lang
     return concat_result
@@ -193,15 +212,20 @@ def _merge_blocks(concat_result: List[SubString]):
     return smart_concat_result
 
 
-def _check_languages(lang_text_list: List[SubString], lang_map=None):
+def _check_languages(
+    lang_text_list: List[SubString],
+    lang_map: Dict = None,
+    default_lang: str = DEFAULT_LANG,
+):
     if lang_map is None:
         lang_map = LANG_MAP
+
     for index, block in enumerate(lang_text_list):
         try:
             cur_lang = fast_detect_lang(block.text)
         except LangDetectException:
             cur_lang = "x"
-        cur_lang = lang_map.get(cur_lang, "x")
+        cur_lang = lang_map.get(cur_lang, default_lang)
         if cur_lang == "ko":
             fast_lang = fast_detect_lang(block.text, text_len_threshold=0)
             if fast_lang != "ko":
@@ -214,13 +238,19 @@ def _check_languages(lang_text_list: List[SubString], lang_map=None):
     return lang_text_list
 
 
-def _smart_concat_logic(lang_text_list: List[SubString], lang_map=None):
+def _smart_concat_logic(
+    lang_text_list: List[SubString], lang_map: Dict = None, default_lang: str = None
+):
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _merge_blocks(lang_text_list)
-    lang_text_list = _check_languages(lang_text_list=lang_text_list, lang_map=lang_map)
+    lang_text_list = _check_languages(
+        lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
+    )
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _fill_missing_languages(lang_text_list)
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
     lang_text_list = _merge_blocks(lang_text_list)
-    lang_text_list = _check_languages(lang_text_list=lang_text_list, lang_map=lang_map)
+    lang_text_list = _check_languages(
+        lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
+    )
     return lang_text_list

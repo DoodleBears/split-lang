@@ -1,0 +1,142 @@
+[
+    [
+        {
+            "lang": "de",
+            "text": "Ich liebe "
+        },
+        {
+            "lang": "en",
+            "text": "Paris, "
+        },
+        {
+            "lang": "fr",
+            "text": "c'est une belle ville, "
+        },
+        {
+            "lang": "en",
+            "text": "and the food is amazing!"
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Berlin ist wunderbar, "
+        },
+        {
+            "lang": "fr",
+            "text": "je veux y retourner, "
+        },
+        {
+            "lang": "en",
+            "text": "and explore more."
+        }
+    ],
+    [
+        {
+            "lang": "fr",
+            "text": "Bonjour, "
+        },
+        {
+            "lang": "de",
+            "text": "wie geht's dir today?"
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Die Musik hier ist fantastisch, "
+        },
+        {
+            "lang": "fr",
+            "text": "la musique est superbe, "
+        },
+        {
+            "lang": "en",
+            "text": "and I enjoy it a lot."
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Guten Morgen, "
+        },
+        {
+            "lang": "fr",
+            "text": "je t'aime, "
+        },
+        {
+            "lang": "en",
+            "text": "have a great day!"
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Das Wetter ist heute schön, "
+        },
+        {
+            "lang": "fr",
+            "text": "il fait beau aujourd'hui, "
+        },
+        {
+            "lang": "en",
+            "text": "and it's perfect for a walk."
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Ich mag dieses Buch, "
+        },
+        {
+            "lang": "fr",
+            "text": "ce livre est intéressant, "
+        },
+        {
+            "lang": "en",
+            "text": "and it has a great story."
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Vielen Dank, "
+        },
+        {
+            "lang": "fr",
+            "text": "merci "
+        },
+        {
+            "lang": "en",
+            "text": "beaucoup, for your help."
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Wir reisen nach Deutschland, "
+        },
+        {
+            "lang": "fr",
+            "text": "nous voyageons en Allemagne, "
+        },
+        {
+            "lang": "en",
+            "text": "and we are excited."
+        }
+    ],
+    [
+        {
+            "lang": "de",
+            "text": "Ich bin müde, "
+        },
+        {
+            "lang": "fr",
+            "text": "je suis fatigué, "
+        },
+        {
+            "lang": "en",
+            "text": "and I need some rest."
+        }
+    ]
+]

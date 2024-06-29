@@ -1,0 +1,370 @@
+[
+    [
+        {
+            "lang": "zh",
+            "text": "我是 "
+        },
+        {
+            "lang": "en",
+            "text": "VGroupChatBot"
+        },
+        {
+            "lang": "zh",
+            "text": "，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野"
+        },
+        {
+            "lang": "ja",
+            "text": "くまです"
+        },
+        {
+            "lang": "en",
+            "text": "my name is bob"
+        },
+        {
+            "lang": "zh",
+            "text": "很高兴认识你"
+        },
+        {
+            "lang": "ja",
+            "text": "どうぞよろしくお願いいたします「こんにちは」"
+        },
+        {
+            "lang": "zh",
+            "text": "是什么意思。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你好，我的名字是"
+        },
+        {
+            "lang": "ja",
+            "text": "西野くまです。"
+        },
+        {
+            "lang": "en",
+            "text": "I am from Tokyo, "
+        },
+        {
+            "lang": "ja",
+            "text": "日本の首都"
+        },
+        {
+            "lang": "zh",
+            "text": "。今天的天气非常好，"
+        },
+        {
+            "lang": "en",
+            "text": "sky is clear and sunny。"
+        },
+        {
+            "lang": "ja",
+            "text": "おはようございます、皆さん！"
+        },
+        {
+            "lang": "zh",
+            "text": "我们一起来学习吧。"
+        },
+        {
+            "lang": "en",
+            "text": "Learning languages can be fun and exciting。"
+        },
+        {
+            "lang": "ja",
+            "text": "昨日はとても忙しかったので、今日は少しリラックスしたいです。"
+        },
+        {
+            "lang": "en",
+            "text": "Let's take a break and enjoy some coffee。"
+        },
+        {
+            "lang": "zh",
+            "text": "中文、"
+        },
+        {
+            "lang": "ja",
+            "text": "日本語、"
+        },
+        {
+            "lang": "en",
+            "text": "and English are three distinct languages, each with its own unique charm。"
+        },
+        {
+            "lang": "zh",
+            "text": "希望我们能一起进步，一起成长。"
+        },
+        {
+            "lang": "en",
+            "text": "Let's keep studying and improving our language skills together. "
+        },
+        {
+            "lang": "ja",
+            "text": "ありがとう！"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你好，今"
+        },
+        {
+            "lang": "ja",
+            "text": "日はどこへ行きますか？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我的名字是"
+        },
+        {
+            "lang": "ja",
+            "text": "田中さんです。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我喜欢吃寿司和拉面"
+        },
+        {
+            "lang": "ja",
+            "text": "おいしいです。"
+        }
+    ],
+    [
+        {
+            "lang": "ja",
+            "text": "今天の天気はとてもいいですね。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我在学习"
+        },
+        {
+            "lang": "ja",
+            "text": "日本語少し難しいです。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "日语真是"
+        },
+        {
+            "lang": "ja",
+            "text": "おもしろい啊"
+        },
+        {
+            "lang": "zh",
+            "text": "啊"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你喜欢看"
+        },
+        {
+            "lang": "ja",
+            "text": "アニメ"
+        },
+        {
+            "lang": "zh",
+            "text": "吗？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我想去日本旅行、"
+        },
+        {
+            "lang": "ja",
+            "text": "特に京都に行きたいです。"
+        }
+    ],
+    [
+        {
+            "lang": "ja",
+            "text": "昨天見た映画はとても感動的でした。"
+        },
+        {
+            "lang": "zh",
+            "text": "我朋友是日本人、"
+        },
+        {
+            "lang": "ja",
+            "text": "彼はとても優しいです。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我们一起去"
+        },
+        {
+            "lang": "ja",
+            "text": "カラオケ"
+        },
+        {
+            "lang": "zh",
+            "text": "吧、"
+        },
+        {
+            "lang": "ja",
+            "text": "楽しそうです。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你今天吃了什么、"
+        },
+        {
+            "lang": "ja",
+            "text": "朝ごはんは何ですか？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我的家在北京、"
+        },
+        {
+            "lang": "ja",
+            "text": "でも、仕事で東京に住んでいます。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我在学做日本料理、"
+        },
+        {
+            "lang": "ja",
+            "text": "日本料理を作るのを習っています。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你会说几种语言、"
+        },
+        {
+            "lang": "ja",
+            "text": "何ヶ国語話せますか？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我昨天看了一本书、"
+        },
+        {
+            "lang": "ja",
+            "text": "その本はとても面白かったです。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我们一起去逛街、"
+        },
+        {
+            "lang": "ja",
+            "text": "買い物に行きましょう。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你最近好吗、最近"
+        },
+        {
+            "lang": "ja",
+            "text": "どうですか？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我在学做日本"
+        },
+        {
+            "lang": "ko",
+            "text": "料理와 한국 요리"
+        },
+        {
+            "lang": "ja",
+            "text": "、日本料理を作るのを習っています。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你会说几种语言、"
+        },
+        {
+            "lang": "ja",
+            "text": "何ヶ国語話せますか？"
+        },
+        {
+            "lang": "ko",
+            "text": "몇 개 언어를 할 수 있어요？"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我昨天看了一本书、"
+        },
+        {
+            "lang": "ja",
+            "text": "その本はとても面白かったです。"
+        },
+        {
+            "lang": "ko",
+            "text": "어제 책을 읽었는데, 정말 재미있었어요。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "我们一起去逛街"
+        },
+        {
+            "lang": "ko",
+            "text": "와 쇼핑"
+        },
+        {
+            "lang": "zh",
+            "text": "、"
+        },
+        {
+            "lang": "ja",
+            "text": "買い物に行きましょう。"
+        },
+        {
+            "lang": "ko",
+            "text": "쇼핑하러 가요。"
+        }
+    ],
+    [
+        {
+            "lang": "zh",
+            "text": "你最近好吗、"
+        },
+        {
+            "lang": "ja",
+            "text": "最近どうですか？"
+        },
+        {
+            "lang": "ko",
+            "text": "요즘 어떻게 지내요？"
+        }
+    ]
+]
