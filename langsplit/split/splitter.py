@@ -1,8 +1,6 @@
-import re
 from typing import Dict, List
 
 from langdetect.lang_detect_exception import LangDetectException
-from pydantic import BaseModel
 from wtpsplit import SaT, WtP
 
 from langsplit.detect_lang.detector import (
@@ -11,68 +9,44 @@ from langsplit.detect_lang.detector import (
     detect_lang,
     fast_detect_lang,
 )
-
-# 定义正则表达式来匹配汉字（简体和繁体）
-chinese_char_pattern = re.compile(r"[\u4e00-\u9fff]")
-# 定义正则表达式来匹配韩文
-hangul_pattern = re.compile(r"[\uac00-\ud7af]")
-# 定义正则表达式来匹配日文平假名
-hiragana_pattern = re.compile(r"[\u3040-\u309f]")
-# 定义正则表达式来匹配日文片假名
-katakana_pattern = re.compile(r"[\u30a0-\u30ff]")
+from langsplit.split.utils import contains_zh_ja_ko, PUNCTUATION
+from langsplit.split.model import SubString, SubStringSection
 
 
-def _contains_chinese_char(text: str):
-    return bool(chinese_char_pattern.search(text))
+class TextSplitter:
+    """
+    Base class for splitting text into substrings.
 
+    This class provides a default implementation using a WtP model.
+    Users can override the `split` method to implement their own custom splitter.
 
-def _contains_hangul(text: str):
-    return bool(hangul_pattern.search(text))
+    Attributes:
+        wtp_split_model (WtP | SaT): The model used for splitting text.
+    """
 
-
-def _contains_hiragana(text: str):
-    return bool(hiragana_pattern.search(text))
-
-
-def _contains_katakana(text: str):
-    return bool(katakana_pattern.search(text))
-
-
-def _contains_zh_ja_ko(text):
-    if (
-        _contains_chinese_char(text)
-        or _contains_hangul(text)
-        or _contains_hiragana(text)
-        or _contains_katakana(text)
-    ):
-        return True
-    return False
-
-
-class SubString(BaseModel):
-    lang: str
-    text: str
-
-
-class SubStringSection(BaseModel):
-    is_punctuation: bool = False
-    text: str
-    substrings: List[SubString]
-
-
-class SentenceSplitter:
     def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
         self.wtp_split_model = wtp_split_model
 
     def split(self, text: str, threshold: float = 4.9e-5, verbose=False) -> List[str]:
+        """
+        Split the given text into substrings.
+
+        Args:
+            text (str): The text to be split.
+            threshold (float, optional): The threshold for splitting. Defaults to 4.9e-5.
+            verbose (bool, optional): If True, provides verbose output. Defaults to False.
+
+        Returns:
+            List[str]: A list of substrings.
+
+        Note:
+            Override this method to implement a custom splitter.
+        """
         if text in PUNCTUATION:
             return text
         return self.wtp_split_model.split(
             text_or_texts=text, threshold=threshold, verbose=verbose
         )
-
-
-default_sentence_splitter = SentenceSplitter()
 
 
 def split_to_substring(
@@ -81,8 +55,22 @@ def split_to_substring(
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
     verbose=False,
-    splitter: SentenceSplitter = default_sentence_splitter,
+    splitter: TextSplitter = TextSplitter(),
+    merge_across_punctuation: bool = False,
 ) -> List[SubString]:
+    """_summary_
+
+    Args:
+        text (str): _description_
+        threshold (float, optional): _description_. Defaults to 4.9e-5.
+        lang_map (Dict, optional): _description_. Defaults to None.
+        default_lang (str, optional): default language to fallback. Defaults to `DEFAULT_LANG`.
+        verbose (bool, optional): _description_. Defaults to False.
+        splitter (TextSplitter, optional): _description_. Defaults to default_sentence_splitter.
+
+    Returns:
+        List[SubString]: substring with .lang and .text
+    """
     sections = split(
         text=text,
         threshold=threshold,
@@ -93,9 +81,12 @@ def split_to_substring(
     )
     substrings: List[SubString] = []
     for section in sections:
-        if section.is_punctuation:
-            substrings.append(SubString(lang="punctuation", text=section.text))
         substrings.extend(section.substrings)
+
+    if merge_across_punctuation:
+        substrings = _merge_substrings_across_punctuation(
+            substrings=substrings,
+        )
     return substrings
 
 
@@ -105,7 +96,7 @@ def split(
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
     verbose=False,
-    splitter: SentenceSplitter = default_sentence_splitter,
+    splitter: TextSplitter = TextSplitter(),
 ) -> List[SubStringSection]:
     """using
     1. `wtpsplit` to split sentences into 'small' substring
@@ -115,11 +106,12 @@ def split(
         text (str): text to split
         threshold (float, optional): the lower the more separated (more) substring will return. Defaults to 4.9e-5 (if your text contains no Chinese, Japanese, Korean, 4.9e-4 is suggested)
         lang_map (_type_, optional): mapping different language to same language for better result, if you know the range of your target languages. Defaults to None.
+        default_lang (str, optional): default language to fallback. Defaults to `DEFAULT_LANG`.
         verbose (bool, optional): print the process. Defaults to False.
-        splitter (SentenceSplitter, optional): sentence splitter. Defaults to default_sentence_splitter.
+        splitter (TextSplitter, optional): sentence splitter. Defaults to default_sentence_splitter.
 
     Returns:
-        List[SubString]: substring with .lang and .text
+        List[SubStringSection]: Multiple sections (separate by punctuation), each section contains substring with .lang and .text
     """
     # MARK: pre split by languages (zh, ja, ko)
     pre_split_section = _pre_split(text=text)
@@ -130,21 +122,34 @@ def split(
 
     # MARK: wtpsplit
 
+    section_index = 0
     for section in pre_split_section:
+        section_len = len(section.text)
         if section.is_punctuation:
-            continue
-        substrings = splitter.split(
-            text=section.text, threshold=threshold, verbose=verbose
-        )
-        if verbose:
-            print("---------wtpsplit")
-            print(substrings)
+            section.substrings.append(
+                SubString(
+                    is_punctuation=True,
+                    text=section.text,
+                    lang="punctuation",
+                    index=section_index,
+                    length=section_len,
+                )
+            )
+        else:
+            substrings = splitter.split(
+                text=section.text, threshold=threshold, verbose=verbose
+            )
+            if verbose:
+                print("---------wtpsplit")
+                print(substrings)
 
-        # MARK: initialize language detect
-        substrings_with_lang = _init_substr_lang(
-            texts=substrings, lang_map=lang_map, default_lang=default_lang
-        )
-        section.substrings = substrings_with_lang
+            # MARK: initialize language detect
+            substrings_with_lang = _init_substr_lang(
+                texts=substrings, lang_map=lang_map, default_lang=default_lang
+            )
+            section.substrings = substrings_with_lang
+
+        section_index += section_len
 
     if verbose:
         print("---------_init_substr_lang")
@@ -170,10 +175,6 @@ def split(
     return wtpsplit_section
 
 
-# Adding additional punctuation from other languages
-PUNCTUATION = r""",.;:!?，。！？；：、·([{<（【《〈「『“‘)]}>）】》〉」』”’"""
-
-
 def _pre_split(text: str) -> List[SubStringSection]:
     """
     1. split Chinese, Japanese and Korean substring and other languages
@@ -196,7 +197,9 @@ def _pre_split(text: str) -> List[SubStringSection]:
             is_punctuation = concat_text.strip() in PUNCTUATION
             sections.append(
                 SubStringSection(
-                    text=concat_text, is_punctuation=is_punctuation, substrings=[]
+                    text=concat_text,
+                    is_punctuation=is_punctuation,
+                    substrings=[],
                 )
             )
             # substrings.append("".join(current_text))
@@ -204,7 +207,7 @@ def _pre_split(text: str) -> List[SubStringSection]:
 
     for char in text:
         if char.isspace() is False:
-            if _contains_zh_ja_ko(char):
+            if contains_zh_ja_ko(char):
                 if current_lang != "zh_ja_ko":
                     add_substring()
                     current_lang = "zh_ja_ko"
@@ -252,111 +255,129 @@ def _smart_merge(
 def _init_substr_lang(
     texts: List[str], lang_map: Dict = None, default_lang: str = DEFAULT_LANG
 ) -> List[SubString]:
-    concat_result = []
+    substrings = []
     lang = ""
     if lang_map is None:
         lang_map = LANG_MAP
 
+    substring_index = 0
     for text in texts:
+        length = len(text)
         if text in PUNCTUATION:
-            concat_result.append(
-                SubString(is_punctuation=True, lang="punctuation", text=text)
+            substrings.append(
+                SubString(
+                    is_punctuation=True,
+                    lang="punctuation",
+                    text=text,
+                    length=length,
+                    index=substring_index,
+                )
             )
-            continue
-        try:
-            cur_lang = detect_lang(text)
-        except LangDetectException:
-            cur_lang = lang
-        cur_lang = lang_map.get(cur_lang, default_lang)
-        if cur_lang == "x":
+        else:
             try:
-                cur_lang = fast_detect_lang(text)
-                cur_lang = lang_map.get(cur_lang, default_lang)
-            except Exception:
+                cur_lang = detect_lang(text)
+            except LangDetectException:
                 cur_lang = lang
-        concat_result.append(SubString(lang=cur_lang, text=text))
-        lang = cur_lang
-    return concat_result
+            cur_lang = lang_map.get(cur_lang, default_lang)
+            if cur_lang == "x":
+                try:
+                    cur_lang = fast_detect_lang(text)
+                    cur_lang = lang_map.get(cur_lang, default_lang)
+                except Exception:
+                    cur_lang = lang
+            substrings.append(
+                SubString(
+                    is_punctuation=False,
+                    lang=cur_lang,
+                    text=text,
+                    length=length,
+                    index=substring_index,
+                )
+            )
+            lang = cur_lang
+
+        substring_index += length
+    return substrings
 
 
-def _merge_middle_substr_to_two_side(substr_list: List[SubString]):
-    substr_len = len(substr_list)
+def _merge_middle_substr_to_two_side(substrings: List[SubString]):
+    substr_len = len(substrings)
     if substr_len <= 2:
-        return substr_list
+        return substrings
     for index in range(substr_len - 2):
-        left_block = substr_list[index]
-        middle_block = substr_list[index + 1]
-        right_block = substr_list[index + 2]
+        left_block = substrings[index]
+        middle_block = substrings[index + 1]
+        right_block = substrings[index + 2]
 
         if left_block.lang == right_block.lang and left_block.lang != "x":
             if len(middle_block.text) <= 1 or middle_block.lang == "x":
-                substr_list[index + 1].lang = left_block.lang
-    return substr_list
+                substrings[index + 1].lang = left_block.lang
+    return substrings
 
 
-def _merge_two_side_substr_to_near(concat_result: List[SubString]):
-    if concat_result[0].lang == "x":
-        for substr in concat_result:
+def _merge_two_side_substr_to_near(substrings: List[SubString]):
+    if substrings[0].lang == "x":
+        for substr in substrings:
             if substr.lang != "x":
-                concat_result[0].lang = substr.lang
+                substrings[0].lang = substr.lang
                 break
-    elif len(concat_result[0].text) <= 1:
-        concat_result[0].lang = _find_nearest_lang_with_direction(
-            concat_result, 0, is_left=False
+    elif len(substrings[0].text) <= 1:
+        substrings[0].lang = _find_nearest_lang_with_direction(
+            substrings, 0, is_left=False
         )
-    if concat_result[-1].lang == "x":
-        concat_result[-1].lang = _find_nearest_lang_with_direction(
-            concat_result, len(concat_result) - 1, is_left=True
+    if substrings[-1].lang == "x":
+        substrings[-1].lang = _find_nearest_lang_with_direction(
+            substrings, len(substrings) - 1, is_left=True
         )
-    return concat_result
+    return substrings
 
 
-def _fill_missing_languages(concat_result: List[SubString]):
-    for index, substr in enumerate(concat_result):
+def _fill_missing_languages(substrings: List[SubString]):
+    for index, substr in enumerate(substrings):
         if substr.lang == "x":
             if index == 0:
                 # For head substring, find right substring
-                concat_result[index].lang = _find_nearest_lang_with_direction(
-                    concat_result, index, is_left=False
+                substrings[index].lang = _find_nearest_lang_with_direction(
+                    substrings, index, is_left=False
                 )
-            elif index == len(concat_result) - 1:
+            elif index == len(substrings) - 1:
                 # For tail substring, find left substring
-                concat_result[index].lang = _find_nearest_lang_with_direction(
-                    concat_result, index, is_left=True
+                substrings[index].lang = _find_nearest_lang_with_direction(
+                    substrings, index, is_left=True
                 )
             else:
                 # For body (middle) substring, find based on rule
-                is_left = _get_find_direction(concat_result, index)
-                concat_result[index].lang = _find_nearest_lang_with_direction(
-                    concat_result, index, is_left
+                is_left = _get_find_direction(substrings, index)
+                substrings[index].lang = _find_nearest_lang_with_direction(
+                    substrings, index, is_left
                 )
-    return concat_result
+    return substrings
 
 
 def _find_nearest_lang_with_direction(
-    concat_result: List[SubString], index: int, is_left: bool
+    substrings: List[SubString], index: int, is_left: bool
 ):
     if is_left:
-        for i in range(1, len(concat_result)):
-            if index - i >= 0 and concat_result[index - i].lang != "x":
-                return concat_result[index - i].lang
+        for i in range(1, len(substrings)):
+            if index - i >= 0 and substrings[index - i].lang != "x":
+                return substrings[index - i].lang
     else:
-        for i in range(1, len(concat_result)):
-            if index + i < len(concat_result) and concat_result[index + i].lang != "x":
-                return concat_result[index + i].lang
+        for i in range(1, len(substrings)):
+            if index + i < len(substrings) and substrings[index + i].lang != "x":
+                return substrings[index + i].lang
     return "x"
 
 
-def _get_find_direction(substr_list: List[SubString], index: int) -> bool:
+def _get_find_direction(substrings: List[SubString], index: int) -> bool:
     is_left = False
     if index == 0:
         is_left = False
         return is_left
-    elif index == len(substr_list) - 1:
+    elif index == len(substrings) - 1:
         is_left = True
         return is_left
-    left_block = substr_list[index - 1]
-    right_block = substr_list[index + 1]
+    left_block = substrings[index - 1]
+    right_block = substrings[index + 1]
     if len(left_block.text) < len(right_block.text) or right_block.lang not in [
         "ja",
         "zh",
@@ -367,17 +388,38 @@ def _get_find_direction(substr_list: List[SubString], index: int) -> bool:
     return is_left
 
 
-def _merge_blocks(concat_result: List[SubString]):
+def _merge_substrings(substrings: List[SubString]):
     smart_concat_result: List[SubString] = []
     lang = ""
-    for block in concat_result:
+    for block in substrings:
         cur_lang = block.lang
         if cur_lang != lang:
             smart_concat_result.append(block)
         else:
             smart_concat_result[-1].text += block.text
+            smart_concat_result[-1].length += block.length
         lang = cur_lang
     return smart_concat_result
+
+
+def _merge_substrings_across_punctuation(substrings: List[SubString]):
+    new_substrings: List[SubString] = []
+    lang = ""
+    for substring in substrings:
+        if substring.is_punctuation:
+            if new_substrings and new_substrings[-1].lang == lang:
+                new_substrings[-1].text += substring.text
+                new_substrings[-1].length += substring.length
+            else:
+                new_substrings.append(substring)
+        else:
+            if substring.lang != lang:
+                new_substrings.append(substring)
+            else:
+                new_substrings[-1].text += substring.text
+                new_substrings[-1].length += substring.length
+        lang = substring.lang if substring.lang != "punctuation" else lang
+    return new_substrings
 
 
 def _check_languages(
@@ -412,7 +454,7 @@ def _smart_concat_logic(
     # print("# _merge_middle_substr_to_two_side")
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     # print("# _merge_blocks")
-    lang_text_list = _merge_blocks(lang_text_list)
+    lang_text_list = _merge_substrings(lang_text_list)
     # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
@@ -424,7 +466,7 @@ def _smart_concat_logic(
     # print("# _merge_two_side_substr_to_near")
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
     # print("# _merge_blocks")
-    lang_text_list = _merge_blocks(lang_text_list)
+    lang_text_list = _merge_substrings(lang_text_list)
     # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang

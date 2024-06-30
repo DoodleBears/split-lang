@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from langsplit.split.splitter import SentenceSplitter
+from langsplit.split.splitter import TextSplitter
 from langsplit.detect_lang.detector import DEFAULT_LANG
 
 
@@ -8,7 +8,7 @@ class TestData(BaseModel):
     filename: str
     texts: List[str]
     threshold: float
-    splitter: SentenceSplitter
+    splitter: TextSplitter
     lang_map: Optional[Dict]
     default_lang: str = DEFAULT_LANG
 

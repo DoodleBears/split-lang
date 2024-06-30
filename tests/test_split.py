@@ -1,4 +1,4 @@
-from langsplit import split, split_to_substring
+from langsplit import split
 from tests.data.generate_test_json import texts_de_fr_en, texts_zh_jp_ko_en
 
 
@@ -25,7 +25,7 @@ def test_split():
             if section.is_punctuation:
                 print(f"\t|——punctuation:{section.text}")
                 continue
-            for inner_index, substr in enumerate(section.substrings):
+            for _, substr in enumerate(section.substrings):
                 print(f"\t|——{substr.lang}:{substr.text}")
         print("----------------------")
 
@@ -42,40 +42,13 @@ def test_split():
             if section.is_punctuation:
                 print(f"\t|——punctuation:{section.text}")
                 continue
-            for inner_index, substr in enumerate(section.substrings):
+            for _, substr in enumerate(section.substrings):
                 print(f"\t|——{substr.lang}:{substr.text}")
-        print("----------------------")
-
-
-def test_split_to_substring():
-    for text in texts_zh_jp_ko_en:
-        substr = split_to_substring(
-            text=text,
-            verbose=False,
-            lang_map=new_lang_map,
-            threshold=4.9e-5,
-            default_lang="en",
-        )
-        for index, item in enumerate(substr):
-            print(f"{index}|{item.lang}:{item.text}")
-        print("----------------------")
-
-    for text in texts_de_fr_en:
-        substr = split_to_substring(
-            text=text,
-            verbose=False,
-            # lang_map=new_lang_map,
-            threshold=4.9e-4,
-            default_lang="en",
-        )
-        for index, item in enumerate(substr):
-            print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
 
 
 def main():
     test_split()
-    # test_split_to_substring()
     pass
 
 

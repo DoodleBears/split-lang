@@ -25,6 +25,7 @@ setup(
         "langdetect",
         "fast_langdetect",
         "wtpsplit",
+        "pydantic",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

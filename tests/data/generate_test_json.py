@@ -3,7 +3,7 @@ import os
 from typing import Dict, List
 
 from langsplit import split
-from langsplit.split.splitter import SentenceSplitter, SubStringSection
+from langsplit.split.splitter import TextSplitter, SubStringSection
 
 from tests.data.test_data import TestData, texts_zh_jp_ko_en, texts_de_fr_en
 from tests.test_config import TEST_DATA_FOLDER
@@ -48,7 +48,7 @@ def generate_test_data(data: TestData):
 
 
 def main():
-    splitter = SentenceSplitter()
+    splitter = TextSplitter()
     zh_jp_ko_en_lang_map = {
         "zh": "zh",
         "zh-cn": "zh",
