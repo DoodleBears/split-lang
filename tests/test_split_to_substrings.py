@@ -31,7 +31,7 @@ def test_split_to_substring():
             text=text,
             verbose=False,
             # lang_map=new_lang_map,
-            threshold=4.9e-4,
+            threshold=DEFAULT_THRESHOLD,
             default_lang="en",
         )
         for index, item in enumerate(substr):
