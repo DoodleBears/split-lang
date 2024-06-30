@@ -2,9 +2,9 @@ import json
 import os
 from typing import Dict, List
 
-from langsplit import split
-from langsplit.split.splitter import SubStringSection, TextSplitter
-from langsplit.split.utils import DEFAULT_THRESHOLD
+from split_lang import split
+from split_lang.split.splitter import SubStringSection, TextSplitter
+from split_lang.split.utils import DEFAULT_THRESHOLD
 from tests.data.test_data import TestData, texts_de_fr_en, texts_zh_jp_ko_en
 from tests.test_config import TEST_DATA_FOLDER
 

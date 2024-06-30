@@ -66,7 +66,7 @@ pip install split-lang
 ### 3.2.1. `split_by_lang`
 
 ```python
-from langsplit import split_by_lang
+from split_lang import split_by_lang
 
 texts = [
     "你喜欢看アニメ吗？",

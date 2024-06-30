@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from langsplit.split.splitter import TextSplitter
-from langsplit.detect_lang.detector import DEFAULT_LANG
+from split_lang.split.splitter import TextSplitter
+from split_lang.detect_lang.detector import DEFAULT_LANG
 
 
 class TestData(BaseModel):

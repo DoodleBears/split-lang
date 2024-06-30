@@ -1,6 +1,6 @@
-from langsplit import split_by_lang
+from split_lang import split_by_lang
 from tests.data.generate_test_json import texts_de_fr_en, texts_zh_jp_ko_en
-from langsplit.split.utils import DEFAULT_THRESHOLD
+from split_lang.split.utils import DEFAULT_THRESHOLD
 
 
 new_lang_map = {

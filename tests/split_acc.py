@@ -1,8 +1,8 @@
 from typing import List
 
-from langsplit import split_by_lang
-from langsplit.split.splitter import SubString, TextSplitter, _get_languages
-from langsplit.split.utils import PUNCTUATION, DEFAULT_THRESHOLD
+from split_lang import split_by_lang
+from split_lang.split.splitter import SubString, TextSplitter, _get_languages
+from split_lang.split.utils import PUNCTUATION, DEFAULT_THRESHOLD
 from tests.test_config import TEST_DATA_FOLDER
 
 new_lang_map = {
