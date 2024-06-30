@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List
 
 from langdetect.lang_detect_exception import LangDetectException
@@ -11,6 +12,12 @@ from langsplit.detect_lang.detector import (
 )
 from langsplit.split.utils import contains_zh_ja_ko, PUNCTUATION
 from langsplit.split.model import SubString, SubStringSection
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format=f"%(asctime)s  %(levelname)s [%(name)s]: %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 class TextSplitter:
@@ -116,9 +123,9 @@ def split(
     # MARK: pre split by languages (zh, ja, ko)
     pre_split_section = _pre_split(text=text)
     if verbose:
-        print("---------pre_split_section:")
+        logger.info("---------pre_split_section:")
         for section in pre_split_section:
-            print(section)
+            logger.info(section)
 
     # MARK: wtpsplit
 
@@ -140,8 +147,8 @@ def split(
                 text=section.text, threshold=threshold, verbose=verbose
             )
             if verbose:
-                print("---------wtpsplit")
-                print(substrings)
+                logger.info("---------wtpsplit")
+                logger.info(substrings)
 
             # MARK: initialize language detect
             substrings_with_lang = _init_substr_lang(
@@ -152,9 +159,9 @@ def split(
         section_index += section_len
 
     if verbose:
-        print("---------_init_substr_lang")
+        logger.info("---------_init_substr_lang")
         for section in pre_split_section:
-            print(section)
+            logger.info(section)
 
     # MARK: smart merge substring together
     wtpsplit_section = pre_split_section
@@ -169,9 +176,9 @@ def split(
         section.substrings.clear()
         section.substrings = smart_concat_result
     if verbose:
-        print("---------smart_concat_result")
+        logger.info("---------smart_concat_result")
         for section in wtpsplit_section:
-            print(section)
+            logger.info(section)
     return wtpsplit_section
 
 
@@ -451,23 +458,16 @@ def _check_languages(
 def _smart_concat_logic(
     lang_text_list: List[SubString], lang_map: Dict = None, default_lang: str = None
 ):
-    # print("# _merge_middle_substr_to_two_side")
+
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
-    # print("# _merge_blocks")
     lang_text_list = _merge_substrings(lang_text_list)
-    # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )
-    # print("# _merge_middle_substr_to_two_side")
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
-    # print("# _fill_missing_languages")
     lang_text_list = _fill_missing_languages(lang_text_list)
-    # print("# _merge_two_side_substr_to_near")
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
-    # print("# _merge_blocks")
     lang_text_list = _merge_substrings(lang_text_list)
-    # print("# _check_languages")
     lang_text_list = _check_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )
