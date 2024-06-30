@@ -20,6 +20,7 @@ def test_split_to_substring():
             lang_map=new_lang_map,
             threshold=DEFAULT_THRESHOLD,
             default_lang="en",
+            merge_across_punctuation=True,
         )
         for index, item in enumerate(substr):
             print(item)

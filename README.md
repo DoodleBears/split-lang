@@ -95,6 +95,67 @@ for text in texts:
 3|punctuation:？
 ```
 
+```python
+from split_lang import split_by_lang
+
+texts = [
+    "Please star this project on GitHub, Thanks you. I love you请加星这个项目，谢谢你。我爱你この項目をスターしてください、ありがとうございます！愛してる",
+]
+
+for text in texts:
+    substr = split_by_lang(
+        text=text,
+        threshold=4.9e-5,
+        default_lang="en",
+        merge_across_punctuation=True,
+    )
+    for index, item in enumerate(substr):
+        print(f"{index}|{item.lang}:{item.text}")
+```
+
+
+```
+0|en:Please star this project on GitHub, Thanks you. I love you
+1|zh:请加星这个项目，谢谢你。我爱你
+2|ja:この項目をスターしてください、ありがとうございます！愛してる
+----------------------
+```
+
+```python
+from split_lang import split_by_lang
+
+texts = [
+    "Please star this project on GitHub, Thanks you. I love you请加星这个项目，谢谢你。我爱你この項目をスターしてください、ありがとうございます！愛してる",
+]
+
+for text in texts:
+    substr = split_by_lang(
+        text=text,
+        threshold=4.9e-5,
+        default_lang="en",
+        merge_across_punctuation=False,
+    )
+    for index, item in enumerate(substr):
+        print(f"{index}|{item.lang}:{item.text}")
+```
+
+```
+0|en:Please star this project on GitHub
+1|punctuation:, 
+2|en:Thanks you
+3|punctuation:. 
+4|en:I love you
+5|zh:请加星这个项目
+6|punctuation:，
+7|zh:谢谢你
+8|punctuation:。
+9|zh:我爱你
+10|ja:この項目をスターしてください
+11|punctuation:、
+12|ja:ありがとうございます
+13|punctuation:！
+14|ja:愛してる
+```
 ## 3.3. Advanced
 
 ### 3.3.1. `threshold`
