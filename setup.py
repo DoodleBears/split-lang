@@ -20,6 +20,7 @@ setup(
     url="https://github.com/DoodleBears/langsplit",
     author="DoodleBear",
     author_email="yangmufeng233@gmail.com",
+    license="MIT",
     packages=find_packages(),
     install_requires=[
         "langdetect",
