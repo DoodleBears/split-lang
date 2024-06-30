@@ -1,4 +1,4 @@
-from langdetect import detect
+import langdetect
 import fast_langdetect
 
 LANG_MAP = {
@@ -15,7 +15,7 @@ DEFAULT_LANG = "en"
 
 
 def detect_lang(text: str) -> str:
-    result = str(detect(text))
+    result = str(langdetect.detect(text))
     result = result.lower()
     return result
 

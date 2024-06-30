@@ -4,14 +4,9 @@ from typing import Dict, List
 from langdetect.lang_detect_exception import LangDetectException
 from wtpsplit import SaT, WtP
 
-from langsplit.detect_lang.detector import (
-    DEFAULT_LANG,
-    LANG_MAP,
-    detect_lang,
-    fast_detect_lang,
-)
-from langsplit.split.utils import contains_zh_ja_ko, PUNCTUATION, DEFAULT_THRESHOLD
-from langsplit.split.model import SubString, SubStringSection
+from ..detect_lang.detector import DEFAULT_LANG, LANG_MAP, detect_lang, fast_detect_lang
+from .model import SubString, SubStringSection
+from .utils import DEFAULT_THRESHOLD, PUNCTUATION, contains_zh_ja_ko
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -34,7 +29,9 @@ class TextSplitter:
     def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
         self.wtp_split_model = wtp_split_model
 
-    def split(self, text: str, threshold: float = DEFAULT_THRESHOLD, verbose=False) -> List[str]:
+    def split(
+        self, text: str, threshold: float = DEFAULT_THRESHOLD, verbose=False
+    ) -> List[str]:
         """
         Split the given text into substrings.
 
