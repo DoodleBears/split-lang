@@ -10,7 +10,7 @@ from langsplit.detect_lang.detector import (
     detect_lang,
     fast_detect_lang,
 )
-from langsplit.split.utils import contains_zh_ja_ko, PUNCTUATION
+from langsplit.split.utils import contains_zh_ja_ko, PUNCTUATION, DEFAULT_THRESHOLD
 from langsplit.split.model import SubString, SubStringSection
 
 logging.basicConfig(
@@ -34,13 +34,13 @@ class TextSplitter:
     def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
         self.wtp_split_model = wtp_split_model
 
-    def split(self, text: str, threshold: float = 4.9e-5, verbose=False) -> List[str]:
+    def split(self, text: str, threshold: float = DEFAULT_THRESHOLD, verbose=False) -> List[str]:
         """
         Split the given text into substrings.
 
         Args:
             text (str): The text to be split.
-            threshold (float, optional): The threshold for splitting. Defaults to 4.9e-5.
+            threshold (float, optional): The threshold for splitting. Defaults to `DEFAULT_THRESHOLD`.
             verbose (bool, optional): If True, provides verbose output. Defaults to False.
 
         Returns:
@@ -56,9 +56,9 @@ class TextSplitter:
         )
 
 
-def split_to_substring(
+def split_by_lang(
     text: str,
-    threshold: float = 4.9e-5,
+    threshold: float = DEFAULT_THRESHOLD,
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
     verbose=False,
@@ -69,7 +69,7 @@ def split_to_substring(
 
     Args:
         text (str): _description_
-        threshold (float, optional): _description_. Defaults to 4.9e-5.
+        threshold (float, optional): _description_. Defaults to DEFAULT_THRESHOLD.
         lang_map (Dict, optional): _description_. Defaults to None.
         default_lang (str, optional): default language to fallback. Defaults to `DEFAULT_LANG`.
         verbose (bool, optional): _description_. Defaults to False.
@@ -99,7 +99,7 @@ def split_to_substring(
 
 def split(
     text: str,
-    threshold: float = 4.9e-5,
+    threshold: float = DEFAULT_THRESHOLD,
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
     verbose=False,
@@ -111,7 +111,7 @@ def split(
 
     Args:
         text (str): text to split
-        threshold (float, optional): the lower the more separated (more) substring will return. Defaults to 4.9e-5 (if your text contains no Chinese, Japanese, Korean, 4.9e-4 is suggested)
+        threshold (float, optional): the lower the more separated (more) substring will return. Defaults to DEFAULT_THRESHOLD (if your text contains no Chinese, Japanese, Korean, 4.9e-4 is suggested)
         lang_map (_type_, optional): mapping different language to same language for better result, if you know the range of your target languages. Defaults to None.
         default_lang (str, optional): default language to fallback. Defaults to `DEFAULT_LANG`.
         verbose (bool, optional): print the process. Defaults to False.
@@ -154,6 +154,8 @@ def split(
             substrings_with_lang = _init_substr_lang(
                 texts=substrings, lang_map=lang_map, default_lang=default_lang
             )
+            for substr in substrings_with_lang:
+                substr.index += section_index
             section.substrings = substrings_with_lang
 
         section_index += section_len
@@ -429,7 +431,7 @@ def _merge_substrings_across_punctuation(substrings: List[SubString]):
     return new_substrings
 
 
-def _check_languages(
+def _get_languages(
     lang_text_list: List[SubString],
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
@@ -438,12 +440,16 @@ def _check_languages(
         lang_map = LANG_MAP
 
     for index, substr in enumerate(lang_text_list):
+        if substr.is_punctuation:
+            continue
         try:
             cur_lang = fast_detect_lang(substr.text)
         except LangDetectException:
             cur_lang = default_lang
         cur_lang = lang_map.get(cur_lang, default_lang)
-        if cur_lang == "ko":
+        if (
+            cur_lang == "ko"
+        ):  # `langdetect` has problem distinguish ko among zh, ja and ko
             fast_lang = fast_detect_lang(substr.text, text_len_threshold=0)
             if fast_lang != cur_lang:
                 is_left = _get_find_direction(lang_text_list, index)
@@ -461,14 +467,14 @@ def _smart_concat_logic(
 
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _merge_substrings(lang_text_list)
-    lang_text_list = _check_languages(
+    lang_text_list = _get_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _fill_missing_languages(lang_text_list)
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
     lang_text_list = _merge_substrings(lang_text_list)
-    lang_text_list = _check_languages(
+    lang_text_list = _get_languages(
         lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
     )
 

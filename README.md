@@ -40,16 +40,16 @@ Vielen Dank, merci beaucoup, for your help.
   - [3.1. Installation](#31-installation)
   - [3.2. Sample Code](#32-sample-code)
     - [3.2.1. Basic](#321-basic)
-      - [3.2.1.1. `split_to_substring`](#3211-split_to_substring)
+      - [3.2.1.1. `split_by_lang`](#3211-split_by_lang)
     - [3.2.2. Advanced](#322-advanced)
-      - [3.2.2.1. `split`](#3221-split)
+      - [3.2.2.1. usage of `lang_map` (for better result)](#3221-usage-of-lang_map-for-better-result)
+      - [3.2.2.2. `split`](#3222-split)
     - [3.2.3. Chinese, Japanese, Korean, English (Simple Usage)](#323-chinese-japanese-korean-english-simple-usage)
       - [3.2.3.1. Code](#3231-code)
       - [3.2.3.2. Output](#3232-output)
     - [3.2.4. French, German, English (Advanced Usage)](#324-french-german-english-advanced-usage)
       - [3.2.4.1. Code](#3241-code)
       - [3.2.4.2. Output](#3242-output)
-  - [3.3. usage of `lang_map` (for better result)](#33-usage-of-lang_map-for-better-result)
 
 
 # 3. Usage
@@ -65,17 +65,17 @@ pip install split-lang
 ## 3.2. Sample Code
 
 ### 3.2.1. Basic
-#### 3.2.1.1. `split_to_substring`
+#### 3.2.1.1. `split_by_lang`
 
 ```python
-from langsplit import split_to_substring
+from langsplit import split_by_lang
 
 texts = [
     "你喜欢看アニメ吗？",
 ]
 
 for text in texts:
-    substr = split_to_substring(
+    substr = split_by_lang(
         text=text,
         verbose=False,
         lang_map=new_lang_map,
@@ -95,7 +95,32 @@ for text in texts:
 ```
 
 ### 3.2.2. Advanced
-#### 3.2.2.1. `split`
+
+#### 3.2.2.1. usage of `lang_map` (for better result)
+
+> [!IMPORTANT]
+> Add lang code for your usecase if other languages are needed
+
+- default `lang_map` looks like below
+  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `'x'`
+  - every 'x' would be merge to the near substring
+- default `default_lang` is `'en'`
+
+```python
+LANG_MAP = {
+    "zh": "zh",
+    "zh-cn": "zh",
+    "zh-tw": "x",
+    "ko": "ko",
+    "ja": "ja",
+    "de": "de",
+    "fr": "fr",
+    "en": "en",
+}
+DEFAULT_LANG = "en"
+```
+
+#### 3.2.2.2. `split`
 
 ```python
 from langsplit import split
@@ -557,22 +582,4 @@ for text in texts:
 ```
 </details>
 
-## 3.3. usage of `lang_map` (for better result)
-- default `lang_map` looks like below
-  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `'x'`
-  - every 'x' would be merge to the near substring
-- default `default_lang` is `'en'`
 
-```python
-LANG_MAP = {
-    "zh": "zh",
-    "zh-cn": "zh",
-    "zh-tw": "x",
-    "ko": "ko",
-    "ja": "ja",
-    "de": "de",
-    "fr": "fr",
-    "en": "en",
-}
-DEFAULT_LANG = "en"
-```

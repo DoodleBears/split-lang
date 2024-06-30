@@ -3,9 +3,9 @@ import os
 from typing import Dict, List
 
 from langsplit import split
-from langsplit.split.splitter import TextSplitter, SubStringSection
-
-from tests.data.test_data import TestData, texts_zh_jp_ko_en, texts_de_fr_en
+from langsplit.split.splitter import SubStringSection, TextSplitter
+from langsplit.split.utils import DEFAULT_THRESHOLD
+from tests.data.test_data import TestData, texts_de_fr_en, texts_zh_jp_ko_en
 from tests.test_config import TEST_DATA_FOLDER
 
 
@@ -60,7 +60,7 @@ def main():
     data = TestData(
         filename="zh_jp_ko_en",
         texts=texts_zh_jp_ko_en,
-        threshold=4.9e-5,
+        threshold=DEFAULT_THRESHOLD,
         splitter=splitter,
         lang_map=zh_jp_ko_en_lang_map,
         default_lang="en",
