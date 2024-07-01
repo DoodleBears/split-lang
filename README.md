@@ -1,21 +1,37 @@
-# 1. `split-lang`
+<div align="center">
+
+<img alt="VisActor Logo" src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
+  
+</div>
+<div align="center">
+  <h1>split-lang</h1>
+
+Splitting sentences by concatenating over-split substrings based on their language
+powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and language detection ([`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)) 
+
+</div>
+
+<br/>
+
+<div align="center">
 
 [![PyPI version](https://badge.fury.io/py/split-lang.svg)](https://badge.fury.io/py/split-lang)
 [![Downloads](https://static.pepy.tech/badge/split-lang)](https://pepy.tech/project/split-lang)
 [![Downloads](https://static.pepy.tech/badge/split-lang/month)](https://pepy.tech/project/split-lang)
 
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DoodleBears/split-lang/blob/main/split-lang-demo.ipynb)
 
 
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
-
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/DoodleBears/split-lang/blob/main/LICENSE)
 [![wakatime](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad.svg)](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad)
 
-Splitting sentences by concatenating over-split substrings based on their language
+</div>
 
-powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)
 
-## 1.1. Idea
+
+
+# 1.1. Idea
 
 **Stage 1**: rule-based split using punctuation
 - `hello, how are you` -> `hello` | `,` | `how are you`
@@ -41,8 +57,7 @@ powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`fast
 Vielen Dank merci beaucoup for your help.
 ```
 
-- [1. `split-lang`](#1-split-lang)
-  - [1.1. Idea](#11-idea)
+- [1.1. Idea](#11-idea)
 - [2. Motivation](#2-motivation)
 - [3. Usage](#3-usage)
   - [3.1. Installation](#31-installation)
@@ -51,6 +66,7 @@ Vielen Dank merci beaucoup for your help.
   - [3.3. Advanced](#33-advanced)
     - [3.3.1. `threshold`](#331-threshold)
     - [3.3.2. usage of `lang_map` (for better result)](#332-usage-of-lang_map-for-better-result)
+- [Acknowledgement](#acknowledgement)
 
 
 # 3. Usage
@@ -189,3 +205,9 @@ LANG_MAP = {
 }
 DEFAULT_LANG = "en"
 ```
+
+# Acknowledgement
+
+- Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
+- Text segmentation depends on [segment-any-text/wtpsplit](https://github.com/segment-any-text/wtpsplit)
+- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [Mimino666/langdetect](https://github.com/Mimino666/langdetect) (fix miss detecting Chinese as Korean in [DoodleBears/langdetect](https://github.com/DoodleBears/langdetect))
