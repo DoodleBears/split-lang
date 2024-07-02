@@ -1,8 +1,8 @@
 <div align="center">
 
-<img alt="VisActor Logo" src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-logo.svg"/>
+<img alt="VisActor Logo" width=50% src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-logo.svg"/>
 
-<img alt="VisActor Logo" src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
+<img alt="VisActor Logo" width=50% src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
   
 </div>
 <div align="center">
