@@ -4,6 +4,9 @@ from split_lang import split_by_lang
 from split_lang.split.splitter import SubString, TextSplitter, _get_languages
 from split_lang.split.utils import PUNCTUATION, DEFAULT_THRESHOLD
 from tests.test_config import TEST_DATA_FOLDER
+from wtpsplit import SaT, WtP
+
+import time
 
 new_lang_map = {
     "zh": "zh",
@@ -53,7 +56,12 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
     return corrected_split_result
 
 
-splitter = TextSplitter()
+# splitter = TextSplitter()
+sat = SaT("sat-1l-sm")
+sat.half().to("cuda")
+wtp = WtP("wtp-bert-tiny")
+# wtp.half().to("cuda")
+splitter = TextSplitter(wtp_split_model=wtp)
 
 
 def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
@@ -75,6 +83,7 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
 
     original_strings = []
     test_split: List[List[SubString]] = []
+    time_1 = time.time()
     # MARK: collect original_strings from .txt and test `split()`
     for correct_substrings in correct_split:
         current_correct_num = 0
@@ -85,6 +94,7 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
         original_string = "".join(substrings_text)
         original_strings.append(original_string)
         # print(original_string)
+
         test_split_substrings = split_by_lang(
             text=original_string,
             lang_map=zh_jp_ko_en_lang_map,
@@ -118,6 +128,7 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
             )
             print("--------------------------")
 
+    time_2 = time.time()
     precision = correct_split_num / correct_total_substring_len
     recall = correct_split_num / test_total_substring_len
     f1_score = 2 * precision * recall / (precision + recall)
@@ -128,6 +139,7 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
         print(f"precision: {precision}")
         print(f"recall: {recall}")
         print(f"F1 Score: {f1_score}")
+        print(f"time: {time_2-time_1}")
     return f1_score
 
 
@@ -151,7 +163,8 @@ def find_best_threshold():
 
 
 def main():
-    find_best_threshold()
+    # find_best_threshold()
+    simple_test(verbose=True)
 
 
 if __name__ == "__main__":

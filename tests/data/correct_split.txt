@@ -23,7 +23,7 @@
 我们一起去逛街|와 쇼핑|、|買い物に行きましょう|。|쇼핑하러 가요|。
 你最近好吗|、|最近どうですか|？|요즘 어떻게 지내요|？
 Bonjour|, |wie geht's dir |today|?
-Vielen Dank |merci beaucoup |for your help.
-Ich bin müde |je suis fatigué |and I need some rest.
-Ich mag dieses Buch |ce livre est intéressant |and it has a great story.
-Ich mag dieses Buch|, |ce livre est intéressant|, |and it has a great story.
+Vielen Dank |merci beaucoup |for your help|.
+Ich bin müde |je suis fatigué |and I need some rest|.
+Ich mag dieses Buch |ce livre est intéressant |and it has a great story|.
+Ich mag dieses Buch|, |ce livre est intéressant|, |and it has a great story|.

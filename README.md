@@ -1,5 +1,7 @@
 <div align="center">
 
+<img alt="VisActor Logo" src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-logo.svg"/>
+
 <img alt="VisActor Logo" src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
   
 </div>
@@ -23,7 +25,8 @@ powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and langua
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DoodleBears/split-lang/blob/main/split-lang-demo.ipynb)
 
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/DoodleBears/split-lang/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/DoodleBears/split-lang/blob/main/LICENSE)
+![GitHub Repo stars](https://img.shields.io/github/stars/DoodleBears/split-lang)
 [![wakatime](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad.svg)](https://wakatime.com/badge/user/5728d95a-5cfb-4acb-b600-e34c2fc231b6/project/e06e0a00-9ba1-453d-8c62-a0b2604aaaad)
 
 </div>
@@ -31,7 +34,7 @@ powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and langua
 
 
 
-# 1.1. Idea
+# 1. Idea
 
 **Stage 1**: rule-based split using punctuation
 - `hello, how are you` -> `hello` | `,` | `how are you`
@@ -48,25 +51,20 @@ powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and langua
 
 ```
 你喜欢看アニメ吗？
-```
-
-```
+Vielen Dank merci beaucoup for your help.
 你最近好吗、最近どうですか？요즘 어떻게 지내요？sky is clear and sunny。
 ```
-```
-Vielen Dank merci beaucoup for your help.
-```
 
-- [1.1. Idea](#11-idea)
+- [1. Idea](#1-idea)
 - [2. Motivation](#2-motivation)
 - [3. Usage](#3-usage)
   - [3.1. Installation](#31-installation)
   - [3.2. Basic](#32-basic)
     - [3.2.1. `split_by_lang`](#321-split_by_lang)
   - [3.3. Advanced](#33-advanced)
-    - [3.3.1. `threshold`](#331-threshold)
-    - [3.3.2. usage of `lang_map` (for better result)](#332-usage-of-lang_map-for-better-result)
-- [Acknowledgement](#acknowledgement)
+    - [3.3.1. `TextSplitter` and `threshold`](#331-textsplitter-and-threshold)
+    - [3.3.2. usage of `lang_map` and `default_lang` (for better result)](#332-usage-of-lang_map-and-default_lang-for-better-result)
+- [4. Acknowledgement](#4-acknowledgement)
 
 
 # 3. Usage
@@ -174,22 +172,28 @@ for text in texts:
 ```
 ## 3.3. Advanced
 
-### 3.3.1. `threshold`
+### 3.3.1. `TextSplitter` and `threshold`
 
-the threshold used in `wtpsplit`, default to 1e-4, the smaller the more substring you will get in `wtpsplit` stage
+`TextSplitter` is a class which implement `split()` method to split the text after splitting with rule-based logic ([Idea-Stage 2](#1-idea)).
+
+By default, it using `WtP` model from `wtpsplit`. (since `WtP` is faster and more accurate in SHORT TEXT situation, switch to `SaT` model for long paragraph).
+
+the `threshold` is used for `WtP` and `SaT` models, default to `1e-4`, the smaller the more substring you will get in `wtpsplit` stage.
 
 > [!NOTE]
 > Check GitHub Repo `tests/split_acc.py` to find best threshold for your use case
 
 
-### 3.3.2. usage of `lang_map` (for better result)
+### 3.3.2. usage of `lang_map` and `default_lang` (for better result)
 
 > [!IMPORTANT]
 > Add lang code for your usecase if other languages are needed
 
 - default `lang_map` looks like below
-  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `'x'`
-  - every 'x' would be merge to the near substring
+  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `default_lang`
+  - if you set `default_lang` or `value` of `key:value` in `lang_map` to `x`, this substring will be merged to the near substring
+    - `zh` | `x` | `jp` -> `zh` | `jp` (`x` been merged to one side)
+    - In example below, `zh-tw` is set to `x` because character in `zh` and `jp` sometimes been detected as Traditional Chinese
 - default `default_lang` is `'en'`
 
 ```python
@@ -206,7 +210,7 @@ LANG_MAP = {
 DEFAULT_LANG = "en"
 ```
 
-# Acknowledgement
+# 4. Acknowledgement
 
 - Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
 - Text segmentation depends on [segment-any-text/wtpsplit](https://github.com/segment-any-text/wtpsplit)
