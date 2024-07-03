@@ -194,11 +194,13 @@ the `threshold` is used for `WtP` and `SaT` models, default to `1e-4`, the small
   - if you set `default_lang` or `value` of `key:value` in `lang_map` to `x`, this substring will be merged to the near substring
     - `zh` | `x` | `jp` -> `zh` | `jp` (`x` been merged to one side)
     - In example below, `zh-tw` is set to `x` because character in `zh` and `jp` sometimes been detected as Traditional Chinese
-- default `default_lang` is `'en'`
+- default `default_lang` is `x`
 
 ```python
 LANG_MAP = {
     "zh": "zh",
+    "yue": "zh",  # 粤语
+    "wuu": "zh",  # 吴语
     "zh-cn": "zh",
     "zh-tw": "x",
     "ko": "ko",
@@ -207,7 +209,7 @@ LANG_MAP = {
     "fr": "fr",
     "en": "en",
 }
-DEFAULT_LANG = "en"
+DEFAULT_LANG = "x"
 ```
 
 # 4. Acknowledgement
