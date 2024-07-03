@@ -1,6 +1,15 @@
+from enum import Enum
 from typing import List
 
 from pydantic import BaseModel
+
+
+class LangSectionType(Enum):
+    ZH_JA = "zh_ja"
+    KO = "ko"
+    PUNCTUATION = "punctuation"
+    DIGIT = "digit"
+    OTHERS = "others"
 
 
 class SubString(BaseModel):
@@ -19,11 +28,12 @@ class SubString(BaseModel):
 
 
 class SubStringSection(BaseModel):
+    lang_section_type: LangSectionType
+    """
+    Used for deal with different type of languages
+    1. Chinese and Japanese both have characters will be processed together
+    """
     text: str
     """original text of this section (combines all of the substrings)"""
     substrings: List[SubString]
     """substrings that splitted from `text`"""
-    is_punctuation: bool
-    """is `text` of this sections is punctuation"""
-    is_digit: bool
-    """is `text` of this sections is digit"""

@@ -1,4 +1,5 @@
 from split_lang import split
+from split_lang.split.model import LangSectionType
 from tests.data.generate_test_json import texts_de_fr_en, texts_zh_jp_ko_en
 
 
@@ -16,7 +17,7 @@ def test_split():
         )
         for index, section in enumerate(substr_sections):
             print(f"{index}:{section.text}")
-            if section.is_punctuation:
+            if section.lang_section_type is LangSectionType.PUNCTUATION:
                 print(f"\t|——punctuation:{section.text}")
                 continue
             for _, substr in enumerate(section.substrings):

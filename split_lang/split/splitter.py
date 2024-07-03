@@ -1,16 +1,14 @@
 import logging
 from typing import Dict, List
 
+import budoux
 from wtpsplit import SaT, WtP
 
-from ..detect_lang.detector import (
-    DEFAULT_LANG,
-    LANG_MAP,
-    detect_lang,
-    detect_lang_combined,
-)
-from .model import SubString, SubStringSection
-from .utils import DEFAULT_THRESHOLD, PUNCTUATION, contains_zh_ja, contains_hangul
+budoux_parser = budoux.load_default_simplified_chinese_parser()
+
+from ..detect_lang.detector import DEFAULT_LANG, LANG_MAP, detect_lang_combined
+from .model import LangSectionType, SubString, SubStringSection
+from .utils import DEFAULT_THRESHOLD, PUNCTUATION, contains_hangul, contains_zh_ja
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -131,19 +129,21 @@ def split(
     Returns:
         List[SubStringSection]: Multiple sections (separate by punctuation), each section contains substring with .lang and .text
     """
-    # MARK: pre split by languages (zh, ja, ko)
+    # MARK: pre split by languages
+    # NOTE: since some language share some characters (e.g. Chinese and Japanese)
+    # NOTE: while Korean has their own characters,
+    # NOTE: For Cyrillic alphabet, Latin alphabet, a lot of languages share the alphabet
     pre_split_section = _pre_split(text=text)
     if verbose:
         logger.info("---------pre_split_section:")
         for section in pre_split_section:
             logger.info(section)
 
-    # MARK: wtpsplit
-
+    # MARK: wtpsplit / budoux
     section_index = 0
     for section in pre_split_section:
         section_len = len(section.text)
-        if section.is_punctuation:
+        if section.lang_section_type is LangSectionType.PUNCTUATION:
             section.substrings.append(
                 SubString(
                     is_digit=False,
@@ -154,10 +154,7 @@ def split(
                     length=section_len,
                 )
             )
-            if verbose:
-                logger.info("---------wtpsplit")
-                logger.info(section.substrings)
-        elif section.is_digit:
+        elif section.lang_section_type is LangSectionType.DIGIT:
             section.substrings.append(
                 SubString(
                     is_digit=True,
@@ -168,16 +165,16 @@ def split(
                     length=section_len,
                 )
             )
-            if verbose:
-                logger.info("---------wtpsplit")
-                logger.info(section.substrings)
         else:
-            substrings = splitter.split(
-                text=section.text, threshold=threshold, verbose=verbose
-            )
-            if verbose:
-                logger.info("---------wtpsplit")
-                logger.info(substrings)
+            substrings: List[str] = []
+            if section.lang_section_type is LangSectionType.OTHERS:
+                substrings = splitter.split(
+                    text=section.text, threshold=threshold, verbose=verbose
+                )
+            elif section.lang_section_type is LangSectionType.KO:
+                substrings = [section.text]
+            elif section.lang_section_type is LangSectionType.ZH_JA:
+                substrings = budoux_parser.parse(section.text)
 
             # MARK: initialize language detect
             substrings_with_lang = _init_substr_lang(
@@ -197,7 +194,7 @@ def split(
     # MARK: smart merge substring together
     wtpsplit_section = pre_split_section
     for section in wtpsplit_section:
-        if section.is_punctuation:
+        if section.lang_section_type is LangSectionType.PUNCTUATION:
             continue
         smart_concat_result = _smart_merge(
             substr_list=section.substrings,
@@ -225,20 +222,17 @@ def _pre_split(text: str) -> List[SubStringSection]:
         List[str]: list of substring
     """
     sections = []
-    current_lang = None
+    current_lang: LangSectionType = LangSectionType.OTHERS
     current_text = []
 
-    def add_substring():
+    def add_substring(lang_section_type: LangSectionType):
         if current_text:
             concat_text = "".join(current_text)
 
-            is_punctuation = concat_text.strip() in PUNCTUATION
-            is_digit = concat_text.strip().isdigit()
             sections.append(
                 SubStringSection(
+                    lang_section_type=lang_section_type,
                     text=concat_text,
-                    is_punctuation=is_punctuation,
-                    is_digit=is_digit,
                     substrings=[],
                 )
             )
@@ -248,23 +242,23 @@ def _pre_split(text: str) -> List[SubStringSection]:
     for char in text:
         if char.isspace() is False:
             if contains_zh_ja(char):
-                if current_lang != "zh_ja":
-                    add_substring()
-                    current_lang = "zh_ja"
+                if current_lang != LangSectionType.ZH_JA:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.ZH_JA
             elif contains_hangul(char):
-                if current_lang != "ko":
-                    add_substring()
-                    current_lang = "ko"
+                if current_lang != LangSectionType.KO:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.KO
             elif char in PUNCTUATION:
-                add_substring()
-                current_lang = "punctuation"
+                add_substring(current_lang)
+                current_lang = LangSectionType.PUNCTUATION
             else:
-                if current_lang != "other":
-                    add_substring()
-                    current_lang = "other"
+                if current_lang != LangSectionType.OTHERS:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.OTHERS
         current_text.append(char)
 
-    add_substring()
+    add_substring(current_lang)
     return sections
 
 
@@ -293,6 +287,7 @@ def _smart_merge(
     return substr_list
 
 
+# MARK: _init_substr_lang
 def _init_substr_lang(
     texts: List[str], lang_map: Dict = None, default_lang: str = DEFAULT_LANG
 ) -> List[SubString]:
@@ -545,6 +540,7 @@ def _merge_substrings_across_punctuation(
     return new_substrings
 
 
+# MARK: _get_languages
 def _get_languages(
     lang_text_list: List[SubString],
     lang_map: Dict = None,
@@ -558,15 +554,7 @@ def _get_languages(
             continue
         cur_lang = detect_lang_combined(substr.text)
         cur_lang = lang_map.get(cur_lang, default_lang)
-        # if (
-        #     cur_lang == "ko"
-        # ):  # `langdetect` has problem distinguish ko among zh, ja and ko
-        #     fast_lang = detect_lang_combined(substr.text, text_len_threshold=0)
-        #     if fast_lang != cur_lang:
-        #         is_left = _get_find_direction(lang_text_list, index)
-        #         cur_lang = _find_nearest_lang_with_direction(
-        #             lang_text_list, index, is_left
-        #         )
+
         if cur_lang != "x":
             substr.lang = cur_lang
     return lang_text_list

@@ -26,14 +26,14 @@ def detect_lang(text: str) -> str:
         result = result.lower()
         return result
     except LangDetectException as e:
-        logger.warning(
+        logger.debug(
             "Language detection of `%s` using `langdetect.detect(text)` failed: %s",
             text,
             e,
         )
         return "zh"
     except Exception as e:
-        logger.warning(
+        logger.debug(
             "An unexpected error occurred of `%s` using `langdetect.detect(text)`: %s",
             text,
             e,
