@@ -178,7 +178,7 @@ def split(
 
             # MARK: initialize language detect
             substrings_with_lang = _init_substr_lang(
-                texts=substrings, lang_map=lang_map, default_lang=default_lang
+                texts=substrings, lang_map=lang_map
             )
             for substr in substrings_with_lang:
                 substr.index += section_index
@@ -288,9 +288,7 @@ def _smart_merge(
 
 
 # MARK: _init_substr_lang
-def _init_substr_lang(
-    texts: List[str], lang_map: Dict = None, default_lang: str = DEFAULT_LANG
-) -> List[SubString]:
+def _init_substr_lang(texts: List[str], lang_map: Dict = None) -> List[SubString]:
     substrings = []
     if lang_map is None:
         lang_map = LANG_MAP
@@ -549,7 +547,7 @@ def _get_languages(
     if lang_map is None:
         lang_map = LANG_MAP
 
-    for index, substr in enumerate(lang_text_list):
+    for _, substr in enumerate(lang_text_list):
         if substr.is_punctuation or substr.is_digit:
             continue
         cur_lang = detect_lang_combined(substr.text)
