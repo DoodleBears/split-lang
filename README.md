@@ -9,7 +9,9 @@
   <h1>split-lang</h1>
 
 Splitting sentences by concatenating over-split substrings based on their language
-powered by [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and language detection ([`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)) 
+powered by
+1. splitting: [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`budoux`](https://github.com/google/budoux)
+2. language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)
 
 </div>
 
@@ -86,74 +88,70 @@ pip install split-lang
 
 ```python
 from split_lang import split_by_lang
+text = "你喜欢看アニメ吗我也喜欢看"
 
-texts = [
-    "你喜欢看アニメ吗？",
-]
-
-for text in texts:
-    substr = split_by_lang(
-        text=text,
-        threshold=4.9e-5,
-        default_lang="en",
-    )
-    for index, item in enumerate(substr):
-        print(f"{index}|{item.lang}:{item.text}")
-    print("----------------------")
+substr = split_by_lang(
+    text=text,
+)
+for index, item in enumerate(substr):
+    print(f"{index}|{item.lang}:{item.text}")
 ```
 
 ```
 0|zh:你喜欢看
 1|ja:アニメ
-2|zh:吗
-3|punctuation:？
+2|zh:吗我也喜欢看
 ```
 
 ```python
 from split_lang import split_by_lang
-
+import time
 texts = [
+    "你喜欢看アニメ吗我也喜欢看",
     "Please star this project on GitHub, Thanks you. I love you请加星这个项目，谢谢你。我爱你この項目をスターしてください、ありがとうございます！愛してる",
 ]
-
+time1 = time.time()
 for text in texts:
     substr = split_by_lang(
         text=text,
         threshold=4.9e-5,
-        default_lang="en",
         merge_across_punctuation=True,
     )
     for index, item in enumerate(substr):
         print(f"{index}|{item.lang}:{item.text}")
-```
-
-
-```
-0|en:Please star this project on GitHub, Thanks you. I love you
-1|zh:请加星这个项目，谢谢你。我爱你
-2|ja:この項目をスターしてください、ありがとうございます！愛してる
-----------------------
-```
-
-```python
-from split_lang import split_by_lang
-
-texts = [
-    "Please star this project on GitHub, Thanks you. I love you请加星这个项目，谢谢你。我爱你この項目をスターしてください、ありがとうございます！愛してる",
-]
+    print("----------------------")
+time2 = time.time()
 
 for text in texts:
     substr = split_by_lang(
         text=text,
         threshold=4.9e-5,
-        default_lang="en",
         merge_across_punctuation=False,
+        merge_across_digit=False,
     )
     for index, item in enumerate(substr):
         print(f"{index}|{item.lang}:{item.text}")
+    print("----------------------")
+time3 = time.time()
+
+print(time2 - time1)
+print(time3 - time2)
 ```
 
+
 ```
+0|zh:你喜欢看
+1|ja:アニメ
+2|zh:吗我也喜欢看
+----------------------
+0|en:Please star this project on GitHub, Thanks you. I love you
+1|zh:请加星这个项目，谢谢你。我爱你
+2|ja:この項目をスターしてください、ありがとうございます！愛してる
+----------------------
+0|zh:你喜欢看
+1|ja:アニメ
+2|zh:吗我也喜欢看
+----------------------
 0|en:Please star this project on GitHub
 1|punctuation:, 
 2|en:Thanks you
@@ -169,7 +167,11 @@ for text in texts:
 12|ja:ありがとうございます
 13|punctuation:！
 14|ja:愛してる
+----------------------
+0.15833711624145508
+0.1587212085723877
 ```
+
 ## 3.3. Advanced
 
 ### 3.3.1. `TextSplitter` and `threshold`
@@ -215,5 +217,5 @@ DEFAULT_LANG = "x"
 # 4. Acknowledgement
 
 - Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
-- Text segmentation depends on [segment-any-text/wtpsplit](https://github.com/segment-any-text/wtpsplit)
+- Text segmentation depends on [segment-any-text/wtpsplit](https://github.com/segment-any-text/wtpsplit) and [google/budoux](https://github.com/google/budoux)
 - Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [Mimino666/langdetect](https://github.com/Mimino666/langdetect) (fix miss detecting Chinese as Korean in [DoodleBears/langdetect](https://github.com/DoodleBears/langdetect))
