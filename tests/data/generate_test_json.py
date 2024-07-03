@@ -67,15 +67,15 @@ def main():
     )
     generate_test_data(data=data)
 
-    data = TestData(
-        filename="de_fr_en",
-        texts=texts_de_fr_en,
-        threshold=4.9e-4,
-        splitter=splitter,
-        lang_map=None,
-        default_lang="x",
-    )
-    generate_test_data(data=data)
+    # data = TestData(
+    #     filename="de_fr_en",
+    #     texts=texts_de_fr_en,
+    #     threshold=4.9e-4,
+    #     splitter=splitter,
+    #     lang_map=None,
+    #     default_lang="x",
+    # )
+    # generate_test_data(data=data)
     return
 
 

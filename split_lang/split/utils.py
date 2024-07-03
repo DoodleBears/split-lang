@@ -13,7 +13,7 @@ def _contains_chinese_char(text: str):
     return bool(chinese_char_pattern.search(text))
 
 
-def _contains_hangul(text: str):
+def contains_hangul(text: str):
     return bool(hangul_pattern.search(text))
 
 
@@ -25,10 +25,9 @@ def _contains_katakana(text: str):
     return bool(katakana_pattern.search(text))
 
 
-def contains_zh_ja_ko(text):
+def contains_zh_ja(text):
     if (
         _contains_chinese_char(text)
-        or _contains_hangul(text)
         or _contains_hiragana(text)
         or _contains_katakana(text)
     ):

@@ -16,6 +16,13 @@ class TestData(BaseModel):
         arbitrary_types_allowed = True
 
 
+texts_with_digit = [
+    "你喜欢看アニメ吗？",
+    "衬衫的价格是9.15便士",
+    "衬衫的价格是233亿元",
+    "衬衫的价格是233亿元人民币",
+]
+
 texts_zh_jp_ko_en = [
     "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。",
     "你好，我的名字是西野くまです。I am from Tokyo, 日本の首都。今天的天气非常好，sky is clear and sunny。おはようございます、皆さん！我们一起来学习吧。Learning languages can be fun and exciting。昨日はとても忙しかったので、今日は少しリラックスしたいです。Let's take a break and enjoy some coffee。中文、日本語、and English are three distinct languages, each with its own unique charm。希望我们能一起进步，一起成长。Let's keep studying and improving our language skills together. ありがとう！",

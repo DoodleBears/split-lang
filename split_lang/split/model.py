@@ -14,6 +14,8 @@ class SubString(BaseModel):
     """length of `text`"""
     is_punctuation: bool
     """if `text` is punctuation"""
+    is_digit: bool
+    """if `text` is punctuation"""
 
 
 class SubStringSection(BaseModel):
@@ -21,5 +23,7 @@ class SubStringSection(BaseModel):
     """original text of this section (combines all of the substrings)"""
     substrings: List[SubString]
     """substrings that splitted from `text`"""
-    is_punctuation: bool = False
+    is_punctuation: bool
     """is `text` of this sections is punctuation"""
+    is_digit: bool
+    """is `text` of this sections is digit"""

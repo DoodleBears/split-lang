@@ -1,1238 +1,2420 @@
 {
     "我是 VGroupChatBot，一个旨在支持多人通信的助手，通过可视化消息来帮助团队成员更好地交流。我可以帮助团队成员更好地整理和共享信息，特别是在讨论、会议和Brainstorming等情况下。你好我的名字是西野くまですmy name is bob很高兴认识你どうぞよろしくお願いいたします「こんにちは」是什么意思。": [
         {
-            "is_punctuation": false,
             "text": "我是 ",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我是 "
+                    "text": "我是 ",
+                    "index": 0,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": false,
             "text": "VGroupChatBot",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "VGroupChatBot"
+                    "text": "VGroupChatBot",
+                    "index": 3,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 16,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "一个旨在支持多人通信的助手",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "一个旨在支持多人通信的助手"
+                    "text": "一个旨在支持多人通信的助手",
+                    "index": 17,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 30,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "通过可视化消息来帮助团队成员更好地交流",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "通过可视化消息来帮助团队成员更好地交流"
+                    "text": "通过可视化消息来帮助团队成员更好地交流",
+                    "index": 31,
+                    "length": 19,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 50,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "我可以帮助团队成员更好地整理和共享信息",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我可以帮助团队成员更好地整理和共享信息"
+                    "text": "我可以帮助团队成员更好地整理和共享信息",
+                    "index": 51,
+                    "length": 19,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 70,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "特别是在讨论",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "特别是在讨论"
+                    "text": "特别是在讨论",
+                    "index": 71,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 77,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "会议和",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "会议和"
+                    "text": "会议和",
+                    "index": 78,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": false,
             "text": "Brainstorming",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "Brainstorming"
+                    "text": "Brainstorming",
+                    "index": 81,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": false,
             "text": "等情况下",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "等情况下"
+                    "text": "等情况下",
+                    "index": 94,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 98,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "你好我的名字是西野くまです",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你好我的名字是"
+                    "text": "你好我的",
+                    "index": 99,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "西野くまです"
+                    "text": "名字是西野くまです",
+                    "index": 103,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": false,
             "text": "my name is bob",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "my name is bob"
+                    "text": "my name is bob",
+                    "index": 112,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": false,
             "text": "很高兴认识你どうぞよろしくお願いいたします",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "很高兴认识你"
+                    "text": "很高兴认识你",
+                    "index": 126,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "どうぞよろしくお願いいたします"
+                    "text": "どうぞよろしくお願いいたします",
+                    "index": 132,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "「",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "「",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "「",
+                    "index": 147,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "こんにちは",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "こんにちは"
+                    "text": "こんにちは",
+                    "index": 148,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "」",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "」",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "」",
+                    "index": 153,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "是什么意思",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "是什么意思"
+                    "text": "是什么意思",
+                    "index": 154,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 159,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你好，我的名字是西野くまです。I am from Tokyo, 日本の首都。今天的天气非常好，sky is clear and sunny。おはようございます、皆さん！我们一起来学习吧。Learning languages can be fun and exciting。昨日はとても忙しかったので、今日は少しリラックスしたいです。Let's take a break and enjoy some coffee。中文、日本語、and English are three distinct languages, each with its own unique charm。希望我们能一起进步，一起成长。Let's keep studying and improving our language skills together. ありがとう！": [
         {
-            "is_punctuation": false,
             "text": "你好",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你好"
+                    "text": "你好",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 2,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "我的名字是西野くまです",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我的名字是"
+                    "text": "我的",
+                    "index": 3,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "西野くまです"
+                    "text": "名字是西野くまです",
+                    "index": 5,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 14,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "I am from Tokyo",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "I am from Tokyo"
+                    "text": "I am from Tokyo",
+                    "index": 15,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 30,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "日本の首都",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "日本の首都"
+                    "text": "日本の",
+                    "index": 32,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "zh",
+                    "text": "首都",
+                    "index": 35,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 37,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "今天的天气非常好",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "今天的天气非常好"
+                    "text": "今天的天气非常好",
+                    "index": 38,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 46,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "sky is clear and sunny",
             "substrings": [
                 {
+                    "lang": "ja",
+                    "text": "sky ",
+                    "index": 47,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "en",
-                    "text": "sky is clear and sunny"
+                    "text": "is clear and sunny",
+                    "index": 51,
+                    "length": 18,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 69,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "おはようございます",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "おはようございます"
+                    "text": "おはようございます",
+                    "index": 70,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 79,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "皆さん",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "皆さん"
+                    "text": "皆さん",
+                    "index": 80,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "！",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "！",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "！",
+                    "index": 83,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "我们一起来学习吧",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我们一起来学习吧"
+                    "text": "我们一起来学习吧",
+                    "index": 84,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 92,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "Learning languages can be fun and exciting",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "Learning languages can be fun and exciting"
+                    "text": "Learning languages can be fun and exciting",
+                    "index": 93,
+                    "length": 42,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 135,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "昨日はとても忙しかったので",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "昨日はとても忙しかったので"
+                    "text": "昨日はとても忙しかったので",
+                    "index": 136,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 149,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "今日は少しリラックスしたいです",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "今日は少しリラックスしたいです"
+                    "text": "今日は少しリラックスしたいです",
+                    "index": 150,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 165,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "Let's take a break and enjoy some coffee",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "Let's take a break and enjoy some coffee"
+                    "text": "Let's take a break and enjoy some coffee",
+                    "index": 166,
+                    "length": 40,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 206,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "中文",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "中文"
+                    "text": "中文",
+                    "index": 207,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 209,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "日本語",
             "substrings": [
                 {
-                    "lang": "ja",
-                    "text": "日本語"
+                    "lang": "zh-tw",
+                    "text": "日本語",
+                    "index": 210,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 213,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and English are three distinct languages",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and English are three distinct languages"
+                    "text": "and English are three distinct languages",
+                    "index": 214,
+                    "length": 40,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 254,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "each with its own unique charm",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "each with its own unique charm"
+                    "text": "each with its own unique charm",
+                    "index": 256,
+                    "length": 30,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 286,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "希望我们能一起进步",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "希望我们能一起进步"
+                    "text": "希望我们能一起进步",
+                    "index": 287,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 296,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "一起成长",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "一起成长"
+                    "text": "一起成长",
+                    "index": 297,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 301,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "Let's keep studying and improving our language skills together",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "Let's keep studying and improving our language skills together"
+                    "text": "Let's keep studying and improving our language skills together",
+                    "index": 302,
+                    "length": 62,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ". ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ". ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ". ",
+                    "index": 364,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "ありがとう",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "ありがとう"
+                    "text": "ありがとう",
+                    "index": 366,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "！",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "！",
+                    "index": 371,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你好，今日はどこへ行きますか？": [
         {
-            "is_punctuation": false,
             "text": "你好",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你好"
+                    "text": "你好",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "，",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "，",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "，",
+                    "index": 2,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "今日はどこへ行きますか",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "今日はどこへ行きますか"
+                    "text": "今日はどこへ行きますか",
+                    "index": 3,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 14,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你好今日はどこへ行きますか？": [
         {
-            "is_punctuation": false,
             "text": "你好今日はどこへ行きますか",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你好今"
+                    "text": "你好",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "日はどこへ行きますか"
+                    "text": "今日はどこへ行きますか",
+                    "index": 2,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 13,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我的名字是田中さんです。": [
         {
-            "is_punctuation": false,
             "text": "我的名字是田中さんです",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我的名字是"
+                    "text": "我的",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "田中さんです"
+                    "text": "名字是田中さんです",
+                    "index": 2,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 11,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我喜欢吃寿司和拉面おいしいです。": [
         {
-            "is_punctuation": false,
             "text": "我喜欢吃寿司和拉面おいしいです",
             "substrings": [
                 {
+                    "lang": "en",
+                    "text": "我喜",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "zh",
-                    "text": "我喜欢吃寿司和拉面"
+                    "text": "欢吃寿司和拉面",
+                    "index": 2,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "おいしいです"
+                    "text": "おいしいです",
+                    "index": 9,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 15,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "今天の天気はとてもいいですね。": [
         {
-            "is_punctuation": false,
             "text": "今天の天気はとてもいいですね",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "今天の天気はとてもいいですね"
+                    "text": "今天の天気はとてもいいですね",
+                    "index": 0,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 14,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我在学习日本語少し難しいです。": [
         {
-            "is_punctuation": false,
             "text": "我在学习日本語少し難しいです",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我在学习"
+                    "text": "我在学习",
+                    "index": 0,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "日本語少し難しいです"
+                    "text": "日",
+                    "index": 4,
+                    "length": 1,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "zh-tw",
+                    "text": "本語",
+                    "index": 5,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "ja",
+                    "text": "少し難しいです",
+                    "index": 7,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 14,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "日语真是おもしろい啊": [
         {
-            "is_punctuation": false,
             "text": "日语真是おもしろい啊",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "日语真是"
+                    "text": "日语真是",
+                    "index": 0,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "おもしろい啊"
+                    "text": "おもしろい啊",
+                    "index": 4,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         }
     ],
     "你喜欢看アニメ吗？": [
         {
-            "is_punctuation": false,
             "text": "你喜欢看アニメ吗",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你喜欢看"
-                },
-                {
-                    "lang": "ja",
-                    "text": "アニメ"
-                },
-                {
-                    "lang": "zh",
-                    "text": "吗"
+                    "text": "你喜欢看アニメ吗",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 8,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我想去日本旅行、特に京都に行きたいです。": [
         {
-            "is_punctuation": false,
             "text": "我想去日本旅行",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我想去"
-                },
-                {
-                    "lang": "ja",
-                    "text": "日本旅行"
+                    "text": "我想去日本旅行",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 7,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "特に京都に行きたいです",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "特に京都に行きたいです"
+                    "text": "特に京都に行きたいです",
+                    "index": 8,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 19,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "昨天見た映画はとても感動的でした。我朋友是日本人彼はとても優しいです。": [
         {
-            "is_punctuation": false,
             "text": "昨天見た映画はとても感動的でした",
             "substrings": [
                 {
-                    "lang": "ja",
-                    "text": "昨天見た映画はとても感動的でした"
-                }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
-            "is_punctuation": false,
-            "text": "我朋友是日本人彼はとても優しいです",
-            "substrings": [
-                {
                     "lang": "zh",
-                    "text": "我朋友是"
+                    "text": "昨天",
+                    "index": 0,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "zh-tw",
+                    "text": "見",
+                    "index": 2,
+                    "length": 1,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "ja",
-                    "text": "日本人彼はとても優しいです"
+                    "text": "た",
+                    "index": 3,
+                    "length": 1,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "zh",
+                    "text": "映画",
+                    "index": 4,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "ja",
+                    "text": "はとても感動的でした",
+                    "index": 6,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 16,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
+            "text": "我朋友是日本人彼はとても優しいです",
+            "substrings": [
+                {
+                    "lang": "en",
+                    "text": "我朋",
+                    "index": 17,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "zh",
+                    "text": "友是日本人",
+                    "index": 19,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "ja",
+                    "text": "彼はとても優しいです",
+                    "index": 24,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 34,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我们一起去カラオケ吧、楽しそうです。": [
         {
-            "is_punctuation": false,
             "text": "我们一起去カラオケ吧",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我们一起去"
-                },
-                {
-                    "lang": "ja",
-                    "text": "カラオケ吧"
+                    "text": "我们一起去カラオケ吧",
+                    "index": 0,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 10,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "楽しそうです",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "楽しそうです"
+                    "text": "楽しそうです",
+                    "index": 11,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 17,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我的家在北京、でも、仕事で東京に住んでいます。": [
         {
-            "is_punctuation": false,
             "text": "我的家在北京",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我的家在北京"
+                    "text": "我的家在北京",
+                    "index": 0,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 6,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "でも",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "でも"
+                    "text": "でも",
+                    "index": 7,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 9,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "仕事で東京に住んでいます",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "仕事で東京に住んでいます"
+                    "text": "仕事で東京に住んでいます",
+                    "index": 10,
+                    "length": 12,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 22,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我在学做日本料理、日本料理を作るのを習っています。": [
         {
-            "is_punctuation": false,
             "text": "我在学做日本料理",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我在学"
-                },
-                {
-                    "lang": "ja",
-                    "text": "做日本料理"
+                    "text": "我在学做日本料理",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 8,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "日本料理を作るのを習っています",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "日本料理を作るのを習っています"
+                    "text": "日本料理を作るのを習っています",
+                    "index": 9,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 24,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你会说几种语言、何ヶ国語話せますか？": [
         {
-            "is_punctuation": false,
             "text": "你会说几种语言",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你会说几种语言"
+                    "text": "你会说几种语言",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 7,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "何ヶ国語話せますか",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "何ヶ"
-                },
-                {
-                    "lang": "zh",
-                    "text": "国語"
-                },
-                {
-                    "lang": "ja",
-                    "text": "話せますか"
+                    "text": "何ヶ国語話せますか",
+                    "index": 8,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 17,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我昨天看了一本书、その本はとても面白かったです。": [
         {
-            "is_punctuation": false,
             "text": "我昨天看了一本书",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我昨天看了一本书"
+                    "text": "我昨天看了一本书",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 8,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "その本はとても面白かったです",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "その本はとても面白かったです"
+                    "text": "その本はとても面白かったです",
+                    "index": 9,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 23,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你最近好吗、最近どうですか？": [
         {
-            "is_punctuation": false,
             "text": "你最近好吗",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你最近好吗"
+                    "text": "你最近好吗",
+                    "index": 0,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 5,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "最近どうですか",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "最近どうですか"
+                    "text": "最近どうですか",
+                    "index": 6,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 13,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我在学做日本料理와 한국 요리、日本料理を作るのを習っています。": [
         {
-            "is_punctuation": false,
-            "text": "我在学做日本料理와 한국 요리",
+            "text": "我在学做日本料理",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我在学"
-                },
+                    "text": "我在学做日本料理",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "와 한국 요리",
+            "substrings": [
                 {
                     "lang": "ko",
-                    "text": "做日本料理와 한국 요리"
+                    "text": "와 한국 요리",
+                    "index": 8,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 15,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "日本料理を作るのを習っています",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "日本料理を作るのを習っています"
+                    "text": "日本料理を作るのを習っています",
+                    "index": 16,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 31,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你会说几种语言、何ヶ国語話せますか？몇 개 언어를 할 수 있어요？": [
         {
-            "is_punctuation": false,
             "text": "你会说几种语言",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你会说几种语言"
+                    "text": "你会说几种语言",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 7,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "何ヶ国語話せますか",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "何ヶ"
-                },
-                {
-                    "lang": "zh",
-                    "text": "国語"
-                },
-                {
-                    "lang": "ja",
-                    "text": "話せますか"
+                    "text": "何ヶ国語話せますか",
+                    "index": 8,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "？",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "？",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 17,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "몇 개 언어를 할 수 있어요",
             "substrings": [
                 {
                     "lang": "ko",
-                    "text": "몇 개 언어를 할 수 있어요"
+                    "text": "몇 개 언어를 할 수 있어요",
+                    "index": 18,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 33,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我昨天看了一本书、その本はとても面白かったです。어제 책을 읽었는데, 정말 재미있었어요。": [
         {
-            "is_punctuation": false,
             "text": "我昨天看了一本书",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我昨天看了一本书"
+                    "text": "我昨天看了一本书",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 8,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "その本はとても面白かったです",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "その本はとても面白かったです"
+                    "text": "その本はとても面白かったです",
+                    "index": 9,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 23,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "어제 책을 읽었는데",
             "substrings": [
                 {
                     "lang": "ko",
-                    "text": "어제 책을 읽었는데"
+                    "text": "어제 책을 읽었는데",
+                    "index": 24,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 34,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "정말 재미있었어요",
             "substrings": [
                 {
                     "lang": "ko",
-                    "text": "정말 재미있었어요"
+                    "text": "정말 재미있었어요",
+                    "index": 36,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 45,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "我们一起去逛街와 쇼핑、買い物に行きましょう。쇼핑하러 가요。": [
         {
-            "is_punctuation": false,
-            "text": "我们一起去逛街와 쇼핑",
+            "text": "我们一起去逛街",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "我们一起去逛街"
-                },
+                    "text": "我们一起去逛街",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "와 쇼핑",
+            "substrings": [
                 {
                     "lang": "ko",
-                    "text": "와 쇼핑"
+                    "text": "와 쇼핑",
+                    "index": 7,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 11,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "買い物に行きましょう",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "買い物に行きましょう"
+                    "text": "買い物に行きましょう",
+                    "index": 12,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "。",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "。",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 22,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "쇼핑하러 가요",
             "substrings": [
                 {
                     "lang": "ko",
-                    "text": "쇼핑하러 가요"
+                    "text": "쇼핑하러 가요",
+                    "index": 23,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "。",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "。",
+                    "index": 30,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "你最近好吗、最近どうですか？요즘 어떻게 지내요？": [
         {
-            "is_punctuation": false,
             "text": "你最近好吗",
             "substrings": [
                 {
                     "lang": "zh",
-                    "text": "你最近好吗"
+                    "text": "你最近好吗",
+                    "index": 0,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "、",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "、",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "、",
+                    "index": 5,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "最近どうですか",
             "substrings": [
                 {
                     "lang": "ja",
-                    "text": "最近どうですか"
+                    "text": "最近どうですか",
+                    "index": 6,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": "？",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": "？",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 13,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "요즘 어떻게 지내요",
             "substrings": [
                 {
                     "lang": "ko",
-                    "text": "요즘 어떻게 지내요"
+                    "text": "요즘 어떻게 지내요",
+                    "index": 14,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "？",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "？",
+                    "index": 24,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ]
 }

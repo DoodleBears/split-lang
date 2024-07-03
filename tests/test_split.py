@@ -1,25 +1,18 @@
 from split_lang import split
 from tests.data.generate_test_json import texts_de_fr_en, texts_zh_jp_ko_en
-from split_lang.split.utils import DEFAULT_THRESHOLD
 
 
-new_lang_map = {
-    "zh": "zh",
-    "zh-cn": "zh",
-    "zh-tw": "x",
-    "ko": "ko",
-    "ja": "ja",
-}
+texts = [
+    "你喜欢看アニメ吗？",
+    "衬衫的价格是9.15便士",
+]
 
 
 def test_split():
-    for text in texts_zh_jp_ko_en:
+    for text in texts:
         substr_sections = split(
             text=text,
             verbose=True,
-            lang_map=new_lang_map,
-            threshold=DEFAULT_THRESHOLD,
-            default_lang="en",
         )
         for index, section in enumerate(substr_sections):
             print(f"{index}:{section.text}")
@@ -30,22 +23,22 @@ def test_split():
                 print(f"\t|——{substr.lang}:{substr.text}")
         print("----------------------")
 
-    for text in texts_de_fr_en:
-        substr_sections = split(
-            text=text,
-            verbose=True,
-            # lang_map=new_lang_map,
-            threshold=4.9e-4,
-            default_lang="en",
-        )
-        for index, section in enumerate(substr_sections):
-            print(f"{index}:{section.text}")
-            if section.is_punctuation:
-                print(f"\t|——punctuation:{section.text}")
-                continue
-            for _, substr in enumerate(section.substrings):
-                print(f"\t|——{substr.lang}:{substr.text}")
-        print("----------------------")
+    # for text in texts_de_fr_en:
+    #     substr_sections = split(
+    #         text=text,
+    #         verbose=True,
+    #         # lang_map=new_lang_map,
+    #         threshold=4.9e-4,
+    #         default_lang="en",
+    #     )
+    #     for index, section in enumerate(substr_sections):
+    #         print(f"{index}:{section.text}")
+    #         if section.is_punctuation:
+    #             print(f"\t|——punctuation:{section.text}")
+    #             continue
+    #         for _, substr in enumerate(section.substrings):
+    #             print(f"\t|——{substr.lang}:{substr.text}")
+    #     print("----------------------")
 
 
 def main():

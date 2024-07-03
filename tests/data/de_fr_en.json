@@ -1,719 +1,1620 @@
 {
     "Ich liebe Paris, c'est une belle ville, and the food is amazing!": [
         {
-            "is_punctuation": false,
             "text": "Ich liebe Paris",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich liebe Paris"
+                    "text": "Ich liebe Paris",
+                    "index": 0,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 15,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "c'est une belle ville",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "c'est une belle ville"
+                    "text": "c'est une belle ville",
+                    "index": 17,
+                    "length": 21,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 38,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and the food is amazing",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and the food is amazing"
+                    "text": "and the food is amazing",
+                    "index": 40,
+                    "length": 23,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "!",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "!",
+                    "index": 63,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Berlin ist wunderbar, je veux y retourner, and explore more.": [
         {
-            "is_punctuation": false,
             "text": "Berlin ist wunderbar",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Berlin ist wunderbar"
+                    "text": "Berlin ist wunderbar",
+                    "index": 0,
+                    "length": 20,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 20,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "je veux y retourner",
             "substrings": [
                 {
+                    "lang": "hr",
+                    "text": "je ",
+                    "index": 22,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "fr",
-                    "text": "je veux y retourner"
+                    "text": "veux ",
+                    "index": 25,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "cy",
+                    "text": "y ",
+                    "index": 30,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "fr",
+                    "text": "retourner",
+                    "index": 32,
+                    "length": 9,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 41,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and explore more",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and explore more"
+                    "text": "and ",
+                    "index": 43,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "ro",
+                    "text": "explore ",
+                    "index": 47,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "more",
+                    "index": 55,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 59,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Bonjour, wie geht's dir today?": [
         {
-            "is_punctuation": false,
             "text": "Bonjour",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "Bonjour"
+                    "text": "Bonjour",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 7,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "wie geht's dir today",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "wie geht's dir "
+                    "text": "wie geht's ",
+                    "index": 9,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "tr",
+                    "text": "dir ",
+                    "index": 20,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "today"
+                    "text": "today",
+                    "index": 24,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "?",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "?",
+                    "index": 29,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Die Musik hier ist fantastisch, la musique est superbe, and I enjoy it a lot.": [
         {
-            "is_punctuation": false,
             "text": "Die Musik hier ist fantastisch",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Die Musik hier ist fantastisch"
+                    "text": "Die Musik hier ist fantastisch",
+                    "index": 0,
+                    "length": 30,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 30,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "la musique est superbe",
             "substrings": [
                 {
+                    "lang": "es",
+                    "text": "la ",
+                    "index": 32,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "fr",
-                    "text": "la musique est superbe"
+                    "text": "musique est superbe",
+                    "index": 35,
+                    "length": 19,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 54,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and I enjoy it a lot",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and I enjoy it a lot"
+                    "text": "and ",
+                    "index": 56,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "it",
+                    "text": "I ",
+                    "index": 60,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "enjoy it a lot",
+                    "index": 62,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 76,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Guten Morgen, je t'aime, have a great day!": [
         {
-            "is_punctuation": false,
             "text": "Guten Morgen",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Guten Morgen"
+                    "text": "Guten Morgen",
+                    "index": 0,
+                    "length": 12,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 12,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "je t'aime",
             "substrings": [
                 {
+                    "lang": "hr",
+                    "text": "je ",
+                    "index": 14,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "fr",
-                    "text": "je t'aime"
+                    "text": "t'aime",
+                    "index": 17,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 23,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "have a great day",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "have a great day"
+                    "text": "have ",
+                    "index": 25,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "hu",
+                    "text": "a ",
+                    "index": 30,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "great ",
+                    "index": 32,
+                    "length": 6,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "so",
+                    "text": "day",
+                    "index": 38,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "!",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "!",
+                    "index": 41,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Das Wetter ist heute schön, il fait beau aujourd'hui, and it's perfect for a walk.": [
         {
-            "is_punctuation": false,
             "text": "Das Wetter ist heute schön",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Das Wetter ist heute schön"
+                    "text": "Das Wetter ist heute schön",
+                    "index": 0,
+                    "length": 26,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 26,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "il fait beau aujourd'hui",
             "substrings": [
                 {
+                    "lang": "it",
+                    "text": "il ",
+                    "index": 28,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "fr",
-                    "text": "il fait beau aujourd'hui"
+                    "text": "fait beau aujourd'",
+                    "index": 31,
+                    "length": 18,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "sw",
+                    "text": "hui",
+                    "index": 49,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 52,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and it's perfect for a walk",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and it's perfect for a walk"
+                    "text": "and it's perfect for a walk",
+                    "index": 54,
+                    "length": 27,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 81,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Ich mag dieses Buch, ce livre est intéressant, and it has a great story.": [
         {
-            "is_punctuation": false,
             "text": "Ich mag dieses Buch",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich mag dieses Buch"
+                    "text": "Ich ",
+                    "index": 0,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "tl",
+                    "text": "mag ",
+                    "index": 4,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "de",
+                    "text": "dieses Buch",
+                    "index": 8,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 19,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "ce livre est intéressant",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "ce livre est intéressant"
+                    "text": "ce livre est intéressant",
+                    "index": 21,
+                    "length": 24,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 45,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and it has a great story",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and it has a great story"
+                    "text": "and ",
+                    "index": 47,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "sq",
+                    "text": "it ",
+                    "index": 51,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "has ",
+                    "index": 54,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "hu",
+                    "text": "a ",
+                    "index": 58,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "great story",
+                    "index": 60,
+                    "length": 11,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 71,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Vielen Dank, merci beaucoup, for your help.": [
         {
-            "is_punctuation": false,
             "text": "Vielen Dank",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Vielen Dank"
+                    "text": "Vielen ",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "so",
+                    "text": "Dank",
+                    "index": 7,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 11,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "merci beaucoup",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "merci beaucoup"
+                    "text": "merci beaucoup",
+                    "index": 13,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 27,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "for your help",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "for your help"
+                    "text": "for your help",
+                    "index": 29,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 42,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Wir reisen nach Deutschland, nous voyageons en Allemagne, and we are excited.": [
         {
-            "is_punctuation": false,
             "text": "Wir reisen nach Deutschland",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Wir reisen nach Deutschland"
+                    "text": "Wir reisen nach Deutschland",
+                    "index": 0,
+                    "length": 27,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 27,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "nous voyageons en Allemagne",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "nous voyageons en Allemagne"
+                    "text": "nous voyageons en Allemagne",
+                    "index": 29,
+                    "length": 27,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 56,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and we are excited",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and we are excited"
+                    "text": "and we are excited",
+                    "index": 58,
+                    "length": 18,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 76,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Ich bin müde, je suis fatigué, and I need some rest.": [
         {
-            "is_punctuation": false,
             "text": "Ich bin müde",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich "
-                },
-                {
-                    "lang": "en",
-                    "text": "bin "
-                },
-                {
-                    "lang": "de",
-                    "text": "müde"
+                    "text": "Ich bin müde",
+                    "index": 0,
+                    "length": 12,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 12,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "je suis fatigué",
             "substrings": [
                 {
+                    "lang": "hr",
+                    "text": "je ",
+                    "index": 14,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
                     "lang": "fr",
-                    "text": "je suis fatigué"
+                    "text": "suis fatigué",
+                    "index": 17,
+                    "length": 12,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
-        },
-        {
-            "is_punctuation": true,
-            "text": ", ",
-            "substrings": []
-        },
-        {
+            ],
             "is_punctuation": false,
+            "is_digit": false
+        },
+        {
+            "text": ", ",
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ", ",
+                    "index": 29,
+                    "length": 2,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
+        },
+        {
             "text": "and I need some rest",
             "substrings": [
                 {
                     "lang": "en",
-                    "text": "and I need some rest"
+                    "text": "and ",
+                    "index": 31,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "it",
+                    "text": "I ",
+                    "index": 35,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "need some rest",
+                    "index": 37,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 51,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Ich liebe Paris c'est une belle ville and the food is amazing!": [
         {
-            "is_punctuation": false,
             "text": "Ich liebe Paris c'est une belle ville and the food is amazing",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich liebe Paris "
+                    "text": "Ich liebe Paris ",
+                    "index": 0,
+                    "length": 16,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "c'est une belle ville and the food is amazing"
+                    "text": "c'est une belle ville and the food is ",
+                    "index": 16,
+                    "length": 38,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "amazing",
+                    "index": 54,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "!",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "!",
+                    "index": 61,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Berlin ist wunderbar je veux y retourner and explore more.": [
         {
-            "is_punctuation": false,
             "text": "Berlin ist wunderbar je veux y retourner and explore more",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Berlin ist wunderbar "
+                    "text": "Berlin ist wunderbar ",
+                    "index": 0,
+                    "length": 21,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "je veux y "
+                    "text": "je veux y ",
+                    "index": 21,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "retourner and explore more"
+                    "text": "retourner and explore more",
+                    "index": 31,
+                    "length": 26,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 57,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Bonjour wie geht's dir today?": [
         {
-            "is_punctuation": false,
             "text": "Bonjour wie geht's dir today",
             "substrings": [
                 {
                     "lang": "fr",
-                    "text": "Bonjour "
+                    "text": "Bonjour ",
+                    "index": 0,
+                    "length": 8,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "de",
-                    "text": "wie geht's dir "
+                    "text": "wie geht's dir ",
+                    "index": 8,
+                    "length": 15,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "today"
+                    "text": "today",
+                    "index": 23,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "?",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "?",
+                    "index": 28,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Die Musik hier ist fantastisch la musique est superbe and I enjoy it a lot.": [
         {
-            "is_punctuation": false,
             "text": "Die Musik hier ist fantastisch la musique est superbe and I enjoy it a lot",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Die Musik hier ist fantastisch "
+                    "text": "Die Musik hier ist fantastisch ",
+                    "index": 0,
+                    "length": 31,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "la musique est superbe "
+                    "text": "la musique est superbe ",
+                    "index": 31,
+                    "length": 23,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "and I enjoy it a lot"
+                    "text": "and ",
+                    "index": 54,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "it",
+                    "text": "I ",
+                    "index": 58,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "enjoy it a lot",
+                    "index": 60,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 74,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Guten Morgen je t'aime have a great day!": [
         {
-            "is_punctuation": false,
             "text": "Guten Morgen je t'aime have a great day",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Guten Morgen "
+                    "text": "Guten Morgen ",
+                    "index": 0,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "je t'aime "
+                    "text": "je t'aime ",
+                    "index": 13,
+                    "length": 10,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "have a great day"
+                    "text": "have a great ",
+                    "index": 23,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "so",
+                    "text": "day",
+                    "index": 36,
+                    "length": 3,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": "!",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": "!",
+                    "index": 39,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Das Wetter ist heute schön il fait beau aujourd'hui and it's perfect for a walk.": [
         {
-            "is_punctuation": false,
             "text": "Das Wetter ist heute schön il fait beau aujourd'hui and it's perfect for a walk",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Das Wetter ist heute schön "
+                    "text": "Das Wetter ist heute schön ",
+                    "index": 0,
+                    "length": 27,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "il fait beau aujourd'"
+                    "text": "il fait beau aujourd'",
+                    "index": 27,
+                    "length": 21,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "de",
-                    "text": "hui "
+                    "text": "hui ",
+                    "index": 48,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "and it's perfect for a walk"
+                    "text": "and it's perfect for a walk",
+                    "index": 52,
+                    "length": 27,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 79,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Ich mag dieses Buch ce livre est intéressant and it has a great story.": [
         {
-            "is_punctuation": false,
             "text": "Ich mag dieses Buch ce livre est intéressant and it has a great story",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich mag dieses Buch "
+                    "text": "Ich mag dieses Buch ",
+                    "index": 0,
+                    "length": 20,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "ce livre est intéressant and it has a great story"
+                    "text": "ce livre est intéressant and it has a great story",
+                    "index": 20,
+                    "length": 49,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 69,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Vielen Dank merci beaucoup for your help.": [
         {
-            "is_punctuation": false,
             "text": "Vielen Dank merci beaucoup for your help",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Vielen Dank "
+                    "text": "Vielen ",
+                    "index": 0,
+                    "length": 7,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "af",
+                    "text": "Dank ",
+                    "index": 7,
+                    "length": 5,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "merci beaucoup for your help"
+                    "text": "merci beaucoup for your help",
+                    "index": 12,
+                    "length": 28,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 40,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Wir reisen nach Deutschland nous voyageons en Allemagne and we are excited.": [
         {
-            "is_punctuation": false,
             "text": "Wir reisen nach Deutschland nous voyageons en Allemagne and we are excited",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Wir reisen nach Deutschland "
+                    "text": "Wir reisen nach Deutschland ",
+                    "index": 0,
+                    "length": 28,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "nous voyageons en Allemagne "
+                    "text": "nous voyageons en Allemagne ",
+                    "index": 28,
+                    "length": 28,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "and we are excited"
+                    "text": "and we are excited",
+                    "index": 56,
+                    "length": 18,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 74,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ],
     "Ich bin müde je suis fatigué and I need some rest.": [
         {
-            "is_punctuation": false,
             "text": "Ich bin müde je suis fatigué and I need some rest",
             "substrings": [
                 {
                     "lang": "de",
-                    "text": "Ich "
-                },
-                {
-                    "lang": "en",
-                    "text": "bin "
-                },
-                {
-                    "lang": "de",
-                    "text": "müde "
+                    "text": "Ich bin müde ",
+                    "index": 0,
+                    "length": 13,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "fr",
-                    "text": "je suis fatigué "
+                    "text": "je suis fatigué ",
+                    "index": 13,
+                    "length": 16,
+                    "is_punctuation": false,
+                    "is_digit": false
                 },
                 {
                     "lang": "en",
-                    "text": "and I need some rest"
+                    "text": "and ",
+                    "index": 29,
+                    "length": 4,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "it",
+                    "text": "I ",
+                    "index": 33,
+                    "length": 2,
+                    "is_punctuation": false,
+                    "is_digit": false
+                },
+                {
+                    "lang": "en",
+                    "text": "need some rest",
+                    "index": 35,
+                    "length": 14,
+                    "is_punctuation": false,
+                    "is_digit": false
                 }
-            ]
+            ],
+            "is_punctuation": false,
+            "is_digit": false
         },
         {
-            "is_punctuation": true,
             "text": ".",
-            "substrings": []
+            "substrings": [
+                {
+                    "lang": "punctuation",
+                    "text": ".",
+                    "index": 49,
+                    "length": 1,
+                    "is_punctuation": true,
+                    "is_digit": false
+                }
+            ],
+            "is_punctuation": true,
+            "is_digit": false
         }
     ]
 }

@@ -3,18 +3,11 @@ from typing import List
 from split_lang import split_by_lang
 from split_lang.split.splitter import SubString, TextSplitter, _get_languages
 from split_lang.split.utils import PUNCTUATION, DEFAULT_THRESHOLD
+from split_lang.detect_lang.detector import DEFAULT_LANG
 from tests.test_config import TEST_DATA_FOLDER
 from wtpsplit import SaT, WtP
 
 import time
-
-new_lang_map = {
-    "zh": "zh",
-    "zh-cn": "zh",
-    "zh-tw": "x",
-    "ko": "ko",
-    "ja": "ja",
-}
 
 
 def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
@@ -35,20 +28,27 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
 
             for substring in substrings:
                 is_punctuation = substring.strip() in PUNCTUATION
+                is_digit = substring.strip().isdigit()
+                lang = DEFAULT_LANG
+                if is_punctuation:
+                    lang = "punctuation"
+                elif is_digit:
+                    lang = "digit"
+
                 substring_objects.append(
                     SubString(
-                        lang="punctuation" if is_punctuation else "x",
+                        lang=lang,
                         text=substring,
                         index=current_index,
                         length=len(substring),
                         is_punctuation=is_punctuation,
+                        is_digit=is_digit,
                     )
                 )
 
                 current_index += len(substring)
             substring_objects = _get_languages(
                 lang_text_list=substring_objects,
-                lang_map=new_lang_map,
                 default_lang="en",
             )
             corrected_split_result.append(substring_objects)
@@ -59,21 +59,14 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
 # splitter = TextSplitter()
 sat = SaT("sat-1l-sm")
 sat.half().to("cuda")
-wtp = WtP("wtp-bert-tiny")
+wtp = WtP("wtp-bert-mini")
 # wtp.half().to("cuda")
 splitter = TextSplitter(wtp_split_model=wtp)
 
 
-def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
-    zh_jp_ko_en_lang_map = {
-        "zh": "zh",
-        "zh-cn": "zh",
-        "zh-tw": "x",
-        "ko": "ko",
-        "ja": "ja",
-    }
+def simple_test(threshold: float, verbose: bool = False):
 
-    text_file_name = "correct_split.txt"
+    text_file_name = "correct_split_merge_punc.txt"
     correct_split = get_corrected_split_result(
         text_file_path=f"{TEST_DATA_FOLDER}/{text_file_name}"
     )
@@ -83,6 +76,8 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
 
     original_strings = []
     test_split: List[List[SubString]] = []
+    original_strings.clear()
+    test_split.clear()
     time_1 = time.time()
     # MARK: collect original_strings from .txt and test `split()`
     for correct_substrings in correct_split:
@@ -97,18 +92,17 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
 
         test_split_substrings = split_by_lang(
             text=original_string,
-            lang_map=zh_jp_ko_en_lang_map,
-            default_lang="en",
             splitter=splitter,
             threshold=threshold,
+            merge_across_punctuation=True,
         )
         test_split.append(test_split_substrings)
         test_total_substring_len += len(test_split_substrings)
         correct_substrings_text = [
-            f"{item.index}|{item.text}" for item in correct_substrings
+            f"{item.lang}|{item.text}" for item in correct_substrings
         ]
         test_split_substrings_text = [
-            f"{item.index}|{item.text}" for item in test_split_substrings
+            f"{item.lang}|{item.text}" for item in test_split_substrings
         ]
 
         for test_substring in test_split_substrings:
@@ -140,31 +134,32 @@ def simple_test(threshold: float = DEFAULT_THRESHOLD, verbose: bool = False):
         print(f"recall: {recall}")
         print(f"F1 Score: {f1_score}")
         print(f"time: {time_2-time_1}")
-    return f1_score
+
+    return precision
 
 
 def find_best_threshold():
-    best_f1_score = 0
+    best_score = 0
     best_threshold = 0
-    for times in range(2, 6):
+    for times in range(5):
         for i in range(1, 10):
-            threshold = i / (10**times)
-            # Call your function to test the threshold and get the F1 score
-            f1_score = simple_test(threshold=threshold, verbose=False)
-            if f1_score > best_f1_score:
-                best_f1_score = f1_score
+            zeros = "0" * times
+            threshold = float(f"0.{zeros}{str(i)}")
+            score = simple_test(threshold=threshold, verbose=False)
+            if score >= best_score:
+                best_score = score
                 best_threshold = threshold
-                print(f"updated: best_f1_score: {best_f1_score}")
+                print(f"updated: best_f1_score: {best_score}")
                 print(f"updated: best_threshold: {best_threshold}")
                 print("------")
 
-    print(f"best_f1_score: {best_f1_score}")
+    print(f"best_score: {best_score}")
     print(f"best_threshold: {best_threshold}")
 
 
 def main():
     # find_best_threshold()
-    simple_test(verbose=True)
+    simple_test(threshold=DEFAULT_THRESHOLD, verbose=True)
 
 
 if __name__ == "__main__":
