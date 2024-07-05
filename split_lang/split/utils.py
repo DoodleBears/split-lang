@@ -1,7 +1,6 @@
 import re
 
 PUNCTUATION = r""",.;:!?，。！？；：、·([{<（【《〈「『“‘)]}>）】》〉」』”’"""
-DEFAULT_THRESHOLD = 1e-4
 
 chinese_char_pattern = re.compile(r"[\u4e00-\u9fff]")
 hangul_pattern = re.compile(r"[\uac00-\ud7af]")

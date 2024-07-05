@@ -2,22 +2,15 @@ import logging
 import langdetect
 import fast_langdetect
 from langdetect.lang_detect_exception import LangDetectException
+from lingua import Language, LanguageDetectorBuilder
+
+from ..model import LangSectionType
+
+
+all_detector = LanguageDetectorBuilder.from_all_languages().build()
+
 
 logger = logging.getLogger(__name__)
-
-LANG_MAP = {
-    "zh": "zh",
-    "yue": "zh",  # 粤语
-    "wuu": "zh",  # 吴语
-    "zh-cn": "zh",
-    "zh-tw": "x",
-    "ko": "ko",
-    "ja": "ja",
-    "de": "de",
-    "fr": "fr",
-    "en": "en",
-}
-DEFAULT_LANG = "x"
 
 
 def detect_lang(text: str) -> str:
@@ -47,8 +40,18 @@ def fast_lang_detect(text: str) -> str:
     return result
 
 
+def lingua_lang_detect_all(text: str) -> str:
+    language: Language | None = all_detector.detect_language_of(text=text)
+    if language is None:
+        return "x"
+    return language.iso_code_639_1.name.lower()
+
+
 # For example '衬衫' cannot be detected by `langdetect`, and `fast_langdetect` will detect it as 'en'
-def detect_lang_combined(text: str, text_len_threshold=3) -> str:
-    if len(text) <= text_len_threshold:
-        return detect_lang(text)
-    return fast_lang_detect(text=text)
+def detect_lang_combined(
+    text: str, lang_section_type: LangSectionType, text_len_threshold=3
+) -> str:
+    # if len(text) <= text_len_threshold:
+    #     return detect_lang(text)
+    # return fast_lang_detect(text=text)
+    return lingua_lang_detect_all(text)

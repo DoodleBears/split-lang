@@ -4,11 +4,16 @@ from typing import Dict, List
 import budoux
 from wtpsplit import SaT, WtP
 
+
 budoux_parser = budoux.load_default_simplified_chinese_parser()
 
-from ..detect_lang.detector import DEFAULT_LANG, LANG_MAP, detect_lang_combined
-from .model import LangSectionType, SubString, SubStringSection
-from .utils import DEFAULT_THRESHOLD, PUNCTUATION, contains_hangul, contains_zh_ja
+from ..detect_lang.detector import (
+    detect_lang_combined,
+)
+from ..model import LangSectionType, SubString, SubStringSection
+from .utils import PUNCTUATION, contains_hangul, contains_zh_ja
+from ..config import LANG_MAP, DEFAULT_LANG, DEFAULT_THRESHOLD
+
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -28,8 +33,8 @@ class TextSplitter:
         wtp_split_model (WtP | SaT): The model used for splitting text.
     """
 
-    def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
-        self.wtp_split_model = wtp_split_model
+    def __init__(self):
+        pass
 
     def split(
         self, text: str, threshold: float = DEFAULT_THRESHOLD, verbose=False
@@ -48,8 +53,33 @@ class TextSplitter:
         Note:
             Override this method to implement a custom splitter.
         """
-        if text in PUNCTUATION or text.isdigit():
-            return text
+        words: List[str] = []
+        exist_space = False
+        chars = []
+        for char in text:
+            if char.isspace() is False:
+                if exist_space:
+                    words.append("".join(chars))
+                    chars.clear()
+                    exist_space = False
+                chars.append(char)
+            else:
+                exist_space = True
+                chars.append(char)
+        if len(chars) > 0:
+            words.append("".join(chars))
+
+        return words
+
+
+class WtpSplitter(TextSplitter):
+    def __init__(self, wtp_split_model: WtP | SaT = WtP("wtp-bert-mini")):
+        self.wtp_split_model = wtp_split_model
+        super().__init__()
+
+    def split(
+        self, text: str, threshold: float = DEFAULT_THRESHOLD, verbose=False
+    ) -> List[str]:
         return self.wtp_split_model.split(
             text_or_texts=text, threshold=threshold, verbose=verbose
         )
@@ -154,31 +184,23 @@ def split(
                     length=section_len,
                 )
             )
-        elif section.lang_section_type is LangSectionType.DIGIT:
-            section.substrings.append(
-                SubString(
-                    is_digit=True,
-                    is_punctuation=False,
-                    text=section.text,
-                    lang="digit",
-                    index=section_index,
-                    length=section_len,
-                )
-            )
         else:
             substrings: List[str] = []
+            lang_section_type = LangSectionType.OTHERS
             if section.lang_section_type is LangSectionType.OTHERS:
                 substrings = splitter.split(
                     text=section.text, threshold=threshold, verbose=verbose
                 )
             elif section.lang_section_type is LangSectionType.KO:
                 substrings = [section.text]
+                lang_section_type = LangSectionType.KO
             elif section.lang_section_type is LangSectionType.ZH_JA:
                 substrings = budoux_parser.parse(section.text)
+                lang_section_type = LangSectionType.ZH_JA
 
             # MARK: initialize language detect
             substrings_with_lang = _init_substr_lang(
-                texts=substrings, lang_map=lang_map
+                texts=substrings, lang_map=lang_map, lang_section_type=lang_section_type
             )
             for substr in substrings_with_lang:
                 substr.index += section_index
@@ -200,6 +222,7 @@ def split(
             substr_list=section.substrings,
             lang_map=lang_map,
             default_lang=default_lang,
+            lang_section_type=section.lang_section_type,
         )
         section.substrings.clear()
         section.substrings = smart_concat_result
@@ -264,6 +287,7 @@ def _pre_split(text: str) -> List[SubStringSection]:
 
 def _smart_merge(
     substr_list: List[SubString],
+    lang_section_type: LangSectionType,
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
 ):
@@ -271,9 +295,14 @@ def _smart_merge(
         lang_map = LANG_MAP
     is_concat_complete = False
     while is_concat_complete is False:
+
         substr_list = _smart_concat_logic(
-            substr_list, lang_map=lang_map, default_lang=default_lang
+            substr_list,
+            lang_map=lang_map,
+            default_lang=default_lang,
+            lang_section_type=lang_section_type,
         )
+        # print(substr_list)
         is_concat_complete = True
 
         for index, block in enumerate(substr_list):
@@ -288,7 +317,9 @@ def _smart_merge(
 
 
 # MARK: _init_substr_lang
-def _init_substr_lang(texts: List[str], lang_map: Dict = None) -> List[SubString]:
+def _init_substr_lang(
+    texts: List[str], lang_section_type: LangSectionType, lang_map: Dict = None
+) -> List[SubString]:
     substrings = []
     if lang_map is None:
         lang_map = LANG_MAP
@@ -319,7 +350,7 @@ def _init_substr_lang(texts: List[str], lang_map: Dict = None) -> List[SubString
                 )
             )
         else:
-            cur_lang = detect_lang_combined(text)
+            cur_lang = detect_lang_combined(text, lang_section_type=lang_section_type)
             cur_lang = lang_map.get(cur_lang, "x")
             substrings.append(
                 SubString(
@@ -541,16 +572,26 @@ def _merge_substrings_across_punctuation(
 # MARK: _get_languages
 def _get_languages(
     lang_text_list: List[SubString],
+    lang_section_type: LangSectionType,
     lang_map: Dict = None,
     default_lang: str = DEFAULT_LANG,
 ):
     if lang_map is None:
         lang_map = LANG_MAP
 
+    if lang_section_type in [
+        LangSectionType.DIGIT,
+        LangSectionType.KO,
+        LangSectionType.PUNCTUATION,
+    ]:
+        return lang_text_list
+
     for _, substr in enumerate(lang_text_list):
         if substr.is_punctuation or substr.is_digit:
             continue
-        cur_lang = detect_lang_combined(substr.text)
+        cur_lang = detect_lang_combined(
+            text=substr.text, lang_section_type=lang_section_type
+        )
         cur_lang = lang_map.get(cur_lang, default_lang)
 
         if cur_lang != "x":
@@ -559,20 +600,29 @@ def _get_languages(
 
 
 def _smart_concat_logic(
-    lang_text_list: List[SubString], lang_map: Dict = None, default_lang: str = None
+    lang_text_list: List[SubString],
+    lang_section_type: LangSectionType,
+    lang_map: Dict = None,
+    default_lang: str = None,
 ):
 
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _merge_substrings(lang_text_list)
     lang_text_list = _get_languages(
-        lang_text_list=lang_text_list, lang_map=lang_map, default_lang="x"
+        lang_text_list=lang_text_list,
+        lang_map=lang_map,
+        default_lang=default_lang,
+        lang_section_type=lang_section_type,
     )
     lang_text_list = _merge_middle_substr_to_two_side(lang_text_list)
     lang_text_list = _fill_missing_languages(lang_text_list)
     lang_text_list = _merge_two_side_substr_to_near(lang_text_list)
     lang_text_list = _merge_substrings(lang_text_list)
     lang_text_list = _get_languages(
-        lang_text_list=lang_text_list, lang_map=lang_map, default_lang=default_lang
+        lang_text_list=lang_text_list,
+        lang_map=lang_map,
+        default_lang=default_lang,
+        lang_section_type=lang_section_type,
     )
 
     return lang_text_list

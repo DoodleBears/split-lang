@@ -1,13 +1,19 @@
+import time
 from typing import List
 
-from split_lang import split_by_lang
-from split_lang.split.splitter import SubString, TextSplitter, _get_languages
-from split_lang.split.utils import PUNCTUATION, DEFAULT_THRESHOLD
-from split_lang.detect_lang.detector import DEFAULT_LANG
-from tests.test_config import TEST_DATA_FOLDER
 from wtpsplit import SaT, WtP
 
-import time
+from split_lang import split_by_lang
+from split_lang.config import DEFAULT_LANG, DEFAULT_THRESHOLD
+from split_lang.model import LangSectionType
+from split_lang.split.splitter import (
+    SubString,
+    TextSplitter,
+    WtpSplitter,
+    _get_languages,
+)
+from split_lang.split.utils import PUNCTUATION
+from tests.test_config import TEST_DATA_FOLDER
 
 
 def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
@@ -50,6 +56,7 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
             substring_objects = _get_languages(
                 lang_text_list=substring_objects,
                 default_lang="en",
+                lang_section_type=LangSectionType.ALL,
             )
             corrected_split_result.append(substring_objects)
 
@@ -61,7 +68,8 @@ sat = SaT("sat-1l-sm")
 sat.half().to("cuda")
 wtp = WtP("wtp-bert-mini")
 # wtp.half().to("cuda")
-splitter = TextSplitter(wtp_split_model=wtp)
+# splitter = WtpSplitter(wtp_split_model=wtp)
+splitter = TextSplitter()
 
 
 def simple_test(threshold: float, verbose: bool = False):
@@ -146,7 +154,7 @@ def find_best_threshold():
             zeros = "0" * times
             threshold = float(f"0.{zeros}{str(i)}")
             score = simple_test(threshold=threshold, verbose=False)
-            if score >= best_score:
+            if score > best_score:
                 best_score = score
                 best_threshold = threshold
                 print(f"updated: best_f1_score: {best_score}")
