@@ -1,3 +1,3 @@
-from .detect_lang.detector import DEFAULT_LANG, LANG_MAP
-from .split.model import SubString, SubStringSection
-from .split.splitter import TextSplitter, split, split_by_lang
+from .split.splitter import LangSplitter
+from .model import SubString, SubStringSection, LangSectionType
+from .config import DEFAULT_LANG, DEFAULT_LANG_MAP

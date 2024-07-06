@@ -8,10 +8,10 @@
 <div align="center">
   <h1>split-lang</h1>
 
-Splitting sentences by concatenating over-split substrings based on their language
+Splitting sentences by languages through concatenating over split substrings based on their language
 powered by
-1. splitting: [`wtpsplit`](https://github.com/segment-any-text/wtpsplit) and [`budoux`](https://github.com/google/budoux)
-2. language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`langdetect`](https://github.com/Mimino666/langdetect)
+1. splitting: [`budoux`](https://github.com/google/budoux) and rule-base splitting
+2. language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
 
 </div>
 
@@ -41,11 +41,17 @@ powered by
 **Stage 1**: rule-based split using punctuation
 - `hello, how are you` -> `hello` | `,` | `how are you`
 
-**Stage 2**: then, over-split text to substrings by `wtpsplit`
+**Stage 2**: then, over-split text to substrings by `budoux`, ` ` (space) and regex
 - `你喜欢看アニメ吗` -> `你` | `喜欢` | `看` | `アニメ` | `吗`
+- `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `はとても` | `感動的` | `でした`
+- `我朋友是日本人彼はとても優しいです` -> `我` | `朋友` | `是` | `日本人` | `彼は` | `とても` | `優しいです`
+- `how are you` -> `how ` | `are ` | `you`
 
 **Stage 3**: concatenate substrings based on their languages using `fast-langdetect` and `langdetect`
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
+- `昨天` | `見た` | `映画` | `はとても` | `感動的` | `でした` -> `昨天` | `見た映画はとても感動的でした`
+- `我` | `朋友` | `是` | `日本人` | `彼は` | `とても` | `優しいです` -> `我朋友是日本人` | `彼はとても優しいです`
+- `how ` | `are ` | `you` -> `how are you`
 
 # 2. Motivation
 1. TTS (Text-To-Speech) model often fails on multi-language sentence, separate sentence based on language will bring better result
@@ -63,9 +69,9 @@ Vielen Dank merci beaucoup for your help.
   - [3.1. Installation](#31-installation)
   - [3.2. Basic](#32-basic)
     - [3.2.1. `split_by_lang`](#321-split_by_lang)
+    - [3.2.2. `merge_across_digit`](#322-merge_across_digit)
   - [3.3. Advanced](#33-advanced)
-    - [3.3.1. `TextSplitter` and `threshold`](#331-textsplitter-and-threshold)
-    - [3.3.2. usage of `lang_map` and `default_lang` (for better result)](#332-usage-of-lang_map-and-default_lang-for-better-result)
+    - [3.3.1. usage of `lang_map` and `default_lang` (for better result)](#331-usage-of-lang_map-and-default_lang-for-better-result)
 - [4. Acknowledgement](#4-acknowledgement)
 
 
@@ -80,17 +86,18 @@ pip install split-lang
 ```
 
 
-
+****
 ## 3.2. Basic
 ### 3.2.1. `split_by_lang`
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DoodleBears/split-lang/blob/main/split-lang-demo.ipynb)
 
 ```python
-from split_lang import split_by_lang
-text = "你喜欢看アニメ吗我也喜欢看"
+from split_lang import LangSplitter
+lang_splitter = LangSplitter()
+text = "你喜欢看アニメ吗"
 
-substr = split_by_lang(
+substr = lang_splitter.split_by_lang(
     text=text,
 )
 for index, item in enumerate(substr):
@@ -100,106 +107,78 @@ for index, item in enumerate(substr):
 ```
 0|zh:你喜欢看
 1|ja:アニメ
-2|zh:吗我也喜欢看
+2|zh:吗
 ```
 
 ```python
-from split_lang import split_by_lang
+from split_lang import LangSplitter
+lang_splitter = LangSplitter(merge_across_punctuation=True)
 import time
 texts = [
-    "你喜欢看アニメ吗我也喜欢看",
+    "你喜欢看アニメ吗？我也喜欢看",
     "Please star this project on GitHub, Thanks you. I love you请加星这个项目，谢谢你。我爱你この項目をスターしてください、ありがとうございます！愛してる",
 ]
 time1 = time.time()
 for text in texts:
-    substr = split_by_lang(
+    substr = lang_splitter.split_by_lang(
         text=text,
-        threshold=4.9e-5,
-        merge_across_punctuation=True,
     )
     for index, item in enumerate(substr):
         print(f"{index}|{item.lang}:{item.text}")
     print("----------------------")
 time2 = time.time()
-
-for text in texts:
-    substr = split_by_lang(
-        text=text,
-        threshold=4.9e-5,
-        merge_across_punctuation=False,
-        merge_across_digit=False,
-    )
-    for index, item in enumerate(substr):
-        print(f"{index}|{item.lang}:{item.text}")
-    print("----------------------")
-time3 = time.time()
-
 print(time2 - time1)
-print(time3 - time2)
 ```
-
 
 ```
 0|zh:你喜欢看
 1|ja:アニメ
-2|zh:吗我也喜欢看
+2|zh:吗？我也喜欢看
 ----------------------
 0|en:Please star this project on GitHub, Thanks you. I love you
 1|zh:请加星这个项目，谢谢你。我爱你
 2|ja:この項目をスターしてください、ありがとうございます！愛してる
 ----------------------
-0|zh:你喜欢看
-1|ja:アニメ
-2|zh:吗我也喜欢看
-----------------------
-0|en:Please star this project on GitHub
-1|punctuation:, 
-2|en:Thanks you
-3|punctuation:. 
-4|en:I love you
-5|zh:请加星这个项目
-6|punctuation:，
-7|zh:谢谢你
-8|punctuation:。
-9|zh:我爱你
-10|ja:この項目をスターしてください
-11|punctuation:、
-12|ja:ありがとうございます
-13|punctuation:！
-14|ja:愛してる
-----------------------
-0.15833711624145508
-0.1587212085723877
+0.007998466491699219
+```
+
+### 3.2.2. `merge_across_digit`
+
+```python
+lang_splitter.merge_across_digit = False
+texts = [
+    "衬衫的价格是9.15便士",
+]
+for text in texts:
+    substr = lang_splitter.split_by_lang(
+        text=text,
+    )
+    for index, item in enumerate(substr):
+        print(f"{index}|{item.lang}:{item.text}")
+```
+
+```
+0|zh:衬衫的价格是
+1|digit:9.15
+2|zh:便士
 ```
 
 ## 3.3. Advanced
 
-### 3.3.1. `TextSplitter` and `threshold`
-
-`TextSplitter` is a class which implement `split()` method to split the text after splitting with rule-based logic ([Idea-Stage 2](#1-idea)).
-
-By default, it using `WtP` model from `wtpsplit`. (since `WtP` is faster and more accurate in SHORT TEXT situation, switch to `SaT` model for long paragraph).
-
-the `threshold` is used for `WtP` and `SaT` models, default to `1e-4`, the smaller the more substring you will get in `wtpsplit` stage.
-
-> [!NOTE]
-> Check GitHub Repo `tests/split_acc.py` to find best threshold for your use case
-
-
-### 3.3.2. usage of `lang_map` and `default_lang` (for better result)
+### 3.3.1. usage of `lang_map` and `default_lang` (for better result)
 
 > [!IMPORTANT]
 > Add lang code for your usecase if other languages are needed
 
 - default `lang_map` looks like below
-  - if `langdetect` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `default_lang`
+  - if `langua-py` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `default_lang`
   - if you set `default_lang` or `value` of `key:value` in `lang_map` to `x`, this substring will be merged to the near substring
     - `zh` | `x` | `jp` -> `zh` | `jp` (`x` been merged to one side)
     - In example below, `zh-tw` is set to `x` because character in `zh` and `jp` sometimes been detected as Traditional Chinese
 - default `default_lang` is `x`
 
 ```python
-LANG_MAP = {
+DEFAULT_LANG_MAP = {
     "zh": "zh",
     "yue": "zh",  # 粤语
     "wuu": "zh",  # 吴语
@@ -210,12 +189,14 @@ LANG_MAP = {
     "de": "de",
     "fr": "fr",
     "en": "en",
+    "hr": "en",
 }
 DEFAULT_LANG = "x"
+
 ```
 
 # 4. Acknowledgement
 
 - Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
-- Text segmentation depends on [segment-any-text/wtpsplit](https://github.com/segment-any-text/wtpsplit) and [google/budoux](https://github.com/google/budoux)
-- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [Mimino666/langdetect](https://github.com/Mimino666/langdetect) (fix miss detecting Chinese as Korean in [DoodleBears/langdetect](https://github.com/DoodleBears/langdetect))
+- Text segmentation depends on [google/budoux](https://github.com/google/budoux)
+- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [lingua-py](https://github.com/pemistahl/lingua-py)

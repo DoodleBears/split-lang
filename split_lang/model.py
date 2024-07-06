@@ -10,6 +10,7 @@ class LangSectionType(Enum):
     PUNCTUATION = "punctuation"
     DIGIT = "digit"
     OTHERS = "others"
+    ALL = "all"
 
 
 class SubString(BaseModel):

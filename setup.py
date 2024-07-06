@@ -13,7 +13,7 @@ def read(*relpath):
 
 setup(
     name="split_lang",
-    version="1.2.0",
+    version="1.3.0",
     description="A package for splitting sentences by language (concatenating over-split substrings based on their language)",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
@@ -23,9 +23,8 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        "langdetect-py",
         "fast_langdetect",
-        "wtpsplit",
+        "lingua-language-detector",
         "pydantic",
         "budoux",
     ],

@@ -1,21 +1,3 @@
-from pydantic import BaseModel
-from typing import Dict, List, Optional
-from split_lang.split.splitter import TextSplitter
-from split_lang.detect_lang.detector import DEFAULT_LANG
-
-
-class TestData(BaseModel):
-    filename: str
-    texts: List[str]
-    threshold: float
-    splitter: TextSplitter
-    lang_map: Optional[Dict]
-    default_lang: str = DEFAULT_LANG
-
-    class Config:
-        arbitrary_types_allowed = True
-
-
 texts_with_digit = [
     "你喜欢看アニメ吗？",
     "衬衫的价格是9.15便士",
