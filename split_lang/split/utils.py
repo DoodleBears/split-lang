@@ -1,6 +1,6 @@
 import re
 
-PUNCTUATION = r""",.;:!?，。！？；：、·([{<（【《〈「『“‘)]}>）】》〉」』”’"""
+PUNCTUATION = r""",.;:!?，。！？；：、·([{<（【《〈「『“‘)]}>）】》〉」』”’"-_——#$%&……￥'*+<=>?@[\]^_`{|}~"""
 
 chinese_char_pattern = re.compile(r"[\u4e00-\u9fff]")
 hangul_pattern = re.compile(r"[\uac00-\ud7af]")

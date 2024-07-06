@@ -223,22 +223,10 @@ class LangSplitter:
         substr_list: List[SubString],
         lang_section_type: LangSectionType,
     ):
-        is_concat_complete = False
-        while is_concat_complete is False:
-            substr_list = self._smart_concat_logic(
-                substr_list,
-                lang_section_type=lang_section_type,
-            )
-            is_concat_complete = True
-
-            for index, block in enumerate(substr_list):
-                if block.lang == "x":
-                    is_concat_complete = False
-                    break
-                if index < len(substr_list) - 1:
-                    if substr_list[index].lang == substr_list[index + 1].lang:
-                        is_concat_complete = False
-                        break
+        substr_list = self._smart_concat_logic(
+            substr_list,
+            lang_section_type=lang_section_type,
+        )
         return substr_list
 
     # MARK: _init_substr_lang
