@@ -1,6 +1,4 @@
-DEFAULT_THRESHOLD = 1e-4
-
-LANG_MAP = {
+DEFAULT_LANG_MAP = {
     "zh": "zh",
     "yue": "zh",  # 粤语
     "wuu": "zh",  # 吴语

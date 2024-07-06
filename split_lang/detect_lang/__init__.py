@@ -1,4 +1,1 @@
-from .detector import (
-    detect_lang,
-    detect_lang_combined,
-)
+from .detector import detect_lang_combined, possible_detection_list

@@ -1,22 +1,19 @@
 import time
 from typing import List
 
-from wtpsplit import SaT, WtP
-
-from split_lang import split_by_lang
-from split_lang.config import DEFAULT_LANG, DEFAULT_THRESHOLD
+from split_lang.config import DEFAULT_LANG
 from split_lang.model import LangSectionType
 from split_lang.split.splitter import (
     SubString,
-    TextSplitter,
-    WtpSplitter,
-    _get_languages,
+    LangSplitter,
 )
 from split_lang.split.utils import PUNCTUATION
 from tests.test_config import TEST_DATA_FOLDER
 
 
-def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
+def get_corrected_split_result(
+    splitter: LangSplitter, text_file_path: str
+) -> List[List[SubString]]:
     """
     # 1. split by `|`
     # 2. convert to SubString, concat to list
@@ -53,9 +50,8 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
                 )
 
                 current_index += len(substring)
-            substring_objects = _get_languages(
+            substring_objects = splitter._get_languages(
                 lang_text_list=substring_objects,
-                default_lang="en",
                 lang_section_type=LangSectionType.ALL,
             )
             corrected_split_result.append(substring_objects)
@@ -63,20 +59,11 @@ def get_corrected_split_result(text_file_path: str) -> List[List[SubString]]:
     return corrected_split_result
 
 
-# splitter = TextSplitter()
-sat = SaT("sat-1l-sm")
-sat.half().to("cuda")
-wtp = WtP("wtp-bert-mini")
-# wtp.half().to("cuda")
-# splitter = WtpSplitter(wtp_split_model=wtp)
-splitter = TextSplitter()
-
-
-def simple_test(threshold: float, verbose: bool = False):
+def simple_test(splitter: LangSplitter, debug: bool = False):
 
     text_file_name = "correct_split_merge_punc.txt"
     correct_split = get_corrected_split_result(
-        text_file_path=f"{TEST_DATA_FOLDER}/{text_file_name}"
+        splitter=splitter, text_file_path=f"{TEST_DATA_FOLDER}/{text_file_name}"
     )
     correct_total_substring_len = 0
     test_total_substring_len = 0
@@ -98,11 +85,8 @@ def simple_test(threshold: float, verbose: bool = False):
         original_strings.append(original_string)
         # print(original_string)
 
-        test_split_substrings = split_by_lang(
+        test_split_substrings = splitter.split_by_lang(
             text=original_string,
-            splitter=splitter,
-            threshold=threshold,
-            merge_across_punctuation=True,
         )
         test_split.append(test_split_substrings)
         test_total_substring_len += len(test_split_substrings)
@@ -122,7 +106,7 @@ def simple_test(threshold: float, verbose: bool = False):
                     correct_split_num += 1
                     current_correct_num += 1
                     break
-        if verbose:
+        if debug:
             print(f"correct_substrings   : {correct_substrings_text}")
             print(f"test_split_substrings: {test_split_substrings_text}")
             print(
@@ -134,7 +118,7 @@ def simple_test(threshold: float, verbose: bool = False):
     precision = correct_split_num / correct_total_substring_len
     recall = correct_split_num / test_total_substring_len
     f1_score = 2 * precision * recall / (precision + recall)
-    if verbose:
+    if debug:
         print(f"total substring num: {correct_total_substring_len}")
         print(f"test total substring num: {test_total_substring_len}")
         print(f"text acc num: {correct_split_num}")
@@ -146,14 +130,14 @@ def simple_test(threshold: float, verbose: bool = False):
     return precision
 
 
-def find_best_threshold():
+def find_best_threshold(splitter: LangSplitter):
     best_score = 0
     best_threshold = 0
     for times in range(5):
         for i in range(1, 10):
             zeros = "0" * times
             threshold = float(f"0.{zeros}{str(i)}")
-            score = simple_test(threshold=threshold, verbose=False)
+            score = simple_test(splitter=splitter, debug=False)
             if score > best_score:
                 best_score = score
                 best_threshold = threshold
@@ -166,8 +150,9 @@ def find_best_threshold():
 
 
 def main():
-    # find_best_threshold()
-    simple_test(threshold=DEFAULT_THRESHOLD, verbose=True)
+    splitter = LangSplitter(merge_across_punctuation=True)
+    # find_best_threshold(splitter=splitter)
+    simple_test(splitter=splitter, debug=True)
 
 
 if __name__ == "__main__":
