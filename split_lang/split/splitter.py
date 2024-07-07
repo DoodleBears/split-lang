@@ -33,12 +33,13 @@ class LangSplitter:
         self.merge_across_punctuation = merge_across_punctuation
         self.merge_across_digit = merge_across_digit
 
+    # MARK: split_by_lang
     def split_by_lang(
         self,
         text: str,
     ) -> List[SubString]:
 
-        sections = self.split(text=text)
+        sections = self._split(text=text)
         substrings: List[SubString] = []
         for section in sections:
             substrings.extend(section.substrings)
@@ -55,7 +56,8 @@ class LangSplitter:
 
         return substrings
 
-    def split(
+    # MARK: _split
+    def _split(
         self,
         text: str,
     ) -> List[SubStringSection]:
@@ -488,41 +490,44 @@ class LangSplitter:
         substrings: List[SubString],
     ) -> List[SubString]:
         new_substrings: List[SubString] = []
-        left_digit_index = 0
-        is_left_has_digit = False
 
-        for index, substring in enumerate(substrings):
+        for _, substring in enumerate(substrings):
             if substring.is_digit:
-                if index == 0:
-                    is_left_has_digit = True
-                if new_substrings:
+
+                if new_substrings and new_substrings[-1].lang != "punctuation":
                     new_substrings[-1].text += substring.text
                     new_substrings[-1].length += substring.length
+                else:
+                    new_substrings.append(substring)
             else:
-                if left_digit_index == 0:
-                    left_digit_index = index
+                if new_substrings and new_substrings[-1].lang == "digit":
+                    substring.text = new_substrings[-1].text + substring.text
+                    substring.index = new_substrings[-1].index
+                    substring.length = new_substrings[-1].length + substring.length
+
+                    new_substrings.pop()
                 new_substrings.append(substring)
 
-        if is_left_has_digit:
-            left_digit_text = "".join(
-                substr.text for substr in substrings[0:left_digit_index]
-            )
-            if new_substrings:
-                new_substrings[0].text = left_digit_text + new_substrings[0].text
-                new_substrings[0].length = (
-                    len(left_digit_text) + new_substrings[0].length
-                )
-            else:
-                new_substrings.append(
-                    SubString(
-                        is_digit=True,
-                        is_punctuation=False,
-                        text=left_digit_text,
-                        length=len(left_digit_text),
-                        lang="digit",
-                        index=0,
-                    )
-                )
+        # if is_left_has_digit:
+        #     left_digit_text = "".join(
+        #         substr.text for substr in substrings[0:left_digit_index]
+        #     )
+        #     if new_substrings:
+        #         new_substrings[0].text = left_digit_text + new_substrings[0].text
+        #         new_substrings[0].length = (
+        #             len(left_digit_text) + new_substrings[0].length
+        #         )
+        #     else:
+        #         new_substrings.append(
+        #             SubString(
+        #                 is_digit=True,
+        #                 is_punctuation=False,
+        #                 text=left_digit_text,
+        #                 length=len(left_digit_text),
+        #                 lang="digit",
+        #                 index=0,
+        #             )
+        #         )
         new_substrings = self._merge_substrings(substrings=new_substrings)
         return new_substrings
 
