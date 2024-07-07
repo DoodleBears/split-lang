@@ -196,8 +196,9 @@ class LangSplitter:
                 )
                 current_text.clear()
 
-        for char in text:
-            if char.isspace() is False:
+        for index, char in enumerate(text):
+            is_space = char.isspace()
+            if is_space is False:
                 if contains_zh_ja(char):
                     if current_lang != LangSectionType.ZH_JA:
                         add_substring(current_lang)
@@ -207,8 +208,11 @@ class LangSplitter:
                         add_substring(current_lang)
                         current_lang = LangSectionType.KO
                 elif char in PUNCTUATION:
-                    add_substring(current_lang)
-                    current_lang = LangSectionType.PUNCTUATION
+                    if char == "'" and index > 0 and text[index - 1].isspace() is False:
+                        pass
+                    else:
+                        add_substring(current_lang)
+                        current_lang = LangSectionType.PUNCTUATION
                 else:
                     if current_lang != LangSectionType.OTHERS:
                         add_substring(current_lang)

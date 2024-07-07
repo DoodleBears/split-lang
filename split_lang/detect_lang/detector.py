@@ -36,7 +36,7 @@ def detect_lang_combined(text: str, lang_section_type: LangSectionType) -> str:
         if contains_ja(text):
             return "ja"
         return fast_lang_detect(text)
-    return lingua_lang_detect_all(text)
+    return fast_lang_detect(text)
 
 
 def possible_detection_list(text) -> List[str]:
