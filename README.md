@@ -2,16 +2,17 @@
 
 <img alt="VisActor Logo" width=50% src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-logo.svg"/>
 
-<img alt="VisActor Logo" width=50% src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
+<img alt="VisActor Logo" width=70% src="https://github.com/DoodleBears/split-lang/blob/main/.github/profile/split-lang-banner.svg"/>
   
 </div>
 <div align="center">
   <h1>split-lang</h1>
 
-Splitting sentences by languages through concatenating over split substrings based on their language
-powered by
-1. splitting: [`budoux`](https://github.com/google/budoux) and rule-base splitting
-2. language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
+Split text by languages through concatenating over split substrings based on their language, powered by
+
+splitting: [`budoux`](https://github.com/google/budoux) and rule-base splitting
+
+language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
 
 </div>
 
@@ -36,26 +37,28 @@ powered by
 
 
 
-# 1. Idea
+# 1. How it works
 
 **Stage 1**: rule-based split using punctuation
 - `hello, how are you` -> `hello` | `,` | `how are you`
 
-**Stage 2**: then, over-split text to substrings by `budoux`, ` ` (space) and regex
+**Stage 2**: then, over-split text to substrings by [`budoux`](https://github.com/google/budoux), ` ` (space) and regex
 - `你喜欢看アニメ吗` -> `你` | `喜欢` | `看` | `アニメ` | `吗`
 - `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `はとても` | `感動的` | `でした`
 - `我朋友是日本人彼はとても優しいです` -> `我` | `朋友` | `是` | `日本人` | `彼は` | `とても` | `優しいです`
 - `how are you` -> `how ` | `are ` | `you`
 
-**Stage 3**: concatenate substrings based on their languages using `fast-langdetect` and `langdetect`
+**Stage 3**: concatenate substrings based on their languages using [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
 - `昨天` | `見た` | `映画` | `はとても` | `感動的` | `でした` -> `昨天` | `見た映画はとても感動的でした`
 - `我` | `朋友` | `是` | `日本人` | `彼は` | `とても` | `優しいです` -> `我朋友是日本人` | `彼はとても優しいです`
 - `how ` | `are ` | `you` -> `how are you`
 
 # 2. Motivation
-1. TTS (Text-To-Speech) model often fails on multi-language sentence, separate sentence based on language will bring better result
-2. Existed NLP toolkit (e.g. `SpaCy`) is helpful for parsing text in one language, however when it comes to multi-language texts like below are hard to deal with: 
+- `TTS (Text-To-Speech)` model often **fails** on multi-language speech generation, there are two ways to do:
+  - Train a model can pronounce multiple languages
+  - **(This Package)** Separate sentence based on language first, then use different language models
+- Existed NLP toolkit (e.g. `SpaCy`) is helpful for parsing text in **ONE** language for each model. However, multi-language texts are hard to deal with: 
 
 ```
 你喜欢看アニメ吗？
@@ -63,7 +66,7 @@ Vielen Dank merci beaucoup for your help.
 你最近好吗、最近どうですか？요즘 어떻게 지내요？sky is clear and sunny。
 ```
 
-- [1. Idea](#1-idea)
+- [1. How it works](#1-how-it-works)
 - [2. Motivation](#2-motivation)
 - [3. Usage](#3-usage)
   - [3.1. Installation](#31-installation)
@@ -71,7 +74,7 @@ Vielen Dank merci beaucoup for your help.
     - [3.2.1. `split_by_lang`](#321-split_by_lang)
     - [3.2.2. `merge_across_digit`](#322-merge_across_digit)
   - [3.3. Advanced](#33-advanced)
-    - [3.3.1. usage of `lang_map` and `default_lang` (for better result)](#331-usage-of-lang_map-and-default_lang-for-better-result)
+    - [3.3.1. usage of `lang_map` and `default_lang` (for your languages)](#331-usage-of-lang_map-and-default_lang-for-your-languages)
 - [4. Acknowledgement](#4-acknowledgement)
 
 
@@ -165,7 +168,7 @@ for text in texts:
 
 ## 3.3. Advanced
 
-### 3.3.1. usage of `lang_map` and `default_lang` (for better result)
+### 3.3.1. usage of `lang_map` and `default_lang` (for your languages)
 
 > [!IMPORTANT]
 > Add lang code for your usecase if other languages are needed
