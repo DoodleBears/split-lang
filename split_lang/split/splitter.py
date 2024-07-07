@@ -83,6 +83,17 @@ class LangSplitter:
                         length=section_len,
                     )
                 )
+            elif section.lang_section_type is LangSectionType.DIGIT:
+                section.substrings.append(
+                    SubString(
+                        is_digit=True,
+                        is_punctuation=False,
+                        text=section.text,
+                        lang="digit",
+                        index=section_index,
+                        length=section_len,
+                    )
+                )
             else:
                 substrings: List[str] = []
                 lang_section_type = LangSectionType.OTHERS
@@ -127,6 +138,7 @@ class LangSplitter:
                 logger.info(section)
         return wtpsplit_section
 
+    # MARK: _parse_without_zh_ja
     def _parse_without_zh_ja(self, text: str):
         words: List[str] = []
         exist_space = False
@@ -146,6 +158,7 @@ class LangSplitter:
 
         return words
 
+    # MARK: _parse_zh_ja
     def _parse_zh_ja(self, text):
         splitted_texts_jp = []
         splitted_texts_jp = jp_budoux_parser.parse(text)
@@ -178,6 +191,7 @@ class LangSplitter:
 
         return new_substrings
 
+    # MARK: _pre_split
     def _pre_split(self, text: str) -> List[SubStringSection]:
         sections = []
         current_lang: LangSectionType = LangSectionType.OTHERS
@@ -207,6 +221,10 @@ class LangSplitter:
                     if current_lang != LangSectionType.KO:
                         add_substring(current_lang)
                         current_lang = LangSectionType.KO
+                elif char.isdigit():
+                    if current_lang != LangSectionType.DIGIT:
+                        add_substring(current_lang)
+                        current_lang = LangSectionType.DIGIT
                 elif char in PUNCTUATION:
                     if char == "'" and index > 0 and text[index - 1].isspace() is False:
                         pass
