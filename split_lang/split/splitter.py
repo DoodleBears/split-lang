@@ -19,17 +19,36 @@ logger = logging.getLogger(__name__)
 
 
 class LangSplitter:
+
     def __init__(
         self,
         lang_map: Dict = None,
         default_lang: str = DEFAULT_LANG,
-        debug: bool = False,
+        punctuation: str = PUNCTUATION,
+        not_merge_punctuation: str = "",
         merge_across_punctuation: bool = True,
         merge_across_digit: bool = True,
+        debug: bool = False,
     ) -> None:
+        """
+        1. pre-split stage will use `punctuation` and `digit` to split text then leave substring that contains language character
+        2. rule-based and machine learning model will be used for extract words from substring
+        3. if language detection of words are same, concat the words into a new substring
+
+        Args:
+            lang_map (Dict, optional): `{"zh-tw": "zh"}` will map `zh-tw` to `zh`. Defaults to `DEFAULT_LANG_MAP`.
+            default_lang (str, optional): when `lang_map` did not have the language key detected, fallback to default_lang. Defaults to `DEFAULT_LANG`.
+            punctuation (str, optional): character that should be treat as punctuation. Defaults to `PUNCTUATION`.
+            not_merge_punctuation (str, optional): usually been set to `.。?？！!` if you do not want to concat all substrings together. Defaults to "".
+            merge_across_punctuation (bool, optional): merge substring across punctuation. Defaults to True.
+            merge_across_digit (bool, optional): merge substring across number (e.g. `233`, `9.15`) will be concat to near substring. Defaults to True.
+            debug (bool, optional): print process for debug. Defaults to False.
+        """
         self.lang_map = lang_map if lang_map is not None else DEFAULT_LANG_MAP
         self.default_lang = default_lang
         self.debug = debug
+        self.punctuation = punctuation
+        self.not_merge_punctuation = not_merge_punctuation
         self.merge_across_punctuation = merge_across_punctuation
         self.merge_across_digit = merge_across_digit
 
@@ -38,6 +57,17 @@ class LangSplitter:
         self,
         text: str,
     ) -> List[SubString]:
+        """
+        1. pre-split stage will use `punctuation` and `digit` to split text then leave substring that contains language character
+        2. rule-based and machine learning model will be used for extract words from substring
+        3. if language detection of words are same, concat the words into a new substring
+
+        Args:
+            text (str): text to split
+
+        Returns:
+            List[SubString]: which contains language, text, index, length, is_punctuation and is_digit data of substring text
+        """
 
         sections = self._split(text=text)
         substrings: List[SubString] = []
@@ -227,7 +257,7 @@ class LangSplitter:
                     if current_lang != LangSectionType.DIGIT:
                         add_substring(current_lang)
                         current_lang = LangSectionType.DIGIT
-                elif char in PUNCTUATION:
+                elif char in self.punctuation:
                     if char == "'" and index > 0 and text[index - 1].isspace() is False:
                         pass
                     else:
@@ -242,6 +272,7 @@ class LangSplitter:
         add_substring(current_lang)
         return sections
 
+    # MARK: _smart_merge
     def _smart_merge(
         self,
         substr_list: List[SubString],
@@ -264,7 +295,7 @@ class LangSplitter:
         substring_index = 0
         for text in texts:
             length = len(text)
-            if text in PUNCTUATION:
+            if text in self.punctuation:
                 substrings.append(
                     SubString(
                         is_punctuation=True,
@@ -508,26 +539,6 @@ class LangSplitter:
                     new_substrings.pop()
                 new_substrings.append(substring)
 
-        # if is_left_has_digit:
-        #     left_digit_text = "".join(
-        #         substr.text for substr in substrings[0:left_digit_index]
-        #     )
-        #     if new_substrings:
-        #         new_substrings[0].text = left_digit_text + new_substrings[0].text
-        #         new_substrings[0].length = (
-        #             len(left_digit_text) + new_substrings[0].length
-        #         )
-        #     else:
-        #         new_substrings.append(
-        #             SubString(
-        #                 is_digit=True,
-        #                 is_punctuation=False,
-        #                 text=left_digit_text,
-        #                 length=len(left_digit_text),
-        #                 lang="digit",
-        #                 index=0,
-        #             )
-        #         )
         new_substrings = self._merge_substrings(substrings=new_substrings)
         return new_substrings
 
@@ -539,7 +550,10 @@ class LangSplitter:
         new_substrings: List[SubString] = []
         lang = ""
         for substring in substrings:
-            if substring.is_punctuation:
+            if (
+                substring.is_punctuation
+                and substring.text.strip() not in self.not_merge_punctuation
+            ):
                 if new_substrings and new_substrings[-1].lang == lang:
                     new_substrings[-1].text += substring.text
                     new_substrings[-1].length += substring.length
@@ -578,6 +592,7 @@ class LangSplitter:
                 substr.lang = cur_lang
         return lang_text_list
 
+    # MARK: _smart_concat_logic
     def _smart_concat_logic(
         self,
         lang_text_list: List[SubString],
