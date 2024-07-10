@@ -76,6 +76,7 @@ Vielen Dank merci beaucoup for your help.
   - [3.3. 上級利用方法](#33-上級利用方法)
     - [3.3.1.  `lang_map` と `default_lang` の使用法 (多言語対応)](#331--lang_map-と-default_lang-の使用法-多言語対応)
 - [4. 謝辞](#4-謝辞)
+- [5. ✨スタータイムライン](#5-スタータイムライン)
 
 
 # 3. 📕利用方法
@@ -203,3 +204,7 @@ DEFAULT_LANG = "x"
 - プロジェクト [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect) に啓発され
 - 中日テキスト分割に [google/budoux](https://github.com/google/budoux) を利用
 - 言語認識に [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) と [lingua-py](https://github.com/pemistahl/lingua-py) を利用
+
+# 5. ✨スタータイムライン
+
+[![Star History Chart](https://api.star-history.com/svg?repos=DoodleBears/split-lang&type=Timeline)](https://star-history.com/#DoodleBears/split-lang&Timeline)

@@ -76,6 +76,7 @@ Vielen Dank merci beaucoup for your help.
   - [3.3. Advanced](#33-advanced)
     - [3.3.1. usage of `lang_map` and `default_lang` (for your languages)](#331-usage-of-lang_map-and-default_lang-for-your-languages)
 - [4. Acknowledgement](#4-acknowledgement)
+- [5. ✨Star History](#5-star-history)
 
 
 # 3. 📕Usage
@@ -203,3 +204,7 @@ DEFAULT_LANG = "x"
 - Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
 - Text segmentation depends on [google/budoux](https://github.com/google/budoux)
 - Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [lingua-py](https://github.com/pemistahl/lingua-py)
+
+# 5. ✨Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=DoodleBears/split-lang&type=Timeline)](https://star-history.com/#DoodleBears/split-lang&Timeline)
