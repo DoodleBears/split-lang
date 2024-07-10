@@ -8,13 +8,13 @@
 <div align="center">
   <h1>split-lang</h1>
 
-**English** | [**中文简体**](./docs/zh/README.md) | [**日本語**](./docs/ja/README.md)
+[**English**](../../README.md) | **中文简体** | [**日本語**](../ja/README.md)
 
-Split text by languages through concatenating over split substrings based on their language, powered by
+基于语言拆分文本：通过拆分字串为极小子字串再基于语言合并，使用
 
-splitting: [`budoux`](https://github.com/google/budoux) and rule-base splitting
+文本分割: [`budoux`](https://github.com/google/budoux) 以及规则判断
 
-language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
+语言识别: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) 和 [`lingua-py`](https://github.com/pemistahl/lingua-py)
 
 </div>
 
@@ -39,26 +39,26 @@ language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdete
 
 
 
-# 1. 💡How it works
+# 1. 💡运作原理
 
-**Stage 1**: rule-based split (separate character, punctuation and digit)
+**阶段 1**: 基于规则切分（区别文字、标点、数字）
 - `hello, how are you` -> `hello` | `,` | `how are you`
 
-**Stage 2**: over-split text to substrings by [`budoux`](https://github.com/google/budoux) for Chinese mix with Japanese, ` ` (space) for **not** [scripta continua](https://en.wikipedia.org/wiki/Scriptio_continua)
+**阶段 2**: 进一步拆分剩余的文字子字串，通过 [`budoux`](https://github.com/google/budoux) 拆分中日混合文本, 通过 ` ` (space) 拆分**非**[连写语言](https://en.wikipedia.org/wiki/Scriptio_continua)
 - `你喜欢看アニメ吗` -> `你` | `喜欢` | `看` | `アニメ` | `吗`
 - `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した`
 - `how are you` -> `how ` | `are ` | `you`
 
-**Stage 3**: concatenate substrings based on their languages using [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`lingua-py`](https://github.com/pemistahl/lingua-py) and regex (rule-based)
+**阶段 3**: 连接子字串基于语言识别，通过 [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`lingua-py`](https://github.com/pemistahl/lingua-py) 和正则表达式 (基于规则)
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
 - `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した` -> `昨天` | `見た映画はとても感動的でした`
 - `how ` | `are ` | `you` -> `how are you`
 
-# 2. 🪨Motivation
-- `TTS (Text-To-Speech)` model often **fails** on multi-language speech generation, there are two ways to do:
-  - Train a model can pronounce multiple languages
-  - **(This Package)** Separate sentence based on language first, then use different language models
-- Existed models in NLP toolkit (e.g. `SpaCy`, `jieba`) is usually helpful for dealing with text in **ONE** language for each model. Which means multi-language texts need pre-process, like texts below: 
+# 2. 🪨动机（为什么有这个包）
+- `TTS (Text-To-Speech)` 文字转语言模型经常在多语音混合文本的任务上失败, 目前的解决方案通常有以下2种:
+  - 训练一个 TTS 模型可以同时发音多种语言（但多种语言的发音规则和语法不同，为了达到音色一致，该种方案成本往往偏高）
+  - **(这个包)** 将文本中不同语言的文本切分, 之后使用不同的 TTS 模型进行生成
+- 现存的自然语音处理（NLP）包 (如：`SpaCy`, `jieba`) 通常每1个模型只针对 **1种** 语言处理（考虑到不同语言的语法、词汇特性）。所以在多语言的文本上，需要进行语言切分的预处理，如以下情况: 
 
 ```
 你喜欢看アニメ吗？
@@ -66,23 +66,23 @@ Vielen Dank merci beaucoup for your help.
 你最近好吗、最近どうですか？요즘 어떻게 지내요？sky is clear and sunny。
 ```
 
-- [1. 💡How it works](#1-how-it-works)
-- [2. 🪨Motivation](#2-motivation)
-- [3. 📕Usage](#3-usage)
-  - [3.1. 🚀Installation](#31-installation)
-  - [3.2. Basic](#32-basic)
+- [1. 💡运作原理](#1-运作原理)
+- [2. 🪨动机（为什么有这个包）](#2-动机为什么有这个包)
+- [3. 📕使用方法](#3-使用方法)
+  - [3.1. 🚀安装](#31-安装)
+  - [3.2. 基础用法](#32-基础用法)
     - [3.2.1. `split_by_lang`](#321-split_by_lang)
     - [3.2.2. `merge_across_digit`](#322-merge_across_digit)
-  - [3.3. Advanced](#33-advanced)
-    - [3.3.1. usage of `lang_map` and `default_lang` (for your languages)](#331-usage-of-lang_map-and-default_lang-for-your-languages)
-- [4. Acknowledgement](#4-acknowledgement)
+  - [3.3. 进阶用法](#33-进阶用法)
+    - [3.3.1.  `lang_map` 和 `default_lang` 的使用方式 (针对你的多语言场景)](#331--lang_map-和-default_lang-的使用方式-针对你的多语言场景)
+- [4. 致谢](#4-致谢)
 
 
-# 3. 📕Usage
+# 3. 📕使用方法
 
-## 3.1. 🚀Installation
+## 3.1. 🚀安装
 
-You can install the package using pip:
+通过 pip 安装:
 
 ```bash
 pip install split-lang
@@ -90,10 +90,10 @@ pip install split-lang
 
 
 ****
-## 3.2. Basic
+## 3.2. 基础用法
 ### 3.2.1. `split_by_lang`
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DoodleBears/split-lang/blob/main/split-lang-demo.ipynb)
+线上体验：[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DoodleBears/split-lang/blob/main/split-lang-demo.ipynb)
 
 ```python
 from split_lang import LangSplitter
@@ -166,19 +166,19 @@ for text in texts:
 2|zh:便士
 ```
 
-## 3.3. Advanced
+## 3.3. 进阶用法
 
-### 3.3.1. usage of `lang_map` and `default_lang` (for your languages)
+### 3.3.1.  `lang_map` 和 `default_lang` 的使用方式 (针对你的多语言场景)
 
 > [!IMPORTANT]
-> Add lang code for your usecase if other languages are needed. [See Support Language](https://github.com/zafercavdar/fasttext-langdetect#supported-languages)
+> 请添加你需要的语言代码（默认可能不包含你的使用场景的语言）[查看支持语言](https://github.com/zafercavdar/fasttext-langdetect#supported-languages)
 
-- default `lang_map` looks like below
-  - if `langua-py` or `fasttext` or any other language detector detect the language that is NOT included in `lang_map` will be set to `default_lang`
-  - if you set `default_lang` or `value` of `key:value` in `lang_map` to `x`, this substring will be merged to the near substring
-    - `zh` | `x` | `jp` -> `zh` | `jp` (`x` been merged to one side)
-    - In example below, `zh-tw` is set to `x` because character in `zh` and `jp` sometimes been detected as Traditional Chinese
-- default `default_lang` is `x`
+- 默认 `lang_map` 的设定如下方代码
+  - 如果 `langua-py` 或 `fasttext` 语言识别器所检测到的语言不包含在 `lang_map` 的 key 中，会被设定为默认语言 `default_lang`
+  - 如果你将 `default_lang` 或将 `lang_map` 中 `键值对` 的 `值` 设为 `x`, 该子字串会和相邻的子字串相连
+    - `zh` | `x` | `jp` -> `zh` | `jp` (`x` 会被合并到其中一方（基于规则）)
+    - 在下面的例子中, `zh-tw` 繁体中文被设置为 `x` 因为中文和日文的汉字包含了繁体中文
+- `default_lang` 的默认值是 `x`
 
 ```python
 DEFAULT_LANG_MAP = {
@@ -198,8 +198,8 @@ DEFAULT_LANG = "x"
 
 ```
 
-# 4. Acknowledgement
+# 4. 致谢
 
-- Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
-- Text segmentation depends on [google/budoux](https://github.com/google/budoux)
-- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [lingua-py](https://github.com/pemistahl/lingua-py)
+- 受项目 [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect) 启发
+- 中日文文本分割基于 [google/budoux](https://github.com/google/budoux)
+- 语言识别基于 [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) 和 [lingua-py](https://github.com/pemistahl/lingua-py)
