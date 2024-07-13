@@ -24,10 +24,10 @@ setup(
     packages=find_packages(),
     install_requires=[
         "fast_langdetect",
-        "lingua-language-detector",
         "pydantic",
         "budoux",
         "wordfreq",
+        "wordfreq[cjk]",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

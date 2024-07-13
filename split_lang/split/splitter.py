@@ -10,7 +10,7 @@ from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP
 from ..detect_lang.detector import (
     detect_lang_combined,
     possible_detection_list,
-    is_word_freq_higher_in_ja,
+    is_word_freq_higher_in_lang_b,
 )
 from ..model import LangSectionType, SubString, SubStringSection
 from .utils import PUNCTUATION, contains_hangul, contains_zh_ja, contains_ja
@@ -195,7 +195,7 @@ class LangSplitter:
         return words
 
     # MARK: _parse_zh_ja
-    def _parse_zh_ja(self, text):
+    def _parse_zh_ja(self, text) -> List[str]:
         splitted_texts_jp = []
         splitted_texts_jp = jp_budoux_parser.parse(text)
 
@@ -353,8 +353,9 @@ class LangSplitter:
         is_middle_zh_side_ja_and_middle_is_high_freq_in_ja = (
             left.lang == "ja"
             and middle.lang == "zh"
-            and is_word_freq_higher_in_ja(middle.text)
+            and is_word_freq_higher_in_lang_b(middle.text, middle.lang, "ja")
         )
+
         return (
             middle_lang_is_possible_the_same_as_left
             or middle_lang_is_x
@@ -367,15 +368,26 @@ class LangSplitter:
             cur.length <= 2 and near.length >= 6 and near.lang == "zh"
         )
         # e.g. 日本人, 今晚, 国外移民
+        cur_lang_is_possible_the_same_as_near = near.lang in possible_detection_list(
+            cur.text
+        )
         is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja = (
-            cur.lang == "zh"
-            and cur.length <= 4
+            cur.length <= 4
+            and cur.lang == "zh"
             and near.lang == "ja"
-            and is_word_freq_higher_in_ja(cur.text)
+            and is_word_freq_higher_in_lang_b(cur.text, cur.lang, "ja")
+        )
+        is_cur_short_and_near_is_zh_and_middle_is_high_freq_in_zh = (
+            cur.length <= 4
+            and cur.lang == "ja"
+            and near.lang == "zh"
+            and is_word_freq_higher_in_lang_b(cur.text, cur.lang, "zh")
         )
         return (
             is_cur_short_and_near_is_zh_and_long
+            or cur_lang_is_possible_the_same_as_near
             or is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja
+            or is_cur_short_and_near_is_zh_and_middle_is_high_freq_in_zh
         )
 
     # MARK: _merge_middle_substr_to_two_side
@@ -408,9 +420,10 @@ class LangSplitter:
                 substrings[0], substrings[1]
             )
 
-            is_possible_same_lang_with_near = substrings[
-                1
-            ].lang in possible_detection_list(substrings[0].text)
+            is_possible_same_lang_with_near = (
+                substrings[1].lang in possible_detection_list(substrings[0].text)
+                and substrings[1].length <= 5
+            )
 
         is_need_merge_to_right = (
             is_lang_x or is_cur_short_and_near_long or is_possible_same_lang_with_near
@@ -428,9 +441,10 @@ class LangSplitter:
             is_cur_short_and_near_long = self._is_cur_short_and_near_long(
                 substrings[-1], substrings[-2]
             )
-            is_possible_same_lang_with_near = substrings[
-                -2
-            ].lang in possible_detection_list(substrings[-1].text)
+            is_possible_same_lang_with_near = (
+                substrings[-2].lang in possible_detection_list(substrings[-1].text)
+                and substrings[-2].length <= 5
+            )
 
         is_need_merge_to_left = (
             is_lang_x or is_cur_short_and_near_long or is_possible_same_lang_with_near
@@ -631,6 +645,7 @@ class LangSplitter:
         lang_section_type: LangSectionType,
     ):
 
+        lang_text_list = self._merge_substrings(lang_text_list)
         lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
         lang_text_list = self._merge_substrings(lang_text_list)
         lang_text_list = self._get_languages(
