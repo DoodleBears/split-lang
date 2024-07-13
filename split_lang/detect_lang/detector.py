@@ -2,6 +2,7 @@ import logging
 from typing import List
 import fast_langdetect
 from lingua import LanguageDetectorBuilder
+from wordfreq import word_frequency
 
 from ..model import LangSectionType
 from ..split.utils import contains_ja
@@ -44,3 +45,14 @@ def possible_detection_list(text) -> List[str]:
     languages.append(fast_lang_detect(text))
     languages.append(lingua_lang_detect_all(text))
     return languages
+
+
+def _detect_word_freq_in_lang(word: str, lang: str) -> float:
+    return word_frequency(word=word, lang=lang)
+
+
+def is_word_freq_higher_in_ja(word: str) -> bool:
+    word_freq_ja = _detect_word_freq_in_lang(word=word, lang="ja")
+    word_freq_zh = _detect_word_freq_in_lang(word=word, lang="zh")
+    # 0.8 means either is more frequently used in Japanese or in both language the word is frequently used
+    return (word_freq_ja / word_freq_zh) > 0.8

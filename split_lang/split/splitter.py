@@ -7,7 +7,11 @@ zh_budoux_parser = budoux.load_default_simplified_chinese_parser()
 jp_budoux_parser = budoux.load_default_japanese_parser()
 
 from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP
-from ..detect_lang.detector import detect_lang_combined, possible_detection_list
+from ..detect_lang.detector import (
+    detect_lang_combined,
+    possible_detection_list,
+    is_word_freq_higher_in_ja,
+)
 from ..model import LangSectionType, SubString, SubStringSection
 from .utils import PUNCTUATION, contains_hangul, contains_zh_ja, contains_ja
 
@@ -336,13 +340,43 @@ class LangSplitter:
             substring_index += length
         return substrings
 
-    def _is_middle_short_and_two_side_long(
+    def _is_merge_middle_to_two_side(
         self, left: SubString, middle: SubString, right: SubString
     ):
-        return middle.length <= 3 and left.length + right.length >= 6
+        middle_lang_is_possible_the_same_as_left = left.lang in possible_detection_list(
+            middle.text
+        )
+        middle_lang_is_x = middle.lang == "x"
+        is_middle_short_and_two_side_long = (
+            middle.length <= 3 and left.length + right.length >= 6
+        )
+        is_middle_zh_side_ja_and_middle_is_high_freq_in_ja = (
+            left.lang == "ja"
+            and middle.lang == "zh"
+            and is_word_freq_higher_in_ja(middle.text)
+        )
+        return (
+            middle_lang_is_possible_the_same_as_left
+            or middle_lang_is_x
+            or is_middle_short_and_two_side_long
+            or is_middle_zh_side_ja_and_middle_is_high_freq_in_ja
+        )
 
     def _is_cur_short_and_near_long(self, cur: SubString, near: SubString):
-        return cur.length <= 2 and near.length >= 6 and near.lang == "zh"
+        is_cur_short_and_near_is_zh_and_long = (
+            cur.length <= 2 and near.length >= 6 and near.lang == "zh"
+        )
+        # e.g. 日本人, 今晚, 国外移民
+        is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja = (
+            cur.lang == "zh"
+            and cur.length <= 4
+            and near.lang == "ja"
+            and is_word_freq_higher_in_ja(cur.text)
+        )
+        return (
+            is_cur_short_and_near_is_zh_and_long
+            or is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja
+        )
 
     # MARK: _merge_middle_substr_to_two_side
     def _merge_middle_substr_to_two_side(self, substrings: List[SubString]):
@@ -357,12 +391,8 @@ class LangSplitter:
             if left_block.lang == right_block.lang and left_block.lang != "x":
                 # if different detectors results contains near block's language, then combine
 
-                if (
-                    left_block.lang in possible_detection_list(middle_block.text)
-                    or self._is_middle_short_and_two_side_long(
-                        left_block, middle_block, right_block
-                    )
-                    or middle_block.lang == "x"
+                if self._is_merge_middle_to_two_side(
+                    left_block, middle_block, right_block
                 ):
                     substrings[index + 1].lang = left_block.lang
         return substrings
@@ -402,7 +432,9 @@ class LangSplitter:
                 -2
             ].lang in possible_detection_list(substrings[-1].text)
 
-        is_need_merge_to_left = is_lang_x or is_cur_short_and_near_long
+        is_need_merge_to_left = (
+            is_lang_x or is_cur_short_and_near_long or is_possible_same_lang_with_near
+        )
 
         if is_need_merge_to_left:
             substrings[-1].lang = self._get_nearest_lang_with_direction(
@@ -606,6 +638,7 @@ class LangSplitter:
             lang_section_type=lang_section_type,
         )
         lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
         lang_text_list = self._fill_unknown_language(lang_text_list)
         lang_text_list = self._merge_side_substr_to_near(lang_text_list)
         lang_text_list = self._merge_substrings(lang_text_list)
@@ -613,5 +646,7 @@ class LangSplitter:
             lang_text_list=lang_text_list,
             lang_section_type=lang_section_type,
         )
+        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
 
         return lang_text_list
