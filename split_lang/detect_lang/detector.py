@@ -54,5 +54,7 @@ def _detect_word_freq_in_lang(word: str, lang: str) -> float:
 def is_word_freq_higher_in_ja(word: str) -> bool:
     word_freq_ja = _detect_word_freq_in_lang(word=word, lang="ja")
     word_freq_zh = _detect_word_freq_in_lang(word=word, lang="zh")
+    if word_freq_zh == 0:
+        return False
     # 0.8 means either is more frequently used in Japanese or in both language the word is frequently used
     return (word_freq_ja / word_freq_zh) > 0.8
