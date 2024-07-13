@@ -14,7 +14,7 @@
 
 文本分割: [`budoux`](https://github.com/google/budoux) 以及规则判断
 
-语言识别: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) 和 [`lingua-py`](https://github.com/pemistahl/lingua-py)
+语言识别: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) 和 [`wordfreq`](https://github.com/rspeer/wordfreq)
 
 </div>
 
@@ -49,7 +49,7 @@
 - `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した`
 - `how are you` -> `how ` | `are ` | `you`
 
-**阶段 3**: 连接子字串基于语言识别，通过 [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`lingua-py`](https://github.com/pemistahl/lingua-py) 和正则表达式 (基于规则)
+**阶段 3**: 连接子字串基于语言识别，通过 [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`wordfreq`](https://github.com/rspeer/wordfreq) 和正则表达式 (基于规则)
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
 - `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した` -> `昨天` | `見た映画はとても感動的でした`
 - `how ` | `are ` | `you` -> `how are you`
@@ -203,7 +203,7 @@ DEFAULT_LANG = "x"
 
 - 受项目 [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect) 启发
 - 中日文文本分割基于 [google/budoux](https://github.com/google/budoux)
-- 语言识别基于 [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) 和 [lingua-py](https://github.com/pemistahl/lingua-py)
+- 语言识别基于 [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) 和 [rspeer/wordfreq](https://github.com/rspeer/wordfreq)
 
 # 5. ✨星星时间线
 

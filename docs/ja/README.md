@@ -14,7 +14,7 @@
 
 テキスト分割: [`budoux`](https://github.com/google/budoux) およびルールベースの判断
 
-言語認識: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) と [`lingua-py`](https://github.com/pemistahl/lingua-py)
+言語認識: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) と [`wordfreq`](https://github.com/rspeer/wordfreq)
 
 </div>
 
@@ -49,7 +49,7 @@
 - `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した`
 - `how are you` -> `how ` | `are ` | `you`
 
-**ステージ 3**: 言語認識に基づいてサブストリングを結合し、[`fast-langdetect`](https://github.com/LlmKira/fast-langdetect)、 [`lingua-py`](https://github.com/pemistahl/lingua-py) と regex (ルールベース) を使用
+**ステージ 3**: 言語認識に基づいてサブストリングを結合し、[`fast-langdetect`](https://github.com/LlmKira/fast-langdetect)、 [`wordfreq`](https://github.com/rspeer/wordfreq) と regex (ルールベース) を使用
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
 - `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した` -> `昨天` | `見た映画はとても感動的でした`
 - `how ` | `are ` | `you` -> `how are you`
@@ -203,7 +203,7 @@ DEFAULT_LANG = "x"
 
 - プロジェクト [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect) に啓発され
 - 中日テキスト分割に [google/budoux](https://github.com/google/budoux) を利用
-- 言語認識に [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) と [lingua-py](https://github.com/pemistahl/lingua-py) を利用
+- 言語認識に [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) と [rspeer/wordfreq](https://github.com/rspeer/wordfreq) を利用
 
 # 5. ✨スタータイムライン
 

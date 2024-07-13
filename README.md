@@ -14,7 +14,7 @@ Split text by languages through concatenating over split substrings based on the
 
 splitting: [`budoux`](https://github.com/google/budoux) and rule-base splitting
 
-language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`lingua-py`](https://github.com/pemistahl/lingua-py)
+language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect) and [`wordfreq`](https://github.com/rspeer/wordfreq)
 
 </div>
 
@@ -49,7 +49,7 @@ language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdete
 - `昨天見た映画はとても感動的でした` -> `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した`
 - `how are you` -> `how ` | `are ` | `you`
 
-**Stage 3**: concatenate substrings based on their languages using [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`lingua-py`](https://github.com/pemistahl/lingua-py) and regex (rule-based)
+**Stage 3**: concatenate substrings based on their languages using [`fast-langdetect`](https://github.com/LlmKira/fast-langdetect), [`wordfreq`](https://github.com/rspeer/wordfreq) and regex (rule-based)
 - `你` | `喜欢` | `看` | `アニメ` | `吗` -> `你喜欢看` | `アニメ` | `吗`
 - `昨天` | `見た` | `映画` | `は` | `とても` | `感動` | `的` | `で` | `した` -> `昨天` | `見た映画はとても感動的でした`
 - `how ` | `are ` | `you` -> `how are you`
@@ -203,7 +203,7 @@ DEFAULT_LANG = "x"
 
 - Inspired by [LlmKira/fast-langdetect](https://github.com/LlmKira/fast-langdetect)
 - Text segmentation depends on [google/budoux](https://github.com/google/budoux)
-- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [lingua-py](https://github.com/pemistahl/lingua-py)
+- Language detection depends on [zafercavdar/fasttext-langdetect](https://github.com/zafercavdar/fasttext-langdetect) and [rspeer/wordfreq](https://github.com/rspeer/wordfreq)
 
 # 5. ✨Star History
 
