@@ -53,3 +53,11 @@ texts_de_fr_en = [
     "Wir reisen nach Deutschland nous voyageons en Allemagne and we are excited.",
     "Ich bin müde je suis fatigué and I need some rest.",
 ]
+
+
+texts_with_newline = [
+    """newline,
+123.
+abc
+233""",
+]
