@@ -1,57 +1,61 @@
-from split_lang import split_by_lang
-from split_lang.split.utils import DEFAULT_THRESHOLD
-from tests.data.test_data import texts_de_fr_en, texts_with_digit, texts_zh_jp_ko_en
+from split_lang import LangSplitter
+from tests.data.test_data import (
+    texts_de_fr_en,
+    texts_with_digit,
+    texts_with_newline,
+    texts_zh_jp_ko_en,
+)
+
+lang_splitter = LangSplitter()
 
 
 def test_split_to_substring():
     for text in texts_zh_jp_ko_en:
-        substr = split_by_lang(
+        substr = lang_splitter.split_by_lang(
             text=text,
-            verbose=False,
-            threshold=4.9e-5,
-            # threshold=DEFAULT_THRESHOLD,
-            # default_lang="en",
-            merge_across_punctuation=True,
         )
-        for index, item in enumerate(substr):
+        for _, item in enumerate(substr):
             print(item)
             # print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
 
     for text in texts_de_fr_en:
-        substr = split_by_lang(
+        substr = lang_splitter.split_by_lang(
             text=text,
-            verbose=False,
-            # lang_map=new_lang_map,
-            threshold=DEFAULT_THRESHOLD,
-            # default_lang="en",
         )
-        for index, item in enumerate(substr):
+        for _, item in enumerate(substr):
             print(item)
             # print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
 
+    lang_splitter.merge_across_digit = False
     for text in texts_with_digit:
-        substr = split_by_lang(
+        substr = lang_splitter.split_by_lang(
             text=text,
-            verbose=False,
-            threshold=4.9e-5,
-            # merge_across_punctuation=False,
-            merge_across_digit=False,
         )
-        for index, item in enumerate(substr):
+        for _, item in enumerate(substr):
             print(item)
             # print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
 
+    lang_splitter.merge_across_digit = True
+    lang_splitter.merge_across_punctuation = True
     for text in texts_with_digit:
-        substr = split_by_lang(
+        substr = lang_splitter.split_by_lang(
             text=text,
-            verbose=False,
-            threshold=4.9e-5,
-            merge_across_punctuation=True,
         )
-        for index, item in enumerate(substr):
+        for _, item in enumerate(substr):
+            print(item)
+            # print(f"{index}|{item.lang}:{item.text}")
+        print("----------------------")
+
+
+def test_split_to_substring_newline():
+    for text in texts_with_newline:
+        substr = lang_splitter.split_by_lang(
+            text=text,
+        )
+        for _, item in enumerate(substr):
             print(item)
             # print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
@@ -59,6 +63,7 @@ def test_split_to_substring():
 
 def main():
     test_split_to_substring()
+    test_split_to_substring_newline()
 
 
 if __name__ == "__main__":

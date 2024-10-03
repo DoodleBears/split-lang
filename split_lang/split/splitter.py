@@ -9,11 +9,11 @@ jp_budoux_parser = budoux.load_default_japanese_parser()
 from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP
 from ..detect_lang.detector import (
     detect_lang_combined,
-    possible_detection_list,
     is_word_freq_higher_in_lang_b,
+    possible_detection_list,
 )
 from ..model import LangSectionType, SubString, SubStringSection
-from .utils import PUNCTUATION, contains_hangul, contains_zh_ja, contains_ja
+from .utils import PUNCTUATION, contains_hangul, contains_ja, contains_zh_ja
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -23,13 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class LangSplitter:
-
     def __init__(
         self,
         lang_map: Dict = None,
         default_lang: str = DEFAULT_LANG,
         punctuation: str = PUNCTUATION,
-        not_merge_punctuation: str = "",
+        not_merge_punctuation: str = "\n",
         merge_across_punctuation: bool = True,
         merge_across_digit: bool = True,
         debug: bool = False,
@@ -77,7 +76,6 @@ class LangSplitter:
         substrings: List[SubString] = []
         for section in sections:
             substrings.extend(section.substrings)
-
         substrings = self._merge_digit(substrings=substrings)
 
         if self.merge_across_digit:
@@ -130,6 +128,17 @@ class LangSplitter:
                         length=section_len,
                     )
                 )
+            elif section.lang_section_type is LangSectionType.NEWLINE:
+                section.substrings.append(
+                    SubString(
+                        is_digit=False,
+                        is_punctuation=False,
+                        text=section.text,
+                        lang="newline",
+                        index=section_index,
+                        length=section_len,
+                    )
+                )
             else:
                 substrings: List[str] = []
                 lang_section_type = LangSectionType.OTHERS
@@ -160,7 +169,11 @@ class LangSplitter:
         # MARK: smart merge substring together
         wtpsplit_section = pre_split_section
         for section in wtpsplit_section:
-            if section.lang_section_type is LangSectionType.PUNCTUATION:
+            if (
+                section.lang_section_type is LangSectionType.PUNCTUATION
+                or section.lang_section_type is LangSectionType.NEWLINE
+            ):
+                # print(section.text)
                 continue
             smart_concat_result = self._smart_merge(
                 substr_list=section.substrings,
@@ -248,7 +261,8 @@ class LangSplitter:
 
         for index, char in enumerate(text):
             is_space = char.isspace()
-            if is_space is False:
+
+            if is_space is False:  # Exclude newlines from processing
                 if contains_zh_ja(char):
                     if current_lang != LangSectionType.ZH_JA:
                         add_substring(current_lang)
@@ -271,6 +285,12 @@ class LangSplitter:
                     if current_lang != LangSectionType.OTHERS:
                         add_substring(current_lang)
                         current_lang = LangSectionType.OTHERS
+            else:
+                if current_lang != LangSectionType.NEWLINE:
+                    # print(f"detect newline {char}")
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.NEWLINE
+
             current_text.append(char)
 
         add_substring(current_lang)
@@ -400,7 +420,11 @@ class LangSplitter:
             middle_block = substrings[index + 1]
             right_block = substrings[index + 2]
 
-            if left_block.lang == right_block.lang and left_block.lang != "x":
+            if (
+                left_block.lang == right_block.lang
+                and left_block.lang != "x"
+                and left_block.lang != "newline"
+            ):
                 # if different detectors results contains near block's language, then combine
 
                 if self._is_merge_middle_to_two_side(
@@ -554,6 +578,7 @@ class LangSplitter:
 
                 if (
                     left_block.lang == right_block.lang
+                    and left_block.lang != "newline"
                     and left_block.is_digit
                     and middle_block.is_punctuation
                 ):
@@ -570,19 +595,26 @@ class LangSplitter:
 
         for _, substring in enumerate(substrings):
             if substring.is_digit:
-
-                if new_substrings and new_substrings[-1].lang != "punctuation":
+                if (
+                    new_substrings
+                    and new_substrings[-1].lang != "punctuation"
+                    and new_substrings[-1].lang != "newline"
+                ):
                     new_substrings[-1].text += substring.text
                     new_substrings[-1].length += substring.length
                 else:
                     new_substrings.append(substring)
             else:
-                if new_substrings and new_substrings[-1].lang == "digit":
-                    substring.text = new_substrings[-1].text + substring.text
-                    substring.index = new_substrings[-1].index
-                    substring.length = new_substrings[-1].length + substring.length
-
-                    new_substrings.pop()
+                if (
+                    new_substrings
+                    and new_substrings[-1].lang == "digit"
+                    and substring.lang != "newline"
+                ):
+                    temp = new_substrings.pop()
+                    temp.text = temp.text + substring.text
+                    temp.index = temp.index
+                    temp.length = temp.length + substring.length
+                    substring = temp
                 new_substrings.append(substring)
 
         new_substrings = self._merge_substrings(substrings=new_substrings)
@@ -620,7 +652,6 @@ class LangSplitter:
         lang_text_list: List[SubString],
         lang_section_type: LangSectionType,
     ):
-
         if lang_section_type in [
             LangSectionType.DIGIT,
             LangSectionType.KO,
@@ -644,7 +675,6 @@ class LangSplitter:
         lang_text_list: List[SubString],
         lang_section_type: LangSectionType,
     ):
-
         lang_text_list = self._merge_substrings(lang_text_list)
         lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
         lang_text_list = self._merge_substrings(lang_text_list)
