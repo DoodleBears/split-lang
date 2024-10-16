@@ -97,6 +97,10 @@ class LangSplitter:
             substrings = self._merge_substrings_across_newline(
                 substrings=substrings,
             )
+
+        substrings = self._merge_middle_substr_to_two_side(substrings)
+        substrings = self._merge_substrings(substrings)
+
         if self.special_merge_for_zh_ja:
             substrings = self._special_merge_for_zh_ja(substrings=substrings)
             substrings = self._special_merge_for_zh_ja(substrings=substrings)

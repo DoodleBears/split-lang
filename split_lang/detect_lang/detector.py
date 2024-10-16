@@ -1,5 +1,6 @@
 import logging
 from typing import List
+
 import fast_langdetect
 from wordfreq import word_frequency
 
@@ -24,7 +25,8 @@ def detect_lang_combined(text: str, lang_section_type: LangSectionType) -> str:
     return fast_lang_detect(text)
 
 
-def possible_detection_list(text) -> List[str]:
+def possible_detection_list(text: str) -> List[str]:
+    text = text.replace("\n", "").strip()
     languages = [
         item["lang"]
         for item in fast_langdetect.detect_multilingual(
