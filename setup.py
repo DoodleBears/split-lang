@@ -1,7 +1,6 @@
 from os import path
 
 from setuptools import find_packages, setup
-from setuptools import find_packages, setup
 
 
 def packagefile(*relpath):
@@ -15,7 +14,7 @@ def read(*relpath):
 
 setup(
     name="split_lang",
-    version="1.4.0",
+    version="1.4.1",
     description="A package for splitting text by languages through concatenating over split substrings based on their language",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
