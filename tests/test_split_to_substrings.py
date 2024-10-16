@@ -6,7 +6,7 @@ from tests.data.test_data import (
     texts_zh_jp_ko_en,
 )
 
-lang_splitter = LangSplitter()
+lang_splitter = LangSplitter(special_merge_for_zh_ja=False)
 
 
 def test_split_to_substring():
@@ -55,14 +55,14 @@ def test_split_to_substring_newline():
         substr = lang_splitter.split_by_lang(
             text=text,
         )
-        for _, item in enumerate(substr):
-            print(item)
-            # print(f"{index}|{item.lang}:{item.text}")
+        for index, item in enumerate(substr):
+            # print(item)
+            print(f"{index}|{item.lang}:{item.text}")
         print("----------------------")
 
 
 def main():
-    test_split_to_substring()
+    # test_split_to_substring()
     test_split_to_substring_newline()
 
 
