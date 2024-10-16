@@ -29,7 +29,9 @@ class LangSplitter:
         default_lang: str = DEFAULT_LANG,
         punctuation: str = PUNCTUATION,
         not_merge_punctuation: str = "\n",
+        special_merge_for_zh_ja: bool = True,
         merge_across_punctuation: bool = True,
+        merge_across_newline: bool = True,
         merge_across_digit: bool = True,
         debug: bool = False,
     ) -> None:
@@ -52,6 +54,8 @@ class LangSplitter:
         self.debug = debug
         self.punctuation = punctuation
         self.not_merge_punctuation = not_merge_punctuation
+        self.merge_across_newline = merge_across_newline
+        self.special_merge_for_zh_ja = special_merge_for_zh_ja
         self.merge_across_punctuation = merge_across_punctuation
         self.merge_across_digit = merge_across_digit
 
@@ -78,6 +82,10 @@ class LangSplitter:
             substrings.extend(section.substrings)
         substrings = self._merge_digit(substrings=substrings)
 
+        if self.merge_across_newline:
+            substrings = self._merge_substrings_across_newline(
+                substrings=substrings,
+            )
         if self.merge_across_digit:
             substrings = self._merge_substring_across_digit(substrings=substrings)
 
@@ -85,6 +93,13 @@ class LangSplitter:
             substrings = self._merge_substrings_across_punctuation(
                 substrings=substrings,
             )
+        if self.merge_across_newline:
+            substrings = self._merge_substrings_across_newline(
+                substrings=substrings,
+            )
+        if self.special_merge_for_zh_ja:
+            substrings = self._special_merge_for_zh_ja(substrings=substrings)
+            substrings = self._special_merge_for_zh_ja(substrings=substrings)
 
         return substrings
 
@@ -586,38 +601,125 @@ class LangSplitter:
         new_substrings = self._merge_substrings(substrings=substrings)
         return new_substrings
 
+    def _merge_substrings_across_newline(
+        self,
+        substrings: List[SubString],
+    ) -> List[SubString]:
+        new_substrings: List[SubString] = []
+        last_lang = ""
+        for index in range(len(substrings)):
+            if (
+                last_lang == substrings[index].lang
+                or substrings[index].lang == "newline"
+            ):
+                new_substrings[-1].text += substrings[index].text
+                new_substrings[-1].length += substrings[index].length
+            else:
+                new_substrings.append(substrings[index])
+                last_lang = substrings[index].lang
+        return new_substrings
+
+    # MARK: _special_merge_for_zh_ja
+
+    def _special_merge_for_zh_ja(
+        self,
+        substrings: List[SubString],
+    ) -> List[SubString]:
+        new_substrings: List[SubString] = []
+
+        if len(substrings) == 1:
+            return substrings
+        # TODO: 如果遇到两边的语言相同，即 ABA，且两边的 A 的长度合计加起来大于中间的 B 的长度的10倍，则合并
+
+        for index in range(len(substrings)):
+            current_block = substrings[index]
+            if index == 0:
+                if (
+                    substrings[index + 1].lang in ["zh", "ja"]
+                    and substrings[index].lang in ["zh", "ja", "x"]
+                    and substrings[index].length * 10 < substrings[index + 1].length
+                ):
+                    right_block = substrings[index + 1]
+                    new_substrings.append(
+                        SubString(
+                            is_digit=False,
+                            is_punctuation=False,
+                            lang=right_block.lang,
+                            text=current_block.text + right_block.text,
+                            length=current_block.length + right_block.length,
+                            index=current_block.index,
+                        )
+                    )
+                    index += 1
+                else:
+                    new_substrings.append(substrings[index])
+            elif index == len(substrings) - 1:
+                left_block = new_substrings[-1]
+                if (
+                    left_block.lang in ["zh", "ja"]
+                    and current_block.lang in ["zh", "ja", "x"]
+                    and current_block.length * 10 < left_block.length
+                ):
+                    new_substrings[-1].text += current_block.text
+                    new_substrings[-1].length += current_block.length
+
+                    index += 1
+                else:
+                    new_substrings.append(substrings[index])
+            else:
+                if (
+                    new_substrings[-1].lang == substrings[index + 1].lang
+                    and new_substrings[-1].lang in ["zh", "ja"]
+                    # and substrings[index].lang in ["zh", "ja", "x"]
+                    and substrings[index].lang != "en"
+                    and substrings[index].length * 10
+                    < new_substrings[-1].length + substrings[index + 1].length
+                ):
+                    left_block = new_substrings[-1]
+                    right_block = substrings[index + 1]
+                    current_block = substrings[index]
+                    new_substrings[-1].text += current_block.text + right_block.text
+                    new_substrings[-1].length += (
+                        current_block.length + right_block.length
+                    )
+                    index += 1
+                else:
+                    new_substrings.append(substrings[index])
+        new_substrings = self._merge_substrings(substrings=new_substrings)
+        return new_substrings
+
     # MARK: _merge_substring_across_digit
     def _merge_substring_across_digit(
         self,
         substrings: List[SubString],
     ) -> List[SubString]:
         new_substrings: List[SubString] = []
+        last_lang = ""
 
         for _, substring in enumerate(substrings):
-            if substring.is_digit:
-                if (
-                    new_substrings
-                    and new_substrings[-1].lang != "punctuation"
-                    and new_substrings[-1].lang != "newline"
-                ):
-                    new_substrings[-1].text += substring.text
-                    new_substrings[-1].length += substring.length
+            if new_substrings:
+                if substring.is_digit:
+                    if new_substrings[-1].is_digit:
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
+                    else:
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
                 else:
-                    new_substrings.append(substring)
+                    if substring.lang == last_lang or last_lang == "":
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
+                        new_substrings[-1].lang = (
+                            substring.lang
+                            if new_substrings[-1].lang == "digit"
+                            else new_substrings[-1].lang
+                        )
+                    else:
+                        new_substrings.append(substring)
+                    last_lang = substring.lang
             else:
-                if (
-                    new_substrings
-                    and new_substrings[-1].lang == "digit"
-                    and substring.lang != "newline"
-                ):
-                    temp = new_substrings.pop()
-                    temp.text = temp.text + substring.text
-                    temp.index = temp.index
-                    temp.length = temp.length + substring.length
-                    substring = temp
                 new_substrings.append(substring)
 
-        new_substrings = self._merge_substrings(substrings=new_substrings)
         return new_substrings
 
     # MARK: _merge_substrings_across_punctuation
