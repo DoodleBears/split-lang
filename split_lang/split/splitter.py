@@ -598,7 +598,6 @@ class LangSplitter:
         return new_substrings
 
     # MARK: _special_merge_for_zh_ja
-
     def _special_merge_for_zh_ja(
         self,
         substrings: List[SubString],
@@ -685,6 +684,7 @@ class LangSplitter:
         new_substrings = self._merge_substrings(substrings=new_substrings)
         return new_substrings
 
+    # MARK: _merge_substrings_across_newline_based_on_sections
     def _merge_substrings_across_newline_based_on_sections(
         self,
         sections: List[SubStringSection],
@@ -777,6 +777,40 @@ class LangSplitter:
                 logger.debug(section)
         return new_sections_merged
 
+    # MARK: _merge_substring_across_digit
+    def _merge_substrings_across_digit(
+        self,
+        substrings: List[SubString],
+    ) -> List[SubString]:
+        new_substrings: List[SubString] = []
+        last_lang = ""
+
+        for _, substring in enumerate(substrings):
+            if new_substrings:
+                if substring.lang == "digit":
+                    if new_substrings[-1].lang == "digit":
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
+                    else:
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
+                else:
+                    if substring.lang == last_lang or last_lang == "":
+                        new_substrings[-1].text += substring.text
+                        new_substrings[-1].length += substring.length
+                        new_substrings[-1].lang = (
+                            substring.lang
+                            if new_substrings[-1].lang == "digit"
+                            else new_substrings[-1].lang
+                        )
+                    else:
+                        new_substrings.append(substring)
+                    last_lang = substring.lang
+            else:
+                new_substrings.append(substring)
+
+        return new_substrings
+
     # MARK: _merge_substrings_across_digit_based_on_sections
     def _merge_substrings_across_digit_based_on_sections(
         self,
@@ -857,6 +891,11 @@ class LangSplitter:
                             section.substrings[substr_index - 1].index
                             + section.substrings[substr_index - 1].length
                         )
+        # NOTE: 再次合并 sections 中的 substrings 里面的 text
+        for section in new_sections_merged:
+            section.substrings = self._merge_substrings_across_digit(section.substrings)
+            # if section.lang_section_type == LangSectionType.ZH_JA:
+            #     section.substrings = self._special_merge_for_zh_ja(section.substrings)
         if self.debug:
             logger.debug("---------------------------------after_merge_digit_sections:")
             for section in new_sections_merged:
