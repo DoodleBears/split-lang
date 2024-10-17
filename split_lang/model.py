@@ -8,7 +8,6 @@ class LangSectionType(Enum):
     ZH_JA = "zh_ja"
     KO = "ko"
     PUNCTUATION = "punctuation"
-    NEWLINE = "newline"
     DIGIT = "digit"
     OTHERS = "others"
     ALL = "all"

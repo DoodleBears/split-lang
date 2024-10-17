@@ -17,8 +17,13 @@ ZH_JA_LANG_MAP = {
     "wuu": "zh",  # 吴语
     "zh-cn": "zh",
     "zh-tw": "x",
-    "zh": "zh",
     "ja": "ja",
+}
+NO_ZH_JA_LANG_MAP = {
+    "de": "de",
+    "fr": "fr",
+    "en": "en",
+    "hr": "en",
 }
 
 DEFAULT_LANG = "x"
