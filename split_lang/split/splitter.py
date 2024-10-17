@@ -6,34 +6,30 @@ import budoux
 zh_budoux_parser = budoux.load_default_simplified_chinese_parser()
 jp_budoux_parser = budoux.load_default_japanese_parser()
 
-from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP
+from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP, NO_ZH_JA_LANG_MAP, ZH_JA_LANG_MAP
 from ..detect_lang.detector import (
     detect_lang_combined,
     is_word_freq_higher_in_lang_b,
     possible_detection_list,
 )
 from ..model import LangSectionType, SubString, SubStringSection
-from .utils import PUNCTUATION, contains_hangul, contains_ja, contains_zh_ja
+from .utils import PUNCTUATION, contains_hangul, contains_ja_kana, contains_zh_ja
 
-logging.basicConfig(
-    level=logging.WARNING,
-    format="%(asctime)s  %(levelname)s [%(name)s]: %(message)s",
-)
 logger = logging.getLogger(__name__)
 
 
 class LangSplitter:
     def __init__(
         self,
-        lang_map: Dict = None,
+        lang_map: Dict[str, str] = DEFAULT_LANG_MAP,
         default_lang: str = DEFAULT_LANG,
         punctuation: str = PUNCTUATION,
-        not_merge_punctuation: str = "\n",
-        special_merge_for_zh_ja: bool = True,
+        not_merge_punctuation: str = "",
         merge_across_punctuation: bool = True,
-        merge_across_newline: bool = True,
         merge_across_digit: bool = True,
-        debug: bool = False,
+        merge_across_newline: bool = True,
+        debug: bool = True,
+        log_level: int = logging.INFO,
     ) -> None:
         """
         1. pre-split stage will use `punctuation` and `digit` to split text then leave substring that contains language character
@@ -49,15 +45,19 @@ class LangSplitter:
             merge_across_digit (bool, optional): merge substring across number (e.g. `233`, `9.15`) will be concat to near substring. Defaults to True.
             debug (bool, optional): print process for debug. Defaults to False.
         """
-        self.lang_map = lang_map if lang_map is not None else DEFAULT_LANG_MAP
+        self.lang_map = lang_map
         self.default_lang = default_lang
         self.debug = debug
         self.punctuation = punctuation
         self.not_merge_punctuation = not_merge_punctuation
-        self.merge_across_newline = merge_across_newline
-        self.special_merge_for_zh_ja = special_merge_for_zh_ja
         self.merge_across_punctuation = merge_across_punctuation
         self.merge_across_digit = merge_across_digit
+        self.merge_across_newline = merge_across_newline
+        self.log_level = log_level
+        logging.basicConfig(
+            level=self.log_level,
+            format="%(asctime)s  %(levelname)s [%(name)s]: %(message)s",
+        )
 
     # MARK: split_by_lang
     def split_by_lang(
@@ -65,10 +65,6 @@ class LangSplitter:
         text: str,
     ) -> List[SubString]:
         """
-        1. pre-split stage will use `punctuation` and `digit` to split text then leave substring that contains language character
-        2. rule-based and machine learning model will be used for extract words from substring
-        3. if language detection of words are same, concat the words into a new substring
-
         Args:
             text (str): text to split
 
@@ -76,60 +72,116 @@ class LangSplitter:
             List[SubString]: which contains language, text, index, length, is_punctuation and is_digit data of substring text
         """
 
-        sections = self._split(text=text)
+        pre_split_section = self.pre_split(text=text)
+
+        sections = self._split(pre_split_section=pre_split_section)
+
+        if self.merge_across_punctuation:  # 合并跨标点符号的 SubString
+            sections = self._merge_substrings_across_punctuation_based_on_sections(
+                sections=sections
+            )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
+
+        if self.merge_across_digit:  # 合并跨数字的 SubString
+            sections = self._merge_substrings_across_digit_based_on_sections(
+                sections=sections
+            )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
+
+        if self.merge_across_newline:
+            sections = self._merge_substrings_across_newline_based_on_sections(
+                sections=sections
+            )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
+
         substrings: List[SubString] = []
         for section in sections:
             substrings.extend(section.substrings)
-        substrings = self._merge_digit(substrings=substrings)
-
-        if self.merge_across_newline:
-            substrings = self._merge_substrings_across_newline(
-                substrings=substrings,
-            )
-        if self.merge_across_digit:
-            substrings = self._merge_substring_across_digit(substrings=substrings)
-
-        if self.merge_across_punctuation:
-            substrings = self._merge_substrings_across_punctuation(
-                substrings=substrings,
-            )
-        if self.merge_across_newline:
-            substrings = self._merge_substrings_across_newline(
-                substrings=substrings,
-            )
-
-        substrings = self._merge_middle_substr_to_two_side(substrings)
-        substrings = self._merge_substrings(substrings)
-
-        if self.special_merge_for_zh_ja:
-            substrings = self._special_merge_for_zh_ja(substrings=substrings)
-            substrings = self._special_merge_for_zh_ja(substrings=substrings)
 
         return substrings
+
+    # MARK: pre_split
+    def pre_split(self, text: str) -> List[SubStringSection]:
+        # NOTE: since some language share some characters (e.g. Chinese and Japanese)
+        # NOTE: while Korean has their own characters,
+        # NOTE: For Cyrillic alphabet, Latin alphabet, a lot of languages share the alphabet
+        text = text.strip()
+        if self.debug:
+            logger.debug("---------before pre_split:")
+            logger.debug(text)
+        sections: List[SubStringSection] = []
+        current_lang: LangSectionType = LangSectionType.OTHERS
+        current_text = []
+
+        def add_substring(lang_section_type: LangSectionType):
+            if current_text:
+                concat_text = "".join(current_text)
+
+                sections.append(
+                    SubStringSection(
+                        lang_section_type=lang_section_type,
+                        text=concat_text,
+                        substrings=[],
+                    )
+                )
+                current_text.clear()
+
+        for index, char in enumerate(text):
+            if contains_zh_ja(char):
+                if current_lang != LangSectionType.ZH_JA:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.ZH_JA
+            elif contains_hangul(char):
+                if current_lang != LangSectionType.KO:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.KO
+            elif char.isdigit():
+                if current_lang != LangSectionType.DIGIT:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.DIGIT
+            elif char in self.punctuation:
+                if char == "'" and index > 0 and text[index - 1].isspace() is False:
+                    # For English, "'" is a part of word
+                    pass
+                # elif current_lang != LangSectionType.PUNCTUATION:
+                else:
+                    # [, ] \n .都会单独作为一个 SubString
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.PUNCTUATION
+            elif char.isspace():
+                # concat space to current text
+                if char == "\n":
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.NEWLINE
+                else:
+                    pass
+            else:
+                if current_lang != LangSectionType.OTHERS:
+                    add_substring(current_lang)
+                    current_lang = LangSectionType.OTHERS
+
+            current_text.append(char)
+
+        add_substring(current_lang)
+        if self.debug:
+            logger.debug("---------after pre_split:")
+            for section in sections:
+                logger.debug(section)
+        return sections
 
     # MARK: _split
     def _split(
         self,
-        text: str,
+        pre_split_section: List[SubStringSection],
     ) -> List[SubStringSection]:
-        # MARK: pre split by languages
-        # NOTE: since some language share some characters (e.g. Chinese and Japanese)
-        # NOTE: while Korean has their own characters,
-        # NOTE: For Cyrillic alphabet, Latin alphabet, a lot of languages share the alphabet
-        pre_split_section = self._pre_split(text=text)
-        if self.debug:
-            logger.info("---------pre_split_section:")
-            for section in pre_split_section:
-                logger.info(section)
-
+        # TODO: 针对不同语言 set 进行不同处理
         section_index = 0
         for section in pre_split_section:
             section_len = len(section.text)
             if section.lang_section_type is LangSectionType.PUNCTUATION:
+                # NOTE: 标点符号作为单独的 SubString
                 section.substrings.append(
                     SubString(
-                        is_digit=False,
-                        is_punctuation=True,
                         text=section.text,
                         lang="punctuation",
                         index=section_index,
@@ -137,10 +189,9 @@ class LangSplitter:
                     )
                 )
             elif section.lang_section_type is LangSectionType.DIGIT:
+                # NOTE: 数字作为单独的 SubString
                 section.substrings.append(
                     SubString(
-                        is_digit=True,
-                        is_punctuation=False,
                         text=section.text,
                         lang="digit",
                         index=section_index,
@@ -148,10 +199,9 @@ class LangSplitter:
                     )
                 )
             elif section.lang_section_type is LangSectionType.NEWLINE:
+                # NOTE: 换行作为单独的 SubString
                 section.substrings.append(
                     SubString(
-                        is_digit=False,
-                        is_punctuation=False,
                         text=section.text,
                         lang="newline",
                         index=section_index,
@@ -159,35 +209,55 @@ class LangSplitter:
                     )
                 )
             else:
-                substrings: List[str] = []
-                lang_section_type = LangSectionType.OTHERS
-                if section.lang_section_type is LangSectionType.OTHERS:
-                    substrings = self._parse_without_zh_ja(section.text)
-                elif section.lang_section_type is LangSectionType.KO:
-                    substrings = [section.text]
-                    lang_section_type = LangSectionType.KO
-                elif section.lang_section_type is LangSectionType.ZH_JA:
-                    substrings = self._parse_zh_ja(section.text)
-                    lang_section_type = LangSectionType.ZH_JA
+                substrings_with_lang: List[SubString] = []
+                if section.lang_section_type is LangSectionType.ZH_JA:
+                    temp_substrings = self._parse_zh_ja(section.text)
+                    substrings_with_lang = self._init_substr_lang(
+                        texts=temp_substrings,
+                        lang_map=ZH_JA_LANG_MAP,
+                        lang_section_type=LangSectionType.ZH_JA,
+                    )
 
-                substrings_with_lang = self._init_substr_lang(
-                    texts=substrings,
-                    lang_section_type=lang_section_type,
-                )
+                elif section.lang_section_type is LangSectionType.KO:
+                    substrings_with_lang = [
+                        SubString(
+                            text=section.text,
+                            lang="ko",
+                            index=section_index,
+                            length=section_len,
+                        )
+                    ]
+
+                else:
+                    temp_substrings = self._parse_without_zh_ja(section.text)
+                    substrings_with_lang = self._init_substr_lang(
+                        texts=temp_substrings,
+                        lang_section_type=LangSectionType.OTHERS,
+                    )
+                # 更新 index
                 for substr in substrings_with_lang:
                     substr.index += section_index
+                if self.debug:
+                    logger.debug("---------after _init_substr_lang:")
+                    for substr in substrings_with_lang:
+                        logger.debug(substr)
+
                 section.substrings = substrings_with_lang
 
             section_index += section_len
 
+        pre_split_section = self._smart_merge_all(pre_split_section)
         if self.debug:
-            logger.info("---------_init_substr_lang")
+            logger.debug("---------after split:")
             for section in pre_split_section:
-                logger.info(section)
+                logger.debug(section)
+
+        return pre_split_section
 
         # MARK: smart merge substring together
-        wtpsplit_section = pre_split_section
-        for section in wtpsplit_section:
+
+    def _smart_merge_all(self, pre_split_section: List[SubStringSection]):
+        for section in pre_split_section:
             if (
                 section.lang_section_type is LangSectionType.PUNCTUATION
                 or section.lang_section_type is LangSectionType.NEWLINE
@@ -200,11 +270,8 @@ class LangSplitter:
             )
             section.substrings.clear()
             section.substrings = smart_concat_result
-        if self.debug:
-            logger.info("---------smart_concat_result")
-            for section in wtpsplit_section:
-                logger.info(section)
-        return wtpsplit_section
+
+        return pre_split_section
 
     # MARK: _parse_without_zh_ja
     def _parse_without_zh_ja(self, text: str):
@@ -230,19 +297,25 @@ class LangSplitter:
     def _parse_zh_ja(self, text) -> List[str]:
         splitted_texts_jp = []
         splitted_texts_jp = jp_budoux_parser.parse(text)
+        if self.debug:
+            logger.debug("---------after jp_budoux_parser:")
+            logger.debug(splitted_texts_jp)
 
         splitted_texts_zh_jp = []
         for substring in splitted_texts_jp:
             splitted_texts_zh_jp.extend(zh_budoux_parser.parse(substring))
+        if self.debug:
+            logger.debug("---------after zh_budoux_parser:")
+            logger.debug(splitted_texts_zh_jp)
 
         new_substrings = [splitted_texts_zh_jp[0]]
         for substring in splitted_texts_zh_jp[1:]:
-            is_left_ja = contains_ja(new_substrings[-1])
-            is_cur_ja = contains_ja(substring)
-            is_both_same_lang = is_left_ja == is_cur_ja
-            is_both_ja = is_left_ja is True and is_both_same_lang
-            is_both_zh = is_left_ja is False and is_both_same_lang
-            if is_both_ja:  # both substring is katakana or hiragana, then concat
+            is_left_ja_kana = contains_ja_kana(new_substrings[-1])
+            is_cur_ja_kana = contains_ja_kana(substring)
+            is_both_same_lang = is_left_ja_kana == is_cur_ja_kana
+            is_both_ja_kana = is_left_ja_kana is True and is_both_same_lang
+            is_both_zh = is_left_ja_kana is False and is_both_same_lang
+            if is_both_ja_kana:  # both substring is katakana or hiragana, then concat
                 new_substrings[-1] += substring
             elif is_both_zh and len(substring) == 1:
                 # NOTE: both substring is full Chinese character, and current one is only one character
@@ -257,127 +330,46 @@ class LangSplitter:
             new_substrings[1] = new_substrings[0] + new_substrings[1]
             new_substrings = new_substrings[1:]
 
+        if self.debug:
+            logger.debug("---------after parse_zh_ja:")
+            logger.debug(new_substrings)
+
         return new_substrings
-
-    # MARK: _pre_split
-    def _pre_split(self, text: str) -> List[SubStringSection]:
-        sections = []
-        current_lang: LangSectionType = LangSectionType.OTHERS
-        current_text = []
-
-        def add_substring(lang_section_type: LangSectionType):
-            if current_text:
-                concat_text = "".join(current_text)
-
-                sections.append(
-                    SubStringSection(
-                        lang_section_type=lang_section_type,
-                        text=concat_text,
-                        substrings=[],
-                    )
-                )
-                current_text.clear()
-
-        for index, char in enumerate(text):
-            is_space = char.isspace()
-
-            if is_space is False:  # Exclude newlines from processing
-                if contains_zh_ja(char):
-                    if current_lang != LangSectionType.ZH_JA:
-                        add_substring(current_lang)
-                        current_lang = LangSectionType.ZH_JA
-                elif contains_hangul(char):
-                    if current_lang != LangSectionType.KO:
-                        add_substring(current_lang)
-                        current_lang = LangSectionType.KO
-                elif char.isdigit():
-                    if current_lang != LangSectionType.DIGIT:
-                        add_substring(current_lang)
-                        current_lang = LangSectionType.DIGIT
-                elif char in self.punctuation:
-                    if char == "'" and index > 0 and text[index - 1].isspace() is False:
-                        pass
-                    else:
-                        add_substring(current_lang)
-                        current_lang = LangSectionType.PUNCTUATION
-                else:
-                    if current_lang != LangSectionType.OTHERS:
-                        add_substring(current_lang)
-                        current_lang = LangSectionType.OTHERS
-            else:
-                if current_lang != LangSectionType.NEWLINE:
-                    # print(f"detect newline {char}")
-                    add_substring(current_lang)
-                    current_lang = LangSectionType.NEWLINE
-
-            current_text.append(char)
-
-        add_substring(current_lang)
-        return sections
 
     # MARK: _smart_merge
     def _smart_merge(
         self,
         substr_list: List[SubString],
         lang_section_type: LangSectionType,
-    ):
-        substr_list = self._smart_concat_logic(
-            substr_list,
-            lang_section_type=lang_section_type,
-        )
-        return substr_list
-
-    # MARK: _init_substr_lang
-    def _init_substr_lang(
-        self,
-        texts: List[str],
-        lang_section_type: LangSectionType,
     ) -> List[SubString]:
-        substrings = []
+        lang_text_list = substr_list
+        lang_text_list = self._merge_substrings(lang_text_list)
+        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
+        # NOTE: get_languages 需要根据不同语言进行不同处理
+        lang_text_list = self._get_languages(
+            lang_text_list=lang_text_list,
+            lang_section_type=lang_section_type,
+            lang_map=ZH_JA_LANG_MAP
+            if lang_section_type is LangSectionType.ZH_JA
+            else NO_ZH_JA_LANG_MAP,
+        )
+        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
+        lang_text_list = self._fill_unknown_language(lang_text_list)
+        lang_text_list = self._merge_side_substr_to_near(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
+        lang_text_list = self._get_languages(
+            lang_text_list=lang_text_list,
+            lang_section_type=lang_section_type,
+            lang_map=ZH_JA_LANG_MAP
+            if lang_section_type is LangSectionType.ZH_JA
+            else NO_ZH_JA_LANG_MAP,
+        )
+        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
+        lang_text_list = self._merge_substrings(lang_text_list)
 
-        substring_index = 0
-        for text in texts:
-            length = len(text)
-            if text in self.punctuation:
-                substrings.append(
-                    SubString(
-                        is_punctuation=True,
-                        is_digit=False,
-                        lang="punctuation",
-                        text=text,
-                        length=length,
-                        index=substring_index,
-                    )
-                )
-            elif text.strip().isdigit():
-                substrings.append(
-                    SubString(
-                        is_punctuation=False,
-                        is_digit=True,
-                        lang="digit",
-                        text=text,
-                        length=length,
-                        index=substring_index,
-                    )
-                )
-            else:
-                cur_lang = detect_lang_combined(
-                    text, lang_section_type=lang_section_type
-                )
-                cur_lang = self.lang_map.get(cur_lang, self.default_lang)
-                substrings.append(
-                    SubString(
-                        is_digit=False,
-                        is_punctuation=False,
-                        lang=cur_lang,
-                        text=text,
-                        length=length,
-                        index=substring_index,
-                    )
-                )
-
-            substring_index += length
-        return substrings
+        return lang_text_list
 
     def _is_merge_middle_to_two_side(
         self, left: SubString, middle: SubString, right: SubString
@@ -533,7 +525,7 @@ class LangSplitter:
                 if (
                     left_i_index >= 0
                     and substrings[left_i_index].lang != "x"
-                    and substrings[left_i_index].is_digit is False
+                    and substrings[left_i_index].lang != "digit"
                 ):
                     return substrings[left_i_index].lang
         else:
@@ -542,7 +534,7 @@ class LangSplitter:
                 if (
                     right_i_index < len(substrings)
                     and substrings[right_i_index].lang != "x"
-                    and substrings[right_i_index].is_digit is False
+                    and substrings[right_i_index].lang != "digit"
                 ):
                     return substrings[right_i_index].lang
         return substrings[index].lang
@@ -605,24 +597,6 @@ class LangSplitter:
         new_substrings = self._merge_substrings(substrings=substrings)
         return new_substrings
 
-    def _merge_substrings_across_newline(
-        self,
-        substrings: List[SubString],
-    ) -> List[SubString]:
-        new_substrings: List[SubString] = []
-        last_lang = ""
-        for index in range(len(substrings)):
-            if (
-                last_lang == substrings[index].lang
-                or substrings[index].lang == "newline"
-            ):
-                new_substrings[-1].text += substrings[index].text
-                new_substrings[-1].length += substrings[index].length
-            else:
-                new_substrings.append(substrings[index])
-                last_lang = substrings[index].lang
-        return new_substrings
-
     # MARK: _special_merge_for_zh_ja
 
     def _special_merge_for_zh_ja(
@@ -633,10 +607,16 @@ class LangSplitter:
 
         if len(substrings) == 1:
             return substrings
-        # TODO: 如果遇到两边的语言相同，即 ABA，且两边的 A 的长度合计加起来大于中间的 B 的长度的10倍，则合并
-
+        # NOTE: 统计每个语言的字符串长度
+        substring_text_len_by_lang = {
+            "zh": 0,
+            "ja": 0,
+            "x": 0,
+            "punctuation": 0,
+        }
         for index in range(len(substrings)):
             current_block = substrings[index]
+            substring_text_len_by_lang[current_block.lang] += current_block.length
             if index == 0:
                 if (
                     substrings[index + 1].lang in ["zh", "ja"]
@@ -689,44 +669,200 @@ class LangSplitter:
                     index += 1
                 else:
                     new_substrings.append(substrings[index])
+        # NOTE: 如果 substring_count 中 存在 x，则将 x 设置为最多的 lang
+        if substring_text_len_by_lang["x"] > 0:
+            max_lang = max(
+                substring_text_len_by_lang, key=substring_text_len_by_lang.get
+            )
+            for index, substr in enumerate(new_substrings):
+                if substr.lang == "x":
+                    new_substrings[index].lang = max_lang
+        # NOTE: 如果 ja 数量是 zh 数量的 10 倍以上，则该 zh 设置为 ja
+        if substring_text_len_by_lang["ja"] >= substring_text_len_by_lang["zh"] * 10:
+            for index, substr in enumerate(new_substrings):
+                if substr.lang == "zh":
+                    new_substrings[index].lang = "ja"
         new_substrings = self._merge_substrings(substrings=new_substrings)
         return new_substrings
 
-    # MARK: _merge_substring_across_digit
-    def _merge_substring_across_digit(
+    def _merge_substrings_across_newline_based_on_sections(
         self,
-        substrings: List[SubString],
-    ) -> List[SubString]:
-        new_substrings: List[SubString] = []
-        last_lang = ""
+        sections: List[SubStringSection],
+    ) -> List[SubStringSection]:
+        new_sections: List[SubStringSection] = [sections[0]]
+        # NOTE: 将 sections 中的 newline 合并到临近的非 punctuation 的 section
+        for index, _ in enumerate(sections):
+            if index == 0:
+                continue
+            if index >= len(sections):
+                break
 
-        for _, substring in enumerate(substrings):
-            if new_substrings:
-                if substring.is_digit:
-                    if new_substrings[-1].is_digit:
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
+            prev_section = new_sections[-1]
+            current_section = sections[index]
+            if (
+                current_section.lang_section_type != LangSectionType.PUNCTUATION
+                and prev_section.lang_section_type == LangSectionType.NEWLINE
+            ):
+                # NOTE: 如果前一个 section 是 newline，则合并
+                prev_section.lang_section_type = current_section.lang_section_type
+                prev_section.text += current_section.text
+                prev_section.substrings.extend(current_section.substrings)
+                for index, substr in enumerate(prev_section.substrings):
+                    if index == 0:
+                        continue
                     else:
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
-                else:
-                    if substring.lang == last_lang or last_lang == "":
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
-                        new_substrings[-1].lang = (
-                            substring.lang
-                            if new_substrings[-1].lang == "digit"
-                            else new_substrings[-1].lang
+                        substr.index = (
+                            new_sections[-1].substrings[index - 1].index
+                            + new_sections[-1].substrings[index - 1].length
+                        )
+
+            elif (
+                current_section.lang_section_type == LangSectionType.NEWLINE
+                and prev_section.lang_section_type != LangSectionType.PUNCTUATION
+            ):
+                # NOTE: 如果前一个 section 不是 punctuation，则合并
+                prev_section.text += current_section.text
+                prev_section.substrings.extend(current_section.substrings)
+                prev_section.substrings[-1].index = (
+                    prev_section.substrings[-2].index
+                    + prev_section.substrings[-2].length
+                )
+            else:
+                new_sections.append(current_section)
+        # NOTE: 将相同类型的 section 合并
+        new_sections_merged: List[SubStringSection] = [new_sections[0]]
+        for index, _ in enumerate(new_sections):
+            if index == 0:
+                continue
+            if (
+                new_sections_merged[-1].lang_section_type
+                == new_sections[index].lang_section_type
+            ):
+                new_sections_merged[-1].text += new_sections[index].text
+                new_sections_merged[-1].substrings.extend(
+                    new_sections[index].substrings
+                )
+            else:
+                new_sections_merged.append(new_sections[index])
+        # NOTE: 重新计算 index
+        for section_index, section in enumerate(new_sections_merged):
+            if section_index == 0:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        continue
+                    else:
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+            else:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        substr.index = (
+                            new_sections_merged[section_index - 1].substrings[-1].index
+                            + new_sections_merged[section_index - 1]
+                            .substrings[-1]
+                            .length
                         )
                     else:
-                        new_substrings.append(substring)
-                    last_lang = substring.lang
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+        if self.debug:
+            logger.debug(
+                "---------------------------------after_merge_newline_sections:"
+            )
+            for section in new_sections_merged:
+                logger.debug(section)
+        return new_sections_merged
+
+    # MARK: _merge_substrings_across_digit_based_on_sections
+    def _merge_substrings_across_digit_based_on_sections(
+        self,
+        sections: List[SubStringSection],
+    ) -> List[SubStringSection]:
+        new_sections: List[SubStringSection] = [sections[0]]
+        # NOTE: 将 sections 中的 digit 合并到临近的非 digit 的 section
+        for index, _ in enumerate(sections):
+            if index == 0:
+                continue
+            if index >= len(sections):
+                break
+
+            prev_section = new_sections[-1]
+            current_section = sections[index]
+            # 如果前一个 section 和当前的 section 类型不同，则合并
+            if prev_section.lang_section_type != current_section.lang_section_type:
+                if prev_section.lang_section_type == LangSectionType.DIGIT:
+                    prev_section.lang_section_type = current_section.lang_section_type
+                    prev_section.text += current_section.text
+                    prev_section.substrings.extend(current_section.substrings)
+                    for index, substr in enumerate(prev_section.substrings):
+                        if index == 0:
+                            continue
+                        else:
+                            substr.index = (
+                                new_sections[-1].substrings[index - 1].index
+                                + new_sections[-1].substrings[index - 1].length
+                            )
+                elif current_section.lang_section_type == LangSectionType.DIGIT:
+                    prev_section.text += current_section.text
+                    prev_section.substrings.extend(current_section.substrings)
+                    prev_section.substrings[-1].index = (
+                        prev_section.substrings[-2].index
+                        + prev_section.substrings[-2].length
+                    )
+                else:
+                    new_sections.append(current_section)
             else:
-                new_substrings.append(substring)
+                new_sections.append(current_section)
+        # NOTE: 将相同类型的 section 合并
+        new_sections_merged: List[SubStringSection] = [new_sections[0]]
+        for index, _ in enumerate(new_sections):
+            if index == 0:
+                continue
+            if (
+                new_sections_merged[-1].lang_section_type
+                == new_sections[index].lang_section_type
+            ):
+                new_sections_merged[-1].text += new_sections[index].text
+                new_sections_merged[-1].substrings.extend(
+                    new_sections[index].substrings
+                )
+            else:
+                new_sections_merged.append(new_sections[index])
+        # NOTE: 重新计算 index
+        for section_index, section in enumerate(new_sections_merged):
+            if section_index == 0:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        continue
+                    else:
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+            else:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        substr.index = (
+                            new_sections_merged[section_index - 1].substrings[-1].index
+                            + new_sections_merged[section_index - 1]
+                            .substrings[-1]
+                            .length
+                        )
+                    else:
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+        if self.debug:
+            logger.debug("---------------------------------after_merge_digit_sections:")
+            for section in new_sections_merged:
+                logger.debug(section)
+        return new_sections_merged
 
-        return new_substrings
-
-    # MARK: _merge_substrings_across_punctuation
     def _merge_substrings_across_punctuation(
         self,
         substrings: List[SubString],
@@ -735,7 +871,7 @@ class LangSplitter:
         lang = ""
         for substring in substrings:
             if (
-                substring.is_punctuation
+                substring.lang == "punctuation"
                 and substring.text.strip() not in self.not_merge_punctuation
             ):
                 if new_substrings and new_substrings[-1].lang == lang:
@@ -752,11 +888,158 @@ class LangSplitter:
             lang = substring.lang if substring.lang != "punctuation" else lang
         return new_substrings
 
+    # MARK: _merge_substrings_across_punctuation based on sections
+    def _merge_substrings_across_punctuation_based_on_sections(
+        self,
+        sections: List[SubStringSection],
+    ) -> List[SubStringSection]:
+        new_sections: List[SubStringSection] = [sections[0]]
+        # NOTE: 将 sections 中的 punctuation 合并到临近的非 punctuation 的 section
+        for index, _ in enumerate(sections):
+            if index == 0:
+                continue
+            # 检查当前 section 和前一个 section 是否可以合并
+            if index >= len(sections):
+                break
+
+            prev_section = new_sections[-1]
+            current_section = sections[index]
+            # 如果前一个 section 和当前的 section 类型不同，且其中一个是 punctuation，则合并
+            if current_section.lang_section_type != prev_section.lang_section_type:
+                # 如果前一个 section 是 punctuation，且第一个元素不是 not_merge_punctuation，则合并
+                if (
+                    prev_section.lang_section_type == LangSectionType.PUNCTUATION
+                    and prev_section.substrings[0].text
+                    not in self.not_merge_punctuation
+                ):
+                    # 将前一个 punctuation section 和当前的 section 合并
+                    prev_section.text += current_section.text
+                    prev_section.lang_section_type = current_section.lang_section_type
+                    prev_section.substrings.extend(current_section.substrings)
+                    for index, substr in enumerate(prev_section.substrings):
+                        if index == 0:
+                            # 第一个元素是前一个 punctuation section 的最后一个元素，不需要修改
+                            continue
+                        else:
+                            # 其他元素是当前 section 的元素，需要修改 index
+                            substr.index = (
+                                new_sections[-1].substrings[index - 1].index
+                                + new_sections[-1].substrings[index - 1].length
+                            )
+                # 如果当前 section 是 punctuation，且第一个元素不是 not_merge_punctuation，则合并
+                elif (
+                    current_section.lang_section_type == LangSectionType.PUNCTUATION
+                    and current_section.substrings[0].text
+                    not in self.not_merge_punctuation
+                ):
+                    # 将当前的 punctuation section 和前一个 section 合并
+
+                    prev_section.text += current_section.text
+                    prev_section.substrings.extend(current_section.substrings)
+                    prev_section.substrings[-1].index = (
+                        prev_section.substrings[-2].index
+                        + prev_section.substrings[-2].length
+                    )
+                # 如果当前 section 是 punctuation，且第一个元素是 not_merge_punctuation，则不合并
+                else:
+                    new_sections.append(current_section)
+            else:
+                new_sections.append(current_section)
+
+        # NOTE: 将相同类型的 section 合并
+        new_sections_merged: List[SubStringSection] = [new_sections[0]]
+        for index, _ in enumerate(new_sections):
+            if index == 0:
+                continue
+            if (
+                new_sections_merged[-1].lang_section_type
+                == new_sections[index].lang_section_type
+            ):
+                new_sections_merged[-1].text += new_sections[index].text
+                new_sections_merged[-1].substrings.extend(
+                    new_sections[index].substrings
+                )
+            else:
+                new_sections_merged.append(new_sections[index])
+        # NOTE: 重新计算 index
+        for section_index, section in enumerate(new_sections_merged):
+            if section_index == 0:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        continue
+                    else:
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+            else:
+                for substr_index, substr in enumerate(section.substrings):
+                    if substr_index == 0:
+                        substr.index = (
+                            new_sections_merged[section_index - 1].substrings[-1].index
+                            + new_sections_merged[section_index - 1]
+                            .substrings[-1]
+                            .length
+                        )
+                    else:
+                        substr.index = (
+                            section.substrings[substr_index - 1].index
+                            + section.substrings[substr_index - 1].length
+                        )
+        # NOTE: 再次合并 sections 中的 substrings 里面的 text
+        for section in new_sections_merged:
+            if section.lang_section_type == LangSectionType.ZH_JA:
+                section.substrings = self._special_merge_for_zh_ja(section.substrings)
+            section.substrings = self._merge_substrings_across_punctuation(
+                section.substrings
+            )
+        if self.debug:
+            logger.debug(
+                "---------------------------------after_merge_punctuation_sections:"
+            )
+            for section in new_sections_merged:
+                logger.debug(section)
+        return new_sections_merged
+
+    # MARK: _init_substr_lang
+    def _init_substr_lang(
+        self,
+        texts: List[str],
+        lang_section_type: LangSectionType,
+        lang_map: Dict[str, str] = None,
+    ) -> List[SubString]:
+        substrings: List[SubString] = []
+        substring_index = 0
+        lang_map = self.lang_map if lang_map is None else lang_map
+        if self.debug:
+            logger.debug("---------lang_map:")
+            logger.debug(lang_map)
+        for text in texts:
+            length = len(text)
+
+            cur_lang = detect_lang_combined(text, lang_section_type=lang_section_type)
+            cur_lang = lang_map.get(cur_lang, self.default_lang)
+            temp_substr = SubString(
+                lang=cur_lang,
+                text=text,
+                length=length,
+                index=substring_index,
+            )
+            if self.debug:
+                logger.debug(
+                    f"---------lang_map: {lang_map}, temp_substr: {temp_substr}"
+                )
+            substrings.append(temp_substr)
+
+            substring_index += length
+        return substrings
+
     # MARK: _get_languages
     def _get_languages(
         self,
         lang_text_list: List[SubString],
         lang_section_type: LangSectionType,
+        lang_map: Dict[str, str] = None,
     ):
         if lang_section_type in [
             LangSectionType.DIGIT,
@@ -765,39 +1048,13 @@ class LangSplitter:
         ]:
             return lang_text_list
 
+        if lang_map is None:
+            lang_map = self.lang_map
+
         for _, substr in enumerate(lang_text_list):
             cur_lang = detect_lang_combined(
                 text=substr.text, lang_section_type=lang_section_type
             )
-            cur_lang = self.lang_map.get(cur_lang, self.default_lang)
-
-            if cur_lang != "x":
-                substr.lang = cur_lang
-        return lang_text_list
-
-    # MARK: _smart_concat_logic
-    def _smart_concat_logic(
-        self,
-        lang_text_list: List[SubString],
-        lang_section_type: LangSectionType,
-    ):
-        lang_text_list = self._merge_substrings(lang_text_list)
-        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
-        lang_text_list = self._merge_substrings(lang_text_list)
-        lang_text_list = self._get_languages(
-            lang_text_list=lang_text_list,
-            lang_section_type=lang_section_type,
-        )
-        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
-        lang_text_list = self._merge_substrings(lang_text_list)
-        lang_text_list = self._fill_unknown_language(lang_text_list)
-        lang_text_list = self._merge_side_substr_to_near(lang_text_list)
-        lang_text_list = self._merge_substrings(lang_text_list)
-        lang_text_list = self._get_languages(
-            lang_text_list=lang_text_list,
-            lang_section_type=lang_section_type,
-        )
-        lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
-        lang_text_list = self._merge_substrings(lang_text_list)
+            cur_lang = lang_map.get(cur_lang, self.default_lang)
 
         return lang_text_list

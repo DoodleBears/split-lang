@@ -1,11 +1,4 @@
-import logging
-
-from split_lang import LangSplitter
-
-texts = [
-    "你喜欢看アニメ吗？",
-    "衬衫的价格是9.15便士",
-    """。3入学早々隣のクラスの絵奈は男子からの人気者。
+入学早々隣のクラスの絵奈は男子からの人気者。
 
 新入生代表の挨拶も絵奈だったから目立ってしまって余計にあの子誰？ってなった。
 
@@ -112,67 +105,4 @@ texts = [
 
 （おぉーかずくんが助けてくれた（笑）もしかして、絵奈に朝怒られたから？もしかして、かずくんも昔から絵奈のことが…いや、考えるのはやめよう。私達３人は幼馴染。変に関係がおかしくなるのも嫌だし。）なんてふと思った。
 
-そして、この先、私達３人の関係は壊れていくことにこの時は気づかなかった…""",
-]
-
-lang_splitter = LangSplitter(log_level=logging.DEBUG)
-
-
-def test_split_step_by_step():
-    for text in texts:
-        pre_split_sections = lang_splitter.pre_split(
-            text=text,
-        )
-        # for section in pre_split_sections:
-        #     print(section)
-
-        split_sections = lang_splitter._split(
-            pre_split_section=pre_split_sections,
-        )
-
-        # for section in split_sections:
-        #     print(section)
-
-        after_merge_punctuation_sections = (
-            lang_splitter._merge_substrings_across_punctuation_based_on_sections(
-                sections=split_sections,
-            )
-        )
-        # for section in after_merge_punctuation_sections:
-        #     print(section)
-        after_merge_digit_sections = (
-            lang_splitter._merge_substrings_across_digit_based_on_sections(
-                sections=after_merge_punctuation_sections,
-            )
-        )
-
-        # for section in after_merge_digit_sections:
-        #     print(section)
-
-        after_merge_newline_sections = (
-            lang_splitter._merge_substrings_across_newline_based_on_sections(
-                sections=after_merge_digit_sections,
-            )
-        )
-        # for section in after_merge_newline_sections:
-        #     print(section)
-
-
-def test_split():
-    print("===========test_split===========")
-    lang_splitter.merge_across_punctuation = True
-    lang_splitter.not_merge_punctuation = ["。"]
-    for text in texts:
-        substrings = lang_splitter.split_by_lang(text=text)
-        for substr in substrings:
-            print(substr)
-
-
-def main():
-    test_split_step_by_step()
-    # test_split()
-    pass
-
-
-if __name__ == "__main__":
-    main()
+そして、この先、私達３人の関係は壊れていくことにこの時は気づかなかった…

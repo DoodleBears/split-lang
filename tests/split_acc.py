@@ -3,10 +3,7 @@ from typing import List
 
 from split_lang.config import DEFAULT_LANG
 from split_lang.model import LangSectionType
-from split_lang.split.splitter import (
-    SubString,
-    LangSplitter,
-)
+from split_lang.split.splitter import LangSplitter, SubString
 from split_lang.split.utils import PUNCTUATION
 from tests.test_config import TEST_DATA_FOLDER
 
@@ -60,8 +57,7 @@ def get_corrected_split_result(
 
 
 def simple_test(splitter: LangSplitter, debug: bool = False):
-
-    text_file_name = "correct_split_merge_punc.txt"
+    text_file_name = "correct_split.txt"
     correct_split = get_corrected_split_result(
         splitter=splitter, text_file_path=f"{TEST_DATA_FOLDER}/{text_file_name}"
     )
