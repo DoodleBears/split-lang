@@ -80,16 +80,19 @@ class LangSplitter:
             sections = self._merge_substrings_across_punctuation_based_on_sections(
                 sections=sections
             )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
         if self.merge_across_digit:  # 合并跨数字的 SubString
             sections = self._merge_substrings_across_digit_based_on_sections(
                 sections=sections
             )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
         if self.merge_across_newline:
             sections = self._merge_substrings_across_newline_based_on_sections(
                 sections=sections
             )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
         substrings: List[SubString] = []
         for section in sections:
@@ -151,8 +154,7 @@ class LangSplitter:
                     add_substring(current_lang)
                     current_lang = LangSectionType.NEWLINE
                 else:
-                    add_substring(current_lang)
-                    current_lang = LangSectionType.PUNCTUATION
+                    pass
             else:
                 if current_lang != LangSectionType.OTHERS:
                     add_substring(current_lang)
@@ -244,7 +246,17 @@ class LangSplitter:
 
             section_index += section_len
 
+        pre_split_section = self._smart_merge_all(pre_split_section)
+        if self.debug:
+            logger.debug("---------after split:")
+            for section in pre_split_section:
+                logger.debug(section)
+
+        return pre_split_section
+
         # MARK: smart merge substring together
+
+    def _smart_merge_all(self, pre_split_section: List[SubStringSection]):
         for section in pre_split_section:
             if (
                 section.lang_section_type is LangSectionType.PUNCTUATION
@@ -259,10 +271,6 @@ class LangSplitter:
             section.substrings.clear()
             section.substrings = smart_concat_result
 
-        if self.debug:
-            logger.debug("---------after split:")
-            for section in pre_split_section:
-                logger.debug(section)
         return pre_split_section
 
     # MARK: _parse_without_zh_ja
@@ -338,7 +346,7 @@ class LangSplitter:
         lang_text_list = self._merge_substrings(lang_text_list)
         lang_text_list = self._merge_middle_substr_to_two_side(lang_text_list)
         lang_text_list = self._merge_substrings(lang_text_list)
-        # FIXME: get_languages 需要根据不同语言进行不同处理
+        # NOTE: get_languages 需要根据不同语言进行不同处理
         lang_text_list = self._get_languages(
             lang_text_list=lang_text_list,
             lang_section_type=lang_section_type,
@@ -855,38 +863,29 @@ class LangSplitter:
                 logger.debug(section)
         return new_sections_merged
 
-    # MARK: _merge_substring_across_digit
-    def _merge_substring_across_digit(
+    def _merge_substrings_across_punctuation(
         self,
         substrings: List[SubString],
     ) -> List[SubString]:
         new_substrings: List[SubString] = []
-        last_lang = ""
-
-        for _, substring in enumerate(substrings):
-            if new_substrings:
-                if substring.is_digit:
-                    if new_substrings[-1].is_digit:
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
-                    else:
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
+        lang = ""
+        for substring in substrings:
+            if (
+                substring.lang == "punctuation"
+                and substring.text.strip() not in self.not_merge_punctuation
+            ):
+                if new_substrings and new_substrings[-1].lang == lang:
+                    new_substrings[-1].text += substring.text
+                    new_substrings[-1].length += substring.length
                 else:
-                    if substring.lang == last_lang or last_lang == "":
-                        new_substrings[-1].text += substring.text
-                        new_substrings[-1].length += substring.length
-                        new_substrings[-1].lang = (
-                            substring.lang
-                            if new_substrings[-1].lang == "digit"
-                            else new_substrings[-1].lang
-                        )
-                    else:
-                        new_substrings.append(substring)
-                    last_lang = substring.lang
+                    new_substrings.append(substring)
             else:
-                new_substrings.append(substring)
-
+                if substring.lang != lang:
+                    new_substrings.append(substring)
+                else:
+                    new_substrings[-1].text += substring.text
+                    new_substrings[-1].length += substring.length
+            lang = substring.lang if substring.lang != "punctuation" else lang
         return new_substrings
 
     # MARK: _merge_substrings_across_punctuation based on sections
@@ -977,8 +976,10 @@ class LangSplitter:
                 for substr_index, substr in enumerate(section.substrings):
                     if substr_index == 0:
                         substr.index = (
-                            new_sections[section_index - 1].substrings[-1].index
-                            + new_sections[section_index - 1].substrings[-1].length
+                            new_sections_merged[section_index - 1].substrings[-1].index
+                            + new_sections_merged[section_index - 1]
+                            .substrings[-1]
+                            .length
                         )
                     else:
                         substr.index = (
@@ -989,7 +990,9 @@ class LangSplitter:
         for section in new_sections_merged:
             if section.lang_section_type == LangSectionType.ZH_JA:
                 section.substrings = self._special_merge_for_zh_ja(section.substrings)
-
+            section.substrings = self._merge_substrings_across_punctuation(
+                section.substrings
+            )
         if self.debug:
             logger.debug(
                 "---------------------------------after_merge_punctuation_sections:"
@@ -1036,7 +1039,7 @@ class LangSplitter:
         self,
         lang_text_list: List[SubString],
         lang_section_type: LangSectionType,
-        lang_map: Dict[str, str],
+        lang_map: Dict[str, str] = None,
     ):
         if lang_section_type in [
             LangSectionType.DIGIT,
@@ -1044,6 +1047,9 @@ class LangSplitter:
             LangSectionType.PUNCTUATION,
         ]:
             return lang_text_list
+
+        if lang_map is None:
+            lang_map = self.lang_map
 
         for _, substr in enumerate(lang_text_list):
             cur_lang = detect_lang_combined(
