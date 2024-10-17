@@ -176,24 +176,24 @@ test_split_substrings: ['de|Ich mag dieses Buch', 'punctuation|, ', 'fr|ce livre
 acc                  : 6/6
 --------------------------
 correct_substrings   : ['x|The shirt is ', 'x|9.15 ', 'x|dollars', 'punctuation|.']
-test_split_substrings: ['en|The shirt is 9', 'punctuation|.15 ', 'en|dollars', 'punctuation|.']
-acc                  : 2/4
+test_split_substrings: ['en|The shirt is ', 'digit|9', 'punctuation|.', 'digit|15 ', 'en|dollars', 'punctuation|.']
+acc                  : 3/4
 --------------------------
 correct_substrings   : ['x|The shirt is ', 'digit|233 ', 'x|dollars', 'punctuation|.']
-test_split_substrings: ['en|The shirt is 233 dollars', 'punctuation|.']
-acc                  : 1/4
+test_split_substrings: ['en|The shirt is ', 'digit|233 ', 'en|dollars', 'punctuation|.']
+acc                  : 4/4
 --------------------------
 correct_substrings   : ['x|lang', 'punctuation|-', 'x|split']
 test_split_substrings: ['en|lang', 'punctuation|-', 'en|split']
 acc                  : 3/3
 --------------------------
 correct_substrings   : ['x|I have ', 'digit|10', 'punctuation|, ', 'x|€']
-test_split_substrings: ['en|I have 10', 'punctuation|, ', 'fr|€']
-acc                  : 2/4
+test_split_substrings: ['en|I have ', 'digit|10', 'punctuation|, ', 'fr|€']
+acc                  : 4/4
 --------------------------
 correct_substrings   : ['x|日本のメディアでは', 'punctuation|「', 'x|匿名掲示板', 'punctuation|」', 'x|であると紹介されることが多いが', 'punctuation|、', 'x|2003年1月7日から全書き込みについて', 'x|IP', 'x|アドレスの記録・保存を始めており', 'punctuation|、', 'x|厳密には匿名掲示板ではなくなっていると', 'x|CNET Japan', 'x|は報じている']
-test_split_substrings: ['ja|日本のメディアでは', 'punctuation|「', 'ja|匿名掲示板', 'punctuation|」', 'ja|であると紹介されることが多いが', 'punctuation|、2003', 'ja|年1月7日から全書き込みについて', 'en|IP', 'ja|アドレスの記録・保存を始めており', 'punctuation|、', 'ja|厳密には匿名掲示板ではなくなっていると', 'en|CNET Japan', 'ja|は報じている']
-acc                  : 11/13
+test_split_substrings: ['ja|日本のメディアでは', 'punctuation|「', 'ja|匿名掲示板', 'punctuation|」', 'ja|であると紹介されることが多いが', 'punctuation|、', 'digit|2003', 'ja|年', 'digit|1', 'ja|月', 'digit|7', 'ja|日から全書き込みについて', 'en|IP', 'ja|アドレスの記録・保存を始めており', 'punctuation|、', 'ja|厳密には匿名掲示板ではなくなっていると', 'en|CNET Japan', 'ja|は報じている']
+acc                  : 12/13
 --------------------------
 correct_substrings   : ['x|日本語', 'punctuation|（', 'x|にほんご', 'punctuation|、', 'x|にっぽんご', 'punctuation|）', 'x|は', 'punctuation|、', 'x|日本国内や', 'punctuation|、', 'x|かつての日本領だった国', 'punctuation|、', 'x|そして国外移民や移住者を含む日本人同士の間で使用されている言語', 'punctuation|。', 'x|日本は法令によって公用語を規定していないが', 'punctuation|、', 'x|法令その他の公用文は全て日本語で記述され', 'punctuation|、', 'x|各種法令において日本語を用いることが規定され', 'punctuation|、', 'x|学校教育においては「国語」の教科として学習を行うなど', 'punctuation|、', 'x|事実上日本国内において唯一の公用語となっている', 'punctuation|。']
 test_split_substrings: ['ja|日本語', 'punctuation|（', 'ja|にほんご', 'punctuation|、', 'ja|にっぽんご', 'punctuation|）', 'ja|は', 'punctuation|、', 'ja|日本国内や', 'punctuation|、', 'ja|かつての日本領だった国', 'punctuation|、', 'ja|そして国外移民 や移住者を含む日本人同士の間で使用されている言語', 'punctuation|。', 'ja|日本は法令によって公用語を規定していないが', 'punctuation|、', 'ja|法令その他の公用文は全て日本語で記述され', 'punctuation|、', 'ja|各種法令において日本語を用いることが規定され', 'punctuation|、', 'ja|学校教育においては', 'punctuation|「', 'ja|国語', 'punctuation|」', 'ja|の教科として学習を行うなど', 'punctuation|、', 'ja|事実上日本国内において唯一の公用語となっている', 'punctuation|。']
@@ -204,12 +204,12 @@ test_split_substrings: ['zh|日语是日本通用语及事实上的官方语言'
 acc                  : 10/10
 --------------------------
 total substring num: 217
-test total substring num: 220
-text acc num: 198
-precision: 0.9124423963133641
-recall: 0.9
-F1 Score: 0.9061784897025171
-time: 0.39931821823120117
+test total substring num: 230
+text acc num: 205
+precision: 0.9447004608294931
+recall: 0.8913043478260869
+F1 Score: 0.9172259507829977
+time: 0.3573117256164551
   ```
 </details>
 
