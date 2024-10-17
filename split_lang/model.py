@@ -23,10 +23,6 @@ class SubString(BaseModel):
     """index of `text` of original string"""
     length: int
     """length of `text`"""
-    is_punctuation: bool
-    """if `text` is punctuation"""
-    is_digit: bool
-    """if `text` is punctuation"""
 
 
 class SubStringSection(BaseModel):

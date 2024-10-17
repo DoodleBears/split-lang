@@ -16,7 +16,7 @@ def contains_hangul(text: str) -> bool:
     return bool(hangul_pattern.search(text))
 
 
-def contains_ja(text: str) -> bool:
+def contains_ja_kana(text: str) -> bool:
     return bool(hiragana_katakana_pattern.search(text))
 
 
