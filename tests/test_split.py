@@ -1,3 +1,5 @@
+import logging
+
 from split_lang import LangSplitter
 
 texts = [
@@ -113,10 +115,10 @@ texts = [
 そして、この先、私達３人の関係は壊れていくことにこの時は気づかなかった…""",
 ]
 
-lang_splitter = LangSplitter()
+lang_splitter = LangSplitter(log_level=logging.DEBUG)
 
 
-def test_split():
+def test_split_step_by_step():
     for text in texts:
         pre_split_sections = lang_splitter.pre_split(
             text=text,
@@ -143,12 +145,32 @@ def test_split():
                 sections=after_merge_punctuation_sections,
             )
         )
+
         # for section in after_merge_digit_sections:
         #     print(section)
 
+        after_merge_newline_sections = (
+            lang_splitter._merge_substrings_across_newline_based_on_sections(
+                sections=after_merge_digit_sections,
+            )
+        )
+        # for section in after_merge_newline_sections:
+        #     print(section)
+
+
+def test_split():
+    print("===========test_split===========")
+    lang_splitter.merge_across_punctuation = True
+    lang_splitter.not_merge_punctuation = ["。"]
+    for text in texts:
+        substrings = lang_splitter.split_by_lang(text=text)
+        for substr in substrings:
+            print(substr)
+
 
 def main():
-    test_split()
+    test_split_step_by_step()
+    # test_split()
     pass
 
 
