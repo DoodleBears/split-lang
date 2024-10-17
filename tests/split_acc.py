@@ -146,7 +146,7 @@ def find_best_threshold(splitter: LangSplitter):
 
 
 def main():
-    splitter = LangSplitter(merge_across_punctuation=True)
+    splitter = LangSplitter(merge_across_punctuation=False)
     # find_best_threshold(splitter=splitter)
     simple_test(splitter=splitter, debug=True)
 
