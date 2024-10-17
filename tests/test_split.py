@@ -3,7 +3,7 @@ from split_lang import LangSplitter
 texts = [
     "你喜欢看アニメ吗？",
     "衬衫的价格是9.15便士",
-    """。入学早々隣のクラスの絵奈は男子からの人気者。
+    """。3入学早々隣のクラスの絵奈は男子からの人気者。
 
 新入生代表の挨拶も絵奈だったから目立ってしまって余計にあの子誰？ってなった。
 
@@ -137,6 +137,13 @@ def test_split():
             )
         )
         # for section in after_merge_punctuation_sections:
+        #     print(section)
+        after_merge_digit_sections = (
+            lang_splitter._merge_substrings_across_digit_based_on_sections(
+                sections=after_merge_punctuation_sections,
+            )
+        )
+        # for section in after_merge_digit_sections:
         #     print(section)
 
 
