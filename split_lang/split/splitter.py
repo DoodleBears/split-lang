@@ -94,6 +94,10 @@ class LangSplitter:
             )
             # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
+        for section in sections:
+            if section.lang_section_type == LangSectionType.ZH_JA:
+                section.substrings = self._special_merge_for_zh_ja(section.substrings)
+
         substrings: List[SubString] = []
         for section in sections:
             substrings.extend(section.substrings)
@@ -709,9 +713,9 @@ class LangSplitter:
                         )
                     else:
                         new_substrings.append(substring)
-                last_lang = substring.lang
             else:
                 new_substrings.append(substring)
+            last_lang = substring.lang
 
         return new_substrings
 
@@ -837,9 +841,9 @@ class LangSplitter:
                         )
                     else:
                         new_substrings.append(substring)
-                    last_lang = substring.lang
             else:
                 new_substrings.append(substring)
+            last_lang = substring.lang
 
         return new_substrings
 
@@ -926,8 +930,6 @@ class LangSplitter:
         # NOTE: 再次合并 sections 中的 substrings 里面的 text
         for section in new_sections_merged:
             section.substrings = self._merge_substrings_across_digit(section.substrings)
-            # if section.lang_section_type == LangSectionType.ZH_JA:
-            #     section.substrings = self._special_merge_for_zh_ja(section.substrings)
         if self.debug:
             logger.debug("---------------------------------after_merge_digit_sections:")
             for section in new_sections_merged:
@@ -958,9 +960,9 @@ class LangSplitter:
                         )
                     else:
                         new_substrings.append(substring)
-                last_lang = substring.lang
             else:
                 new_substrings.append(substring)
+            last_lang = substring.lang
 
         return new_substrings
 
@@ -1064,8 +1066,6 @@ class LangSplitter:
                         )
         # NOTE: 再次合并 sections 中的 substrings 里面的 text
         for section in new_sections_merged:
-            if section.lang_section_type == LangSectionType.ZH_JA:
-                section.substrings = self._special_merge_for_zh_ja(section.substrings)
             section.substrings = self._merge_substrings_across_punctuation(
                 section.substrings
             )
