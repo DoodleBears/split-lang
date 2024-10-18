@@ -154,7 +154,7 @@ class LangSplitter:
                     current_lang = LangSectionType.PUNCTUATION
             elif char.isspace():
                 # concat space to current text
-                if char == "\n":
+                if char in ["\n", "\r"]:
                     add_substring(current_lang)
                     current_lang = LangSectionType.NEWLINE
                 else:
@@ -734,10 +734,7 @@ class LangSplitter:
 
             prev_section = new_sections[-1]
             current_section = sections[index]
-            if (
-                current_section.lang_section_type != LangSectionType.PUNCTUATION
-                and prev_section.lang_section_type == LangSectionType.NEWLINE
-            ):
+            if prev_section.lang_section_type == LangSectionType.NEWLINE:
                 # NOTE: 如果前一个 section 是 newline，则合并
                 prev_section.lang_section_type = current_section.lang_section_type
                 prev_section.text += current_section.text
@@ -751,10 +748,7 @@ class LangSplitter:
                             + new_sections[-1].substrings[index - 1].length
                         )
 
-            elif (
-                current_section.lang_section_type == LangSectionType.NEWLINE
-                and prev_section.lang_section_type != LangSectionType.PUNCTUATION
-            ):
+            elif current_section.lang_section_type == LangSectionType.NEWLINE:
                 # NOTE: 如果前一个 section 不是 punctuation，则合并
                 prev_section.text += current_section.text
                 prev_section.substrings.extend(current_section.substrings)
