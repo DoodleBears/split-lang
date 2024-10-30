@@ -615,6 +615,7 @@ class LangSplitter:
             "zh": 0,
             "ja": 0,
             "x": 0,
+            "digit": 0,
             "punctuation": 0,
         }
         for index in range(len(substrings)):
