@@ -855,6 +855,8 @@ class LangSplitter:
             if index >= len(sections):
                 break
 
+            print(f"测试：{sections[index].lang_section_type}")
+
             prev_section = new_sections[-1]
             current_section = sections[index]
             # 如果前一个 section 和当前的 section 类型不同，则合并
@@ -862,7 +864,16 @@ class LangSplitter:
                 if prev_section.lang_section_type == LangSectionType.DIGIT:
                     prev_section.lang_section_type = current_section.lang_section_type
                     prev_section.text += current_section.text
-                    prev_section.substrings.extend(current_section.substrings)
+                    prev_section.substrings[-1].text += current_section.substrings[
+                        0
+                    ].text
+                    prev_section.substrings[-1].length += current_section.substrings[
+                        0
+                    ].length
+                    prev_section.substrings[-1].lang = current_section.substrings[
+                        0
+                    ].lang
+                    prev_section.substrings.extend(current_section.substrings[1:])
                     for index, substr in enumerate(prev_section.substrings):
                         if index == 0:
                             continue
