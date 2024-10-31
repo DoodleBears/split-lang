@@ -82,14 +82,14 @@ class LangSplitter:
             )
             # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
-        if self.merge_across_newline:
-            sections = self._merge_substrings_across_newline_based_on_sections(
+        if self.merge_across_punctuation:  # 合并跨标点符号的 SubString
+            sections = self._merge_substrings_across_punctuation_based_on_sections(
                 sections=sections
             )
             # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
-        if self.merge_across_punctuation:  # 合并跨标点符号的 SubString
-            sections = self._merge_substrings_across_punctuation_based_on_sections(
+        if self.merge_across_newline:
+            sections = self._merge_substrings_across_newline_based_on_sections(
                 sections=sections
             )
             # sections = self._smart_merge_all(pre_split_section=pre_split_section)
@@ -829,14 +829,14 @@ class LangSplitter:
                 break
 
             current_section = sections[index]
-            print(f"当前 section：{current_section.lang_section_type}")
+            # print(f"当前 section：{current_section.lang_section_type}")
             # 如果前一个 section 和当前的 section 类型不同，则合并
             one_of_section_is_digit = (
                 new_sections[-1].lang_section_type == LangSectionType.DIGIT
                 or current_section.lang_section_type == LangSectionType.DIGIT
             )
             if one_of_section_is_digit:
-                print(f"测试：{new_sections[-1].text} | {current_section.text}")
+                # print(f"测试：{new_sections[-1].text} | {current_section.text}")
                 if new_sections[-1].lang_section_type == LangSectionType.DIGIT:
                     if current_section.lang_section_type != LangSectionType.PUNCTUATION:
                         new_sections[
