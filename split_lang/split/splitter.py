@@ -71,16 +71,10 @@ class LangSplitter:
         Returns:
             List[SubString]: which contains language, text, index, length, is_punctuation and is_digit data of substring text
         """
-
+        # FIXME: 调整 merge 顺序，最后合并 punctuation
         pre_split_section = self.pre_split(text=text)
 
         sections = self._split(pre_split_section=pre_split_section)
-
-        if self.merge_across_punctuation:  # 合并跨标点符号的 SubString
-            sections = self._merge_substrings_across_punctuation_based_on_sections(
-                sections=sections
-            )
-            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
 
         if self.merge_across_digit:  # 合并跨数字的 SubString
             sections = self._merge_substrings_across_digit_based_on_sections(
@@ -90,6 +84,12 @@ class LangSplitter:
 
         if self.merge_across_newline:
             sections = self._merge_substrings_across_newline_based_on_sections(
+                sections=sections
+            )
+            # sections = self._smart_merge_all(pre_split_section=pre_split_section)
+
+        if self.merge_across_punctuation:  # 合并跨标点符号的 SubString
+            sections = self._merge_substrings_across_punctuation_based_on_sections(
                 sections=sections
             )
             # sections = self._smart_merge_all(pre_split_section=pre_split_section)
@@ -577,30 +577,6 @@ class LangSplitter:
             lang = cur_lang
         return smart_concat_result
 
-    # MARK: _merge_digit
-    def _merge_digit(
-        self,
-        substrings: List[SubString],
-    ) -> List[SubString]:
-        new_substrings: List[SubString] = []
-
-        substr_len = len(substrings)
-        if substr_len >= 3:
-            for index in range(substr_len - 2):
-                left_block = substrings[index]
-                middle_block = substrings[index + 1]
-                right_block = substrings[index + 2]
-
-                if (
-                    left_block.lang == right_block.lang
-                    and left_block.lang != "newline"
-                    and left_block.is_digit
-                    and middle_block.is_punctuation
-                ):
-                    substrings[index + 1].lang = left_block.lang
-        new_substrings = self._merge_substrings(substrings=substrings)
-        return new_substrings
-
     # MARK: _special_merge_for_zh_ja
     def _special_merge_for_zh_ja(
         self,
@@ -617,6 +593,7 @@ class LangSplitter:
             "x": 0,
             "digit": 0,
             "punctuation": 0,
+            "newline": 0,
         }
         for index in range(len(substrings)):
             current_block = substrings[index]
@@ -829,11 +806,8 @@ class LangSplitter:
                     if substring.lang == last_lang or last_lang == "":
                         new_substrings[-1].text += substring.text
                         new_substrings[-1].length += substring.length
-                        new_substrings[-1].lang = (
-                            substring.lang
-                            if new_substrings[-1].lang == "digit"
-                            else new_substrings[-1].lang
-                        )
+                        if substring.lang != "punctuation":
+                            new_substrings[-1].lang = substring.lang
                     else:
                         new_substrings.append(substring)
             else:
@@ -855,26 +829,34 @@ class LangSplitter:
             if index >= len(sections):
                 break
 
-            print(f"测试：{sections[index].lang_section_type}")
-
-            prev_section = new_sections[-1]
             current_section = sections[index]
+            print(f"当前 section：{current_section.lang_section_type}")
             # 如果前一个 section 和当前的 section 类型不同，则合并
-            if prev_section.lang_section_type != current_section.lang_section_type:
-                if prev_section.lang_section_type == LangSectionType.DIGIT:
-                    prev_section.lang_section_type = current_section.lang_section_type
-                    prev_section.text += current_section.text
-                    prev_section.substrings[-1].text += current_section.substrings[
+            one_of_section_is_digit = (
+                new_sections[-1].lang_section_type == LangSectionType.DIGIT
+                or current_section.lang_section_type == LangSectionType.DIGIT
+            )
+            if one_of_section_is_digit:
+                print(f"测试：{new_sections[-1].text} | {current_section.text}")
+                if new_sections[-1].lang_section_type == LangSectionType.DIGIT:
+                    if current_section.lang_section_type != LangSectionType.PUNCTUATION:
+                        new_sections[
+                            -1
+                        ].lang_section_type = current_section.lang_section_type
+                    new_sections[-1].text += current_section.text
+                    new_sections[-1].substrings[-1].text += current_section.substrings[
                         0
                     ].text
-                    prev_section.substrings[-1].length += current_section.substrings[
-                        0
-                    ].length
-                    prev_section.substrings[-1].lang = current_section.substrings[
-                        0
-                    ].lang
-                    prev_section.substrings.extend(current_section.substrings[1:])
-                    for index, substr in enumerate(prev_section.substrings):
+                    new_sections[-1].substrings[
+                        -1
+                    ].length += current_section.substrings[0].length
+                    new_sections[-1].substrings[-1].lang = (
+                        current_section.substrings[0].lang
+                        if current_section.substrings[0].lang != "punctuation"
+                        else new_sections[-1].substrings[-1].lang
+                    )
+                    new_sections[-1].substrings.extend(current_section.substrings[1:])
+                    for index, substr in enumerate(new_sections[-1].substrings):
                         if index == 0:
                             continue
                         else:
@@ -883,14 +865,22 @@ class LangSplitter:
                                 + new_sections[-1].substrings[index - 1].length
                             )
                 elif current_section.lang_section_type == LangSectionType.DIGIT:
-                    prev_section.text += current_section.text
-                    prev_section.substrings.extend(current_section.substrings)
-                    prev_section.substrings[-1].index = (
-                        prev_section.substrings[-2].index
-                        + prev_section.substrings[-2].length
-                    )
-                else:
-                    new_sections.append(current_section)
+                    new_sections[-1].text += current_section.text
+                    new_sections[-1].substrings[-1].text += current_section.substrings[
+                        0
+                    ].text
+                    new_sections[-1].substrings[
+                        -1
+                    ].length += current_section.substrings[0].length
+                    if new_sections[-1].substrings[-1].lang == "punctuation":
+                        new_sections[-1].substrings[-1].lang = "digit"
+
+                    if (
+                        new_sections[-1].lang_section_type
+                        == LangSectionType.PUNCTUATION
+                    ):
+                        new_sections[-1].lang_section_type = LangSectionType.DIGIT
+
             else:
                 new_sections.append(current_section)
         # NOTE: 将相同类型的 section 合并
@@ -997,9 +987,11 @@ class LangSplitter:
                     not in self.not_merge_punctuation
                 ):
                     # 将前一个 punctuation section 和当前的 section 合并
-                    prev_section.text += current_section.text
-                    prev_section.lang_section_type = current_section.lang_section_type
-                    prev_section.substrings.extend(current_section.substrings)
+                    new_sections[-1].text += current_section.text
+                    new_sections[
+                        -1
+                    ].lang_section_type = current_section.lang_section_type
+                    new_sections[-1].substrings.extend(current_section.substrings)
                     for index, substr in enumerate(prev_section.substrings):
                         if index == 0:
                             # 第一个元素是前一个 punctuation section 的最后一个元素，不需要修改
@@ -1017,14 +1009,12 @@ class LangSplitter:
                     not in self.not_merge_punctuation
                 ):
                     # 将当前的 punctuation section 和前一个 section 合并
-
-                    prev_section.text += current_section.text
-                    prev_section.substrings.extend(current_section.substrings)
-                    prev_section.substrings[-1].index = (
-                        prev_section.substrings[-2].index
-                        + prev_section.substrings[-2].length
+                    new_sections[-1].text += current_section.text
+                    new_sections[-1].substrings.extend(current_section.substrings)
+                    new_sections[-1].substrings[-1].index = (
+                        new_sections[-1].substrings[-2].index
+                        + new_sections[-1].substrings[-2].length
                     )
-                # 如果当前 section 是 punctuation，且第一个元素是 not_merge_punctuation，则不合并
                 else:
                     new_sections.append(current_section)
             else:
