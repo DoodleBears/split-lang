@@ -710,14 +710,13 @@ class LangSplitter:
             if index >= len(sections):
                 break
 
-            prev_section = new_sections[-1]
             current_section = sections[index]
-            if prev_section.lang_section_type == LangSectionType.NEWLINE:
+            if new_sections[-1].lang_section_type == LangSectionType.NEWLINE:
                 # NOTE: 如果前一个 section 是 newline，则合并
-                prev_section.lang_section_type = current_section.lang_section_type
-                prev_section.text += current_section.text
-                prev_section.substrings.extend(current_section.substrings)
-                for index, substr in enumerate(prev_section.substrings):
+                new_sections[-1].lang_section_type = current_section.lang_section_type
+                new_sections[-1].text += current_section.text
+                new_sections[-1].substrings.extend(current_section.substrings)
+                for index, substr in enumerate(new_sections[-1].substrings):
                     if index == 0:
                         continue
                     else:
@@ -728,11 +727,11 @@ class LangSplitter:
 
             elif current_section.lang_section_type == LangSectionType.NEWLINE:
                 # NOTE: 如果前一个 section 不是 punctuation，则合并
-                prev_section.text += current_section.text
-                prev_section.substrings.extend(current_section.substrings)
-                prev_section.substrings[-1].index = (
-                    prev_section.substrings[-2].index
-                    + prev_section.substrings[-2].length
+                new_sections[-1].text += current_section.text
+                new_sections[-1].substrings.extend(current_section.substrings)
+                new_sections[-1].substrings[-1].index = (
+                    new_sections[-1].substrings[-2].index
+                    + new_sections[-1].substrings[-2].length
                 )
             else:
                 new_sections.append(current_section)
@@ -976,14 +975,18 @@ class LangSplitter:
             if index >= len(sections):
                 break
 
-            prev_section = new_sections[-1]
             current_section = sections[index]
             # 如果前一个 section 和当前的 section 类型不同，且其中一个是 punctuation，则合并
-            if current_section.lang_section_type != prev_section.lang_section_type:
-                # 如果前一个 section 是 punctuation，且第一个元素不是 not_merge_punctuation，则合并
+            one_of_section_is_punctuation = (
+                new_sections[-1].lang_section_type == LangSectionType.PUNCTUATION
+                or current_section.lang_section_type == LangSectionType.PUNCTUATION
+            )
+            if one_of_section_is_punctuation:
+                # 如果当前 section 是 punctuation，且第一个元素不是 not_merge_punctuation，则合并
+
                 if (
-                    prev_section.lang_section_type == LangSectionType.PUNCTUATION
-                    and prev_section.substrings[0].text
+                    new_sections[-1].lang_section_type == LangSectionType.PUNCTUATION
+                    and new_sections[-1].substrings[0].text
                     not in self.not_merge_punctuation
                 ):
                     # 将前一个 punctuation section 和当前的 section 合并
@@ -991,8 +994,17 @@ class LangSplitter:
                     new_sections[
                         -1
                     ].lang_section_type = current_section.lang_section_type
-                    new_sections[-1].substrings.extend(current_section.substrings)
-                    for index, substr in enumerate(prev_section.substrings):
+                    new_sections[-1].substrings[-1].text += current_section.substrings[
+                        0
+                    ].text
+                    new_sections[-1].substrings[
+                        -1
+                    ].length += current_section.substrings[0].length
+                    new_sections[-1].substrings[-1].lang = current_section.substrings[
+                        0
+                    ].lang
+                    new_sections[-1].substrings.extend(current_section.substrings[1:])
+                    for index, substr in enumerate(new_sections[-1].substrings):
                         if index == 0:
                             # 第一个元素是前一个 punctuation section 的最后一个元素，不需要修改
                             continue
@@ -1002,7 +1014,6 @@ class LangSplitter:
                                 new_sections[-1].substrings[index - 1].index
                                 + new_sections[-1].substrings[index - 1].length
                             )
-                # 如果当前 section 是 punctuation，且第一个元素不是 not_merge_punctuation，则合并
                 elif (
                     current_section.lang_section_type == LangSectionType.PUNCTUATION
                     and current_section.substrings[0].text
@@ -1010,11 +1021,22 @@ class LangSplitter:
                 ):
                     # 将当前的 punctuation section 和前一个 section 合并
                     new_sections[-1].text += current_section.text
-                    new_sections[-1].substrings.extend(current_section.substrings)
-                    new_sections[-1].substrings[-1].index = (
-                        new_sections[-1].substrings[-2].index
-                        + new_sections[-1].substrings[-2].length
-                    )
+                    new_sections[-1].substrings[-1].text += current_section.substrings[
+                        0
+                    ].text
+                    new_sections[-1].substrings[
+                        -1
+                    ].length += current_section.substrings[0].length
+
+                    new_sections[-1].substrings.extend(current_section.substrings[1:])
+                    for index, substr in enumerate(new_sections[-1].substrings):
+                        if index == 0:
+                            continue
+                        else:
+                            substr.index = (
+                                new_sections[-1].substrings[index - 1].index
+                                + new_sections[-1].substrings[index - 1].length
+                            )
                 else:
                     new_sections.append(current_section)
             else:
