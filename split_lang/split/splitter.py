@@ -412,9 +412,11 @@ class LangSplitter:
             cur.length <= 2 and near.length >= 6 and near.lang == "zh"
         )
         # e.g. 日本人, 今晚, 国外移民
+        
+        is_cur_only_kana = contains_only_kana(cur.text)
         cur_lang_is_possible_the_same_as_near = near.lang in possible_detection_list(
             cur.text
-        )
+        ) and not is_cur_only_kana
         is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja = (
             cur.length <= 4
             and cur.lang == "zh"
@@ -464,10 +466,12 @@ class LangSplitter:
         is_cur_short_and_near_long = False
         is_possible_same_lang_with_near = False
         if len(substrings) >= 2:
+            # NOTE: if current substr is short and near substr is long, then merge
             is_cur_short_and_near_long = self._is_cur_short_and_near_long(
                 substrings[0], substrings[1]
             )
 
+            # NOTE: if language of near substr is possible the same as current substr, then merge
             is_possible_same_lang_with_near = (
                 substrings[1].lang in possible_detection_list(substrings[0].text)
                 and substrings[1].length <= 5
