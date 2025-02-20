@@ -13,7 +13,7 @@ from ..detect_lang.detector import (detect_lang_combined,
                                     possible_detection_list)
 from ..model import LangSectionType, SubString, SubStringSection
 from .utils import (PUNCTUATION, contains_hangul, contains_ja_kana,
-                    contains_zh_ja)
+                    contains_only_kana, contains_zh_ja)
 
 logger = logging.getLogger(__name__)
 
@@ -274,6 +274,11 @@ class LangSplitter:
             )
             section.substrings.clear()
             section.substrings = smart_concat_result
+        
+        if self.debug:
+            logger.debug("---------after smart_merge_all:")
+            for section in pre_split_section:
+                logger.debug(section)
 
         return pre_split_section
 
@@ -378,13 +383,17 @@ class LangSplitter:
     def _is_merge_middle_to_two_side(
         self, left: SubString, middle: SubString, right: SubString
     ):
+        
+        is_middle_only_kana = contains_only_kana(middle.text)
+        
         middle_lang_is_possible_the_same_as_left = left.lang in possible_detection_list(
             middle.text
-        )
+        ) and not is_middle_only_kana
         middle_lang_is_x = middle.lang == "x"
         is_middle_short_and_two_side_long = (
-            middle.length <= 3 and left.length + right.length >= 6
+            middle.length <= 3 and left.length + right.length >= 6 and not is_middle_only_kana
         )
+        
         is_middle_zh_side_ja_and_middle_is_high_freq_in_ja = (
             left.lang == "ja"
             and middle.lang == "zh"

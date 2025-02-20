@@ -1,3 +1,4 @@
+import logging
 import time
 from typing import List
 
@@ -146,7 +147,11 @@ def find_best_threshold(splitter: LangSplitter):
 
 
 def main():
-    splitter = LangSplitter(merge_across_punctuation=False, merge_across_digit=False)
+    splitter = LangSplitter(
+        merge_across_punctuation=False,
+        merge_across_digit=False,
+        log_level=logging.DEBUG,
+    )
     # find_best_threshold(splitter=splitter)
     simple_test(splitter=splitter, debug=True)
 
