@@ -6,14 +6,14 @@ import budoux
 zh_budoux_parser = budoux.load_default_simplified_chinese_parser()
 jp_budoux_parser = budoux.load_default_japanese_parser()
 
-from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP, NO_ZH_JA_LANG_MAP, ZH_JA_LANG_MAP
-from ..detect_lang.detector import (
-    detect_lang_combined,
-    is_word_freq_higher_in_lang_b,
-    possible_detection_list,
-)
+from ..config import (DEFAULT_LANG, DEFAULT_LANG_MAP, NO_ZH_JA_LANG_MAP,
+                      ZH_JA_LANG_MAP)
+from ..detect_lang.detector import (detect_lang_combined,
+                                    is_word_freq_higher_in_lang_b,
+                                    possible_detection_list)
 from ..model import LangSectionType, SubString, SubStringSection
-from .utils import PUNCTUATION, contains_hangul, contains_ja_kana, contains_zh_ja
+from .utils import (PUNCTUATION, contains_hangul, contains_ja_kana,
+                    contains_zh_ja)
 
 logger = logging.getLogger(__name__)
 
@@ -595,7 +595,8 @@ class LangSplitter:
             "punctuation": 0,
             "newline": 0,
         }
-        for index in range(len(substrings)):
+        index = 0
+        while index < len(substrings):
             current_block = substrings[index]
             substring_text_len_by_lang[current_block.lang] += current_block.length
             if index == 0:
@@ -650,6 +651,8 @@ class LangSplitter:
                     index += 1
                 else:
                     new_substrings.append(substrings[index])
+            index += 1
+
         # NOTE: 如果 substring_count 中 存在 x，则将 x 设置为最多的 lang
         if substring_text_len_by_lang["x"] > 0:
             max_lang = max(
