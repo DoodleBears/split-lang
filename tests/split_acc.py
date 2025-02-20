@@ -69,9 +69,10 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
     test_split: List[List[SubString]] = []
     original_strings.clear()
     test_split.clear()
+    total_text_len = sum([len(item) for item in correct_split])
     time_1 = time.time()
     # MARK: collect original_strings from .txt and test `split()`
-    for correct_substrings in correct_split:
+    for str_index, correct_substrings in enumerate(correct_split):
         current_correct_num = 0
         correct_total_substring_len += len(correct_substrings)
         substrings_text = []
@@ -86,11 +87,14 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
         )
         test_split.append(test_split_substrings)
         test_total_substring_len += len(test_split_substrings)
+
         correct_substrings_text = [
-            f"{item.lang}|{item.text}" for item in correct_substrings
+            f"{' '*(3 - len(item.lang))}{'pun' if item.lang == 'punctuation' else item.lang}|{item.text}"
+            for item in correct_substrings
         ]
         test_split_substrings_text = [
-            f"{item.lang}|{item.text}" for item in test_split_substrings
+            f"{' '*(3 - len(item.lang))}{'pun' if item.lang == 'punctuation' else item.lang}|{item.text}"
+            for item in test_split_substrings
         ]
 
         for test_substring in test_split_substrings:
@@ -103,12 +107,12 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
                     current_correct_num += 1
                     break
         if debug:
+            print(f"{str_index+1}{'-'*(100 - len(str(str_index)))}")
             print(f"correct_substrings   : {correct_substrings_text}")
             print(f"test_split_substrings: {test_split_substrings_text}")
             print(
                 f"acc                  : {current_correct_num}/{len(correct_substrings_text)}"
             )
-            print("--------------------------")
 
     time_2 = time.time()
     precision = correct_split_num / correct_total_substring_len
@@ -122,6 +126,7 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
         print(f"recall: {recall}")
         print(f"F1 Score: {f1_score}")
         print(f"time: {time_2-time_1}")
+        print(f"process speed char/s: {total_text_len/(time_2-time_1)}")
 
     return precision
 
@@ -146,7 +151,11 @@ def find_best_threshold(splitter: LangSplitter):
 
 
 def main():
-    splitter = LangSplitter(merge_across_punctuation=False, merge_across_digit=False)
+    splitter = LangSplitter(
+        merge_across_punctuation=False,
+        merge_across_digit=False,
+        # log_level=logging.DEBUG,
+    )
     # find_best_threshold(splitter=splitter)
     simple_test(splitter=splitter, debug=True)
 

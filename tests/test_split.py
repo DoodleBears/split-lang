@@ -118,6 +118,7 @@ texts = [
     "I have 10 €",
     "2.术语和定义 2.Terms and Definitions",
     "(2.2)术语和定义 (2.2)Terms and Definitions",
+    "MyGO|?|,|你也喜欢|まいご|吗|？",
 ]
 
 lang_splitter = LangSplitter(log_level=logging.DEBUG)
@@ -166,7 +167,7 @@ def test_split_step_by_step():
 def test_split():
     print("===========test_split===========")
     lang_splitter.merge_across_digit = False
-    lang_splitter.merge_across_punctuation = True
+    lang_splitter.merge_across_punctuation = False
     # lang_splitter.not_merge_punctuation = ["。"]
     for text in texts:
         substrings = lang_splitter.split_by_lang(text=text)
