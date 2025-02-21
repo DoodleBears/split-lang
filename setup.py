@@ -27,8 +27,6 @@ setup(
         "fast_langdetect",
         "pydantic",
         "budoux",
-        "wordfreq",
-        "wordfreq[cjk]",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
