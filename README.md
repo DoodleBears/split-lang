@@ -36,7 +36,7 @@ language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdete
 
 # Update History
 
-## v2.0.7
+## v2.1.0
 
 - [2024-02-21] Modified merging logic
 
@@ -922,7 +922,7 @@ Vielen Dank merci beaucoup for your help.
 ```
 
 - [Update History](#update-history)
-  - [v2.0.7](#v207)
+  - [v2.1.0](#v207)
     - [before](#before)
     - [after](#after)
     - [All Test Results (Execute `python .\tests\split_acc.py` to obtain)](#all-test-results-execute-python-testssplit_accpy-to-obtain)

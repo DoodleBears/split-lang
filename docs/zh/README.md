@@ -36,7 +36,7 @@
 
 # 更新记录
 
-## v2.0.7
+## v2.1.0
 
 - [2024-02-21] 修改合并逻辑
 
@@ -922,7 +922,7 @@ Vielen Dank merci beaucoup for your help.
 ```
 
 - [更新记录](#更新记录)
-  - [v2.0.7](#v207)
+  - [v2.1.0](#v210)
     - [before](#before)
     - [after](#after)
     - [所有测试结果（执行 `python .\tests\split_acc.py` 获取）](#所有测试结果执行-python-testssplit_accpy-获取)
