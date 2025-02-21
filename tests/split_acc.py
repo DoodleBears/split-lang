@@ -1,4 +1,3 @@
-import logging
 import time
 from typing import List
 
@@ -97,8 +96,11 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
             f"{' '*(3 - len(item.lang))}{'pun' if item.lang == 'punctuation' else item.lang}|{item.text}"
             for item in test_split_substrings
         ]
+        
+        result_emoji_str = ''
 
         for test_substring in test_split_substrings:
+            is_correct = False
             for correct_substring in correct_substrings:
                 if (
                     test_substring.text == correct_substring.text
@@ -106,11 +108,18 @@ def simple_test(splitter: LangSplitter, debug: bool = False):
                 ):
                     correct_split_num += 1
                     current_correct_num += 1
+                    result_emoji_str += '✅'
+                    is_correct = True
                     break
+            if not is_correct:
+                result_emoji_str += '❌'
+                
+
         if debug:
-            print(f"{str_index+1}{'-'*(100 - len(str(str_index)))}")
-            print(f"correct_substrings   : {correct_substrings_text}")
-            print(f"test_split_substrings: {test_split_substrings_text}")
+            print(f"{str_index+1}{result_emoji_str}{'-'*(100 - len(str(str_index+1)))}")
+            print(f"original_string: {original_string}")
+            print(f"correct result : {correct_substrings_text}")
+            print(f"test result    : {test_split_substrings_text}")
             print(
                 f"acc                  : {current_correct_num}/{len(correct_substrings_text)}"
             )
@@ -155,7 +164,7 @@ def main():
     splitter = LangSplitter(
         merge_across_punctuation=False,
         merge_across_digit=False,
-        log_level=logging.DEBUG,
+        # log_level=logging.DEBUG,
     )
     # find_best_threshold(splitter=splitter)
     simple_test(splitter=splitter, debug=True)

@@ -27,7 +27,7 @@ Vielen Dank |merci beaucoup |for your help|.
 Ich bin müde |je suis fatigué |and I need some rest|.
 Ich mag dieses Buch |ce livre est intéressant |and it has a great story|.
 Ich mag dieses Buch|, |ce livre est intéressant|, |and it has a great story|.
-The shirt is |9.15 |dollars|.
+The shirt is |9|.|15 |dollars|.
 The shirt is |233 |dollars|.
 lang|-|split
 I have |10|, |€
@@ -46,3 +46,13 @@ MyGO|?,|你也喜欢|まいご|吗|？
 料理私は大好きです|。
 游戏|大好きです|。
 游戏|面白いです|。
+初次见面|，|私の名前は|Doodle|です|。
+中国語と日本語のミックス|中文和日文的混合
+真的很难分离|玉子焼き
+真的很难分离|すしリンゴ|苹果
+全是汉字很难分离|果物|苹果
+寂しい|的人
+我的姓名|は|爱音
+我的|名前は|爱音
+我的|名字は|爱音
+我的|名前|是爱音
