@@ -6,14 +6,20 @@ import budoux
 zh_budoux_parser = budoux.load_default_simplified_chinese_parser()
 jp_budoux_parser = budoux.load_default_japanese_parser()
 
-from ..config import (DEFAULT_LANG, DEFAULT_LANG_MAP, NO_ZH_JA_LANG_MAP,
-                      ZH_JA_LANG_MAP)
-from ..detect_lang.detector import (detect_lang_combined,
-                                    is_word_freq_higher_in_lang_b,
-                                    possible_detection_list)
+from ..config import DEFAULT_LANG, DEFAULT_LANG_MAP, NO_ZH_JA_LANG_MAP, ZH_JA_LANG_MAP
+from ..detect_lang.detector import (
+    detect_lang_combined,
+    is_word_freq_higher_in_lang_b,
+    possible_detection_list,
+)
 from ..model import LangSectionType, SubString, SubStringSection
-from .utils import (PUNCTUATION, contains_hangul, contains_ja_kana,
-                    contains_only_kana, contains_zh_ja)
+from .utils import (
+    PUNCTUATION,
+    contains_hangul,
+    contains_ja_kana,
+    contains_only_kana,
+    contains_zh_ja,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -274,7 +280,7 @@ class LangSplitter:
             )
             section.substrings.clear()
             section.substrings = smart_concat_result
-        
+
         if self.debug:
             logger.debug("---------after smart_merge_all:")
             for section in pre_split_section:
@@ -383,17 +389,21 @@ class LangSplitter:
     def _is_merge_middle_to_two_side(
         self, left: SubString, middle: SubString, right: SubString
     ):
-        
         is_middle_only_kana = contains_only_kana(middle.text)
-        
-        middle_lang_is_possible_the_same_as_left = left.lang in possible_detection_list(
-            middle.text
-        ) and not is_middle_only_kana
-        middle_lang_is_x = middle.lang == "x"
-        is_middle_short_and_two_side_long = (
-            middle.length <= 3 and left.length + right.length >= 6 and not is_middle_only_kana
+
+        middle_lang_is_possible_the_same_as_left = (
+            left.lang in possible_detection_list(middle.text)
+            and not is_middle_only_kana
         )
-        
+        middle_lang_is_x = middle.lang == "x"
+
+        is_middle_contains_no_kana = not contains_ja_kana(middle.text)
+        is_middle_short_and_two_side_long = (
+            middle.length <= 3
+            and left.length + right.length >= 6
+            and is_middle_contains_no_kana
+        )
+
         is_middle_zh_side_ja_and_middle_is_high_freq_in_ja = (
             left.lang == "ja"
             and middle.lang == "zh"
@@ -408,15 +418,16 @@ class LangSplitter:
         )
 
     def _is_cur_short_and_near_long(self, cur: SubString, near: SubString):
+        is_cur_contains_no_kana = not contains_ja_kana(cur.text)
+        is_near_str_is_long_zh = near.length >= 6 and near.lang == "zh"
         is_cur_short_and_near_is_zh_and_long = (
-            cur.length <= 2 and near.length >= 6 and near.lang == "zh"
+            cur.length <= 2 and is_near_str_is_long_zh and is_cur_contains_no_kana
         )
         # e.g. 日本人, 今晚, 国外移民
-        
         is_cur_only_kana = contains_only_kana(cur.text)
-        cur_lang_is_possible_the_same_as_near = near.lang in possible_detection_list(
-            cur.text
-        ) and not is_cur_only_kana
+        cur_lang_is_possible_the_same_as_near = (
+            near.lang in possible_detection_list(cur.text) and not is_cur_only_kana
+        )
         is_cur_short_and_near_is_ja_and_middle_is_high_freq_in_ja = (
             cur.length <= 4
             and cur.lang == "zh"
