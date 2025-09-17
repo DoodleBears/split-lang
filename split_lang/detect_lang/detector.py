@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import List, cast
 
 import fast_langdetect
 
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def fast_lang_detect(text: str) -> str:
-    result = str(fast_langdetect.detect(text, low_memory=False)["lang"])
+    result = str(fast_langdetect.detect(text, model="full")[0]["lang"])
     result = result.lower()
     return result
 
@@ -27,12 +27,13 @@ def detect_lang_combined(text: str, lang_section_type: LangSectionType) -> str:
 def possible_detection_list(text: str) -> List[str]:
     text = text.replace("\n", "").strip()
     languages = [
-        item["lang"]
-        for item in fast_langdetect.detect_multilingual(
+        cast(str, item["lang"])
+        for item in fast_langdetect.detect(
             text,
-            low_memory=False,
+            model="full",
             k=5,
             threshold=0.01,
         )
     ]
+
     return languages
