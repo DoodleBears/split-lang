@@ -24,7 +24,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        "fast_langdetect",
+        "fast_langdetect>=1.0",
         "pydantic",
         "budoux",
     ],
