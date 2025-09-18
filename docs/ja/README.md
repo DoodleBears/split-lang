@@ -36,6 +36,10 @@
 
 # Update History
 
+## v2.1.1
+
+- [2025-09-18] fast_langdetect を 1.0+ にアップグレード
+
 ## v2.1.0
 
 - [2024-02-21] 統合ロジックの修正
@@ -922,7 +926,8 @@ Vielen Dank merci beaucoup for your help.
 ```
 
 - [Update History](#update-history)
-  - [v2.1.0](#v207)
+  - [v2.1.1](#v211)
+  - [v2.1.0](#v210)
     - [before](#before)
     - [after](#after)
     - [すべてのテスト結果（`python .\tests\split_acc.py` を実行して取得）](#すべてのテスト結果python-testssplit_accpy-を実行して取得)

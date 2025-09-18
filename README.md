@@ -36,9 +36,13 @@ language detection: [`fast-langdetect`](https://github.com/LlmKira/fast-langdete
 
 # Update History
 
+## v2.1.1
+
+- [2025-09-18] Bump fast_langdetect to 1.0+
+
 ## v2.1.0
 
-- [2024-02-21] Modified merging logic
+- [2025-02-21] Modified merging logic
 
   - Significantly reduced the merging of `ja` strings containing kana into nearby `zh` (there are still misjudgments in cases of pure kanji Japanese and Chinese mixed together)
   - Processing speed increased by 6 to 7 times (removed the use of `wordfreq`)
@@ -922,7 +926,8 @@ Vielen Dank merci beaucoup for your help.
 ```
 
 - [Update History](#update-history)
-  - [v2.1.0](#v207)
+  - [v2.1.1](#v211)
+  - [v2.1.0](#v210)
     - [before](#before)
     - [after](#after)
     - [All Test Results (Execute `python .\tests\split_acc.py` to obtain)](#all-test-results-execute-python-testssplit_accpy-to-obtain)
